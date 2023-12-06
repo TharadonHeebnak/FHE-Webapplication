@@ -57,6 +57,10 @@ button {
 	transition: transform 80ms ease-in;
 }
 
+button:hover {
+    background-color: #3579BD;;
+  }
+
 button:active {
 	transform: scale(0.95);
 }
