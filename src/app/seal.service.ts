@@ -1,24 +1,16 @@
-// seal.service.ts
 import { Injectable } from '@angular/core';
-const seal = require('node-seal');
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class SealService {
-  private context: any; // ปรับตามโครงสร้างของ NodeSEAL
-  private keyGenerator: any; // ปรับตามโครงสร้างของ NodeSEAL
+  private apiUrl = 'http://localhost:3000/seal-operation';
 
-  constructor() {
-    this.context = new seal.Context(); // ปรับตามโครงสร้างของ NodeSEAL
-    this.keyGenerator = new seal.KeyGenerator(this.context); // ปรับตามโครงสร้างของ NodeSEAL
+  constructor(private http: HttpClient) { }
+
+  performSealOperation(data: { number1: number; number2: number }): Observable<{ result: number }> {
+    return this.http.post<{ result: number }>(this.apiUrl, data);
   }
-
-  generateKeyPair(): any {
-    const publicKey = this.keyGenerator.createPublicKey();
-    const secretKey = this.keyGenerator.secretKey();
-    return { publicKey, secretKey };
-  }
-
-  // เพิ่มเมธอดอื่น ๆ ตามต้องการ
 }

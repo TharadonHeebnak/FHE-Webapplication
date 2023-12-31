@@ -13,8 +13,8 @@ export class EncryptionComponent {
 
   ngOnInit(): void {
     // เรียกใช้งาน NodeSEAL service
-    const keyPair = this.sealService.generateKeyPair();
-    console.log('Public Key:', keyPair.publicKey);
-    console.log('Secret Key:', keyPair.secretKey);
+    // const keyPair = this.sealService.generateKeyPair();
+    // console.log('Public Key:', keyPair.publicKey);
+    // console.log('Secret Key:', keyPair.secretKey);
   }
 }
