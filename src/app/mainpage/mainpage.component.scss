@@ -27,6 +27,8 @@
     display: flex;
     position: relative;
     align-items: center;
+    background-color:#0043CE ;
+    color: #ffffff;
 }
 
 *, *::before, *::after {
@@ -327,7 +329,7 @@ html {
 }
 
 .MuiTypography-root {
-  margin: 0;
+  margin-top: 20px;
 }
 
 input[type="text" i] {
@@ -510,4 +512,19 @@ div {
 .MuiGrid-item {
   margin: 0;
   box-sizing: border-box;
+}
+
+
+///// create button ////
+
+.asd{
+  
+  width: 220px;
+  height: 46px;
+  top: 0;
+  left: 0;
+  background-color: #0043ceb2;
+  border-radius: 7px;
+  color: #ffffff;
+  border-color: #0043ceb2;
 }

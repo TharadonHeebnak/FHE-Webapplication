@@ -134,12 +134,16 @@
           <p class="MuiFormHelperText-root">Determines whether the modulus switching chain should be created</p>
         </div> -->
         <div class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-align-items-xs-center">
-          <div class="MuiGrid-root MuiGrid-item"><button
-              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary" tabindex="0"
-              type="button" id="BUTTON-create-encryption-parameters"><span class="MuiButton-label"><span
-                  class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                  id="BUTTON-create-encryption-parameters">Create Enc Parms</span></span><span
-                class="MuiTouchRipple-root"></span></button></div>
+          <div class="MuiGrid-root MuiGrid-item">
+            <!-- class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary" tabindex="0" (before asd)-->
+            <button class="asd" tabindex="0" type="button" id="BUTTON-create-encryption-parameters">
+              <span class="MuiButton-label">
+                <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
+                  id="BUTTON-create-encryption-parameters">Create Enc Parms</span>
+              </span>
+              <span class="MuiTouchRipple-root"></span>
+            </button>
+          </div>
         </div>
       </div>
       <hr class="MuiDivider-root jss21">
@@ -321,31 +325,33 @@
             </div>
           </form>
         </div>
-        
+
       </div>
       <hr class="MuiDivider-root jss29">
       <h2 class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom">Encryption & Decryption</h2>
-      <p class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom">Encryption is the process by which a readable message is converted to an unreadable form to prevent unauthorized parties from reading it.
-        Decryption is the process of transforming data that has been rendered unreadable through encryption back to its unencrypted form.</p>
+      <p class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom">Encryption is the process by which a
+        readable message is converted to an unreadable form to prevent unauthorized parties from reading it.
+        Decryption is the process of transforming data that has been rendered unreadable through encryption back to its
+        unencrypted form.</p>
     </div>
 
 
     <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
-          <form class="MuiPaper-root jss30 MuiPaper-elevation1 MuiPaper-rounded">
-            <h3 class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom">Relin Key</h3>
-            <p class="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextSecondary">Relinearization Keys are
-              used to reduce the size of a CipherText after multiplication back to the initial size, 2.</p>
-            <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
-                <div class="MuiGrid-root MuiGrid-item">
-                  <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
+      <form class="MuiPaper-root jss30 MuiPaper-elevation1 MuiPaper-rounded">
+        <h3 class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom">Encryption</h3>
+        <p class="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextSecondary">Upload your flie for
+          Encryption.</p>
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
+            <div class="MuiGrid-root MuiGrid-item">
+              <!-- <div
                     class="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal MuiFormControl-fullWidth">
                     <label
                       class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated Mui-disabled Mui-disabled"
-                      data-shrink="false" for="INPUT-relin-key-name" id="INPUT-relin-key-name-label">RelinKey
+                      data-shrink="false" for="INPUT-relin-key-name" id="INPUT-relin-key-name-label">Encrypt file
                       name</label>
                     <div
                       class="MuiInputBase-root MuiInput-root MuiInput-underline Mui-disabled Mui-disabled MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl">
@@ -353,153 +359,94 @@
                         id="INPUT-relin-key-name" name="relinKeyName" type="text"
                         class="MuiInputBase-input MuiInput-input Mui-disabled Mui-disabled" value="">
                     </div>
-                    <p class="MuiFormHelperText-root Mui-disabled" id="INPUT-relin-key-name-helper-text">Create a new
-                      RelinKey from the active SecretKey</p>
-                  </div>
-                </div>
-                <div class="MuiGrid-root MuiGrid-item"><button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
-                    tabindex="-1" type="button" disabled="" id="BUTTON-create-relin-key"><span
-                      class="MuiButton-label"><span
-                        class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                        id="BUTTON-create-relin-key-text">Create</span></span></button></div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
-                <div class="MuiGrid-root MuiGrid-item">
-                  <div class="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal"><label
-                      class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated Mui-disabled Mui-disabled"
-                      data-shrink="false">Active RelinKey</label>
-                    <div
-                      class="MuiInputBase-root MuiInput-root MuiInput-underline Mui-disabled Mui-disabled MuiInputBase-formControl MuiInput-formControl">
-                      <div
-                        class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input Mui-disabled Mui-disabled Mui-disabled"
-                        role="button" aria-disabled="true" aria-haspopup="listbox"><span>&ZeroWidthSpace;</span></div>
-                      <input aria-hidden="true" tabindex="-1" class="MuiSelect-nativeInput" value=""><svg
-                        class="MuiSvgIcon-root MuiSelect-icon Mui-disabled" focusable="false" viewBox="0 0 24 24"
-                        aria-hidden="true">
-                        <path d="M7 10l5 5 5-5z"></path>
-                      </svg>
-                    </div>
-                    <p class="MuiFormHelperText-root Mui-disabled">Set the active RelinKey to be used for
-                      Relinearization</p>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-flex-end">
-                <div class="MuiGrid-root MuiGrid-item">
-                  <div class="jss35">
-                    <div><input id="file-upload-relinkey" class="jss37" type="file" disabled=""><label
-                        for="file-upload-relinkey"><span
-                          class="MuiButtonBase-root MuiButton-root MuiButton-text Mui-disabled Mui-disabled"
-                          tabindex="-1" role="button" aria-disabled="true"><span class="MuiButton-label"><span
-                              class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                              id="UPLOAD relinkey">Upload</span></span></span></label></div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
-                <div class="MuiGrid-root MuiGrid-item"><button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-text jss34 Mui-disabled Mui-disabled"
-                    tabindex="-1" type="button" disabled="" id="BUTTON-delete-relin-key"><span
-                      class="MuiButton-label"><span
-                        class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                        id="BUTTON-delete-relin-key-text">Delete</span></span></button></div>
-                <div class="MuiGrid-root MuiGrid-item"><button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
-                    tabindex="-1" type="button" disabled="" id="BUTTON-download-relin-key"><span
-                      class="MuiButton-label"><span
-                        class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                        id="BUTTON-download-relin-key-text">Download</span></span></button></div>
+                  </div> -->
+            </div>
+          </div>
+
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-flex-end">
+            <div class="MuiGrid-root MuiGrid-item">
+              <div class="jss35">
+                <div><input id="file-upload-relinkey" class="jss37" type="file" disabled=""><label
+                    for="file-upload-relinkey"><span
+                      class="MuiButtonBase-root MuiButton-root MuiButton-text Mui-disabled Mui-disabled" tabindex="-1"
+                      role="button" aria-disabled="true"><span class="MuiButton-label"><span
+                          class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
+                          id="UPLOAD relinkey">Upload</span></span></span></label></div>
               </div>
             </div>
-          </form>
-          <form class="MuiPaper-root jss30 MuiPaper-elevation1 MuiPaper-rounded">
-            <h3 class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom">Galois Key</h3>
-            <p class="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextSecondary">Galois Keys are used to
-              Rotate a CipherText's rows, columns, or entire vector depending on the SchemeType.</p>
-            <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
-                <div class="MuiGrid-root MuiGrid-item">
-                  <div
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
+            <div class="MuiGrid-root MuiGrid-item"><button
+                class="MuiButtonBase-root MuiButton-root MuiButton-text jss34 Mui-disabled Mui-disabled" tabindex="-1"
+                type="button" disabled="" id="BUTTON-delete-relin-key"><span class="MuiButton-label"><span
+                    class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
+                    id="BUTTON-delete-relin-key-text">Delete</span></span></button></div>
+            <div class="MuiGrid-root MuiGrid-item"><button
+                class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
+                tabindex="-1" type="button" disabled="" id="BUTTON-download-relin-key"><span
+                  class="MuiButton-label"><span
+                    class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
+                    id="BUTTON-download-relin-key-text">Download</span></span></button></div>
+          </div>
+        </div>
+      </form>
+      <form class="MuiPaper-root jss30 MuiPaper-elevation1 MuiPaper-rounded">
+        <h3 class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom">Decrytption</h3>
+        <p class="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextSecondary">Upload your encryption file
+          for Decryption.</p>
+          <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
+            <div class="MuiGrid-root MuiGrid-item">
+              <!-- <div
                     class="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal MuiFormControl-fullWidth">
                     <label
                       class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated Mui-disabled Mui-disabled"
-                      data-shrink="false" for="INPUT-galois-key-name" id="INPUT-galois-key-name-label">GaloisKey
+                      data-shrink="false" for="INPUT-relin-key-name" id="INPUT-relin-key-name-label">Encrypt file
                       name</label>
                     <div
                       class="MuiInputBase-root MuiInput-root MuiInput-underline Mui-disabled Mui-disabled MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl">
-                      <input aria-invalid="false" aria-describedby="INPUT-galois-key-name-helper-text" disabled=""
-                        id="INPUT-galois-key-name" name="galoisKeyName" type="text"
+                      <input aria-invalid="false" aria-describedby="INPUT-relin-key-name-helper-text" disabled=""
+                        id="INPUT-relin-key-name" name="relinKeyName" type="text"
                         class="MuiInputBase-input MuiInput-input Mui-disabled Mui-disabled" value="">
                     </div>
-                    <p class="MuiFormHelperText-root Mui-disabled" id="INPUT-galois-key-name-helper-text">Create a new
-                      GaloisKey from the active SecretKey</p>
-                  </div>
-                </div>
-                <div class="MuiGrid-root MuiGrid-item"><button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
-                    tabindex="-1" type="button" disabled="" id="BUTTON-create-galois-key"><span
-                      class="MuiButton-label"><span
-                        class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                        id="BUTTON-create-galois-key-text">Create</span></span></button></div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
-                <div class="MuiGrid-root MuiGrid-item">
-                  <div class="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal"><label
-                      class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated Mui-disabled Mui-disabled"
-                      data-shrink="false">Active GaloisKey</label>
-                    <div
-                      class="MuiInputBase-root MuiInput-root MuiInput-underline Mui-disabled Mui-disabled MuiInputBase-formControl MuiInput-formControl">
-                      <div
-                        class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input Mui-disabled Mui-disabled Mui-disabled"
-                        role="button" aria-disabled="true" aria-haspopup="listbox"><span>&ZeroWidthSpace;</span></div>
-                      <input aria-hidden="true" tabindex="-1" class="MuiSelect-nativeInput" value=""><svg
-                        class="MuiSvgIcon-root MuiSelect-icon Mui-disabled" focusable="false" viewBox="0 0 24 24"
-                        aria-hidden="true">
-                        <path d="M7 10l5 5 5-5z"></path>
-                      </svg>
-                    </div>
-                    <p class="MuiFormHelperText-root Mui-disabled">Set the active GaloisKey to be used for Rotations</p>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-flex-end">
-                <div class="MuiGrid-root MuiGrid-item">
-                  <div class="jss35">
-                    <div><input id="file-upload-galoiskey" class="jss37" type="file" disabled=""><label
-                        for="file-upload-galoiskey"><span
-                          class="MuiButtonBase-root MuiButton-root MuiButton-text Mui-disabled Mui-disabled"
-                          tabindex="-1" role="button" aria-disabled="true"><span class="MuiButton-label"><span
-                              class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                              id="UPLOAD galoiskey">Upload</span></span></span></label></div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
-                <div class="MuiGrid-root MuiGrid-item"><button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-text jss34 Mui-disabled Mui-disabled"
-                    tabindex="-1" type="button" disabled="" id="BUTTON-delete-galois-key"><span
-                      class="MuiButton-label"><span
-                        class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                        id="BUTTON-delete-galois-key-text">Delete</span></span></button></div>
-                <div class="MuiGrid-root MuiGrid-item"><button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
-                    tabindex="-1" type="button" disabled="" id="BUTTON-download-galois-key"><span
-                      class="MuiButton-label"><span
-                        class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                        id="BUTTON-download-galois-key-text">Download</span></span></button></div>
+                  </div> -->
+            </div>
+          </div>
+
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-flex-end">
+            <div class="MuiGrid-root MuiGrid-item">
+              <div class="jss35">
+                <div><input id="file-upload-relinkey" class="jss37" type="file" disabled=""><label
+                    for="file-upload-relinkey"><span
+                      class="MuiButtonBase-root MuiButton-root MuiButton-text Mui-disabled Mui-disabled" tabindex="-1"
+                      role="button" aria-disabled="true"><span class="MuiButton-label"><span
+                          class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
+                          id="UPLOAD relinkey">Upload</span></span></span></label></div>
               </div>
             </div>
-          </form>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
+            <div class="MuiGrid-root MuiGrid-item"><button
+                class="MuiButtonBase-root MuiButton-root MuiButton-text jss34 Mui-disabled Mui-disabled" tabindex="-1"
+                type="button" disabled="" id="BUTTON-delete-relin-key"><span class="MuiButton-label"><span
+                    class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
+                    id="BUTTON-delete-relin-key-text">Delete</span></span></button></div>
+            <div class="MuiGrid-root MuiGrid-item"><button
+                class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
+                tabindex="-1" type="button" disabled="" id="BUTTON-download-relin-key"><span
+                  class="MuiButton-label"><span
+                    class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
+                    id="BUTTON-download-relin-key-text">Download</span></span></button></div>
+          </div>
         </div>
+      </form>
+    </div>
 
 
   </main>
