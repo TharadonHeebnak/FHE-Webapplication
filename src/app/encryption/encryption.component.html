@@ -1,6 +1,69 @@
-<p>encryption works!</p>
+<!-- <p>encryption works!</p> -->
 <!-- app.component.html -->
 <div>
     <!-- <p>Public Key: {{ publicKey }}</p>
     <p>Secret Key: {{ secretKey }}</p> -->
   </div>
+  <div>
+    <h1>Encryption Parameters</h1>
+    <p>These parameters can have drastic performance effects if not properly optimized. Most of these settings are arbitrarily defined and are safe to use; however, you are encouraged to optimize them.</p>
+    <!-- <h2>Angular App with Microsoft SEAL</h2>
+    <button (click)="performSealOperation()">Perform SEAL Operation</button>
+    <button (click)="getSchemeType()">getSchemeType</button>
+    <div>
+      Result: {{ result }}
+    </div> -->
+    <!-- <div>
+      getSchemeType:{{schemeType}}
+    </div> -->
+
+      <!-- <option *ngFor="let key of Object.keys(schemeType)" [value]="key">{{ key }}</option> -->
+
+      <div class="container">
+        <div class="row parameters">
+          <div class="col-6">
+            <div class="row">
+              <label for="selectedSchemeType">เลือก schemeType:</label>
+            </div>
+            <div class="row">
+              <select id="selectedSchemeType" [(ngModel)]="selectedSchemeType" name="selectedSchemeType">
+                <option *ngFor="let option of schemeType | keyvalue" [value]="option.key">{{ option.key }}</option>
+              </select>
+            </div>
+
+          </div>
+          <div class="col-6">
+            <div class="row">
+              <label for="dropdown">เลือก securityLevel:</label>
+            </div>
+            <div class="row">
+              <select id="dropdown" [(ngModel)]="selectedSecurityLevel" name="dropdown">
+                <option *ngFor="let option of securityLevelOption" [value]="option.securityLevel">{{ option.value}}</option>
+              </select>
+            </div>
+
+            </div>
+
+          </div>
+          <p> SelectedSchemeType ค่าที่เลือก: {{ selectedSchemeType }}</p>
+          <p> SelectedSecurityLevel ค่าที่เลือก: {{ selectedSecurityLevel }}</p>
+        </div>
+
+
+
+
+
+
+      <!-- <div>
+  <label for="dropdown">เลือกตัวเลือก:</label>
+  <select id="dropdown" [(ngModel)]="schemeType" name="dropdown">
+    <option *ngFor="let option of dropdownData" [value]="option">{{ option.name }}</option>
+  </select>
+</div> -->
+<!-- แสดงค่าที่ถูกเลือก -->
+<!-- <div *ngIf="selectedOption !== null">
+  Selected Scheme Type: {{ selectedOption.schemeType }}
+</div> -->
+
+  </div>
+

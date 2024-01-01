@@ -7,10 +7,15 @@ import { Observable } from 'rxjs';
 })
 export class SealService {
   private apiUrl = 'http://localhost:3000/seal-operation';
+  private apiGetSchemeType = 'http://localhost:3000/getSchemeType';
 
   constructor(private http: HttpClient) { }
 
   performSealOperation(data: { number1: number; number2: number }): Observable<{ result: number }> {
     return this.http.post<{ result: number }>(this.apiUrl, data);
+  }
+
+  getSchemeType(): Observable<{ sealOption: any}> {
+    return this.http.post<{ sealOption:any }>(this.apiGetSchemeType, {});
   }
 }

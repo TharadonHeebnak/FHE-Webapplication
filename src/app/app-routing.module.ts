@@ -1,4 +1,4 @@
-import { Input, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { InputFileComponent } from './input-file/input-file.component';
 import { EncryptionComponent } from './encryption/encryption.component';
