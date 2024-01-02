@@ -30,10 +30,12 @@ export class EncryptionComponent {
   selectedSecurityLevel: any;
   securityLevel: any;
   sealOption: any;
+  parms: any;
   constructor(private sealService: SealService) {}
 
   ngOnInit(): void {
     this.getSchemeType()
+
     // เรียกใช้งาน NodeSEAL service
     // const keyPair = this.sealService.generateKeyPair();
     // console.log('Public Key:', keyPair.publicKey);
@@ -56,6 +58,12 @@ export class EncryptionComponent {
       }, error => {
         console.error('Error fetching schemeType:', error);
       });
+  }
+
+  getparms(){
+    this.sealService.getparms().subscribe(response =>{
+      this.parms = response.parms;
+    })
   }
 
 }

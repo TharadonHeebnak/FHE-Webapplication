@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import SEAL from 'node-seal';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,8 @@ import { Observable } from 'rxjs';
 export class SealService {
   private apiUrl = 'http://localhost:3000/seal-operation';
   private apiGetSchemeType = 'http://localhost:3000/getSchemeType';
+  private apiGetParms = 'http://localhost:3000/createencryptparam'
+
 
   constructor(private http: HttpClient) { }
 
@@ -18,4 +21,9 @@ export class SealService {
   getSchemeType(): Observable<{ sealOption: any}> {
     return this.http.post<{ sealOption:any }>(this.apiGetSchemeType, {});
   }
+
+  getparms():Observable<{parms:any}>{
+    return this.http.post<{parms:any}>(this.apiGetParms,{})
+  }
+
 }
