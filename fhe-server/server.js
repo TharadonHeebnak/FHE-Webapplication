@@ -140,17 +140,14 @@ const keyGenerator = seal.KeyGenerator(
 )
 console.log('This is Key Generate',keyGenerator);
     // Get the SecretKey from the keyGenerator
-    const Secret_key_G_KEy_ = keyGenerator.secretKey();
     const secretKey = keyGenerator.secretKey();
     const publicKey = keyGenerator.createPublicKey();
     // Get the PublicKey from the keyGenerator
-    const Public_key_G_KEy_ = keyGenerator.createPublicKey()
-    console.log('This is Key Generate secretKey',Secret_key_G_KEy_);
-    console.log('This is Key Generate createPublicKey',Public_key_G_KEy_);
     const secretBase64Key = secretKey.save()
 const publicBase64Key = publicKey.save()
 console.log('This is secretKey',secretBase64Key);
 console.log('This is publicKey',publicBase64Key);
+res.status(200).json({ secretBase64Key,publicBase64Key});
 });
 
 

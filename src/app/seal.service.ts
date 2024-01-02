@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import SEAL from 'node-seal';
 
 @Injectable({
   providedIn: 'root'
