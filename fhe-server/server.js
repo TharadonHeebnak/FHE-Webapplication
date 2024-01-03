@@ -85,7 +85,7 @@ app.post('/getSchemeType', async(req, res) => {
   res.status(200).json({ schemeType,securityLevel,polyModulusDegree,sealOption });
 });
 
-app.post('/createencryptparam',async(req,res)=>{
+app.post('/creat-secret-key',async(req,res)=>{
   const seal = await SEAL();
 
 //   const parms = new EncryptionParameters();
@@ -141,7 +141,7 @@ const keyGenerator = seal.KeyGenerator(
 console.log('This is Key Generate',keyGenerator);
     // Get the SecretKey from the keyGenerator
     const secretKey = keyGenerator.secretKey();
-    const publicKey = keyGenerator.createPublicKey();
+    const publicKey = keyGenerator.createPublicKey(secretKey);
     // Get the PublicKey from the keyGenerator
     const secretBase64Key = secretKey.save()
 const publicBase64Key = publicKey.save()

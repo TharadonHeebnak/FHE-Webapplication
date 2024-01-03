@@ -51,9 +51,24 @@
 
         <div>
           <p>get parms</p>
-          <button (click)="getparms()">Get paems</button>
-
+          <button (click)="getkey()">Get Two Key</button>
         </div>
+        <p>this is secretkey : {{secretkey}}</p>
+        <p>this is publickey : {{publickey}}</p>
+
+        <div>
+          <p>download</p>
+          <button (click)="downloadTxtFile()">download</button>
+        </div>
+
+        <div>
+          <label for="secretKeyName">Enter File Name:</label>
+          <input type="text" id="secretKeyName" [(ngModel)]="fileName" placeholder="Enter file name">
+          <button (click)="downloadTxtFile()">Download File</button>
+        </div>
+        <!-- <p>this is key : {{secretkey}}</p> -->
+
+
 
 
 

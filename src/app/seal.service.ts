@@ -9,6 +9,7 @@ export class SealService {
   private apiUrl = 'http://localhost:3000/seal-operation';
   private apiGetSchemeType = 'http://localhost:3000/getSchemeType';
   private apiGetParms = 'http://localhost:3000/createencryptparam'
+  private apiGetSecretKey ='http://localhost:3000/creat-secret-key'
 
 
   constructor(private http: HttpClient) { }
@@ -21,8 +22,10 @@ export class SealService {
     return this.http.post<{ sealOption:any }>(this.apiGetSchemeType, {});
   }
 
-  getparms():Observable<{parms:any}>{
-    return this.http.post<{parms:any}>(this.apiGetParms,{})
+  getkey():Observable<{secretBase64Key:any,publicBase64Key:any}>{
+    return this.http.post<{secretBase64Key:any,publicBase64Key:any}>(this.apiGetSecretKey,{})
   }
+
+
 
 }
