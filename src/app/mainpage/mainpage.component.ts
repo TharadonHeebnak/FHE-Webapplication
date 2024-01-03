@@ -8,6 +8,6 @@ import { Component } from '@angular/core';
 
 
 export class MainpageComponent {
-  selectedSchemeType: string = '';
-
+  selectedSchemeType: string = 'bfv';
+  isButtonDisabled = false;
 }

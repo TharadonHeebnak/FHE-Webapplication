@@ -137,7 +137,8 @@
         <div class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-align-items-xs-center">
           <div class="MuiGrid-root MuiGrid-item">
             <!-- class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary" tabindex="0" (before asd)-->
-            <button class="asd" tabindex="0" type="button" id="BUTTON-create-encryption-parameters">
+            <!-- <button mat-button class="btn btn-primary">Create</button> -->
+            <button class="asd btn btn-primary" tabindex="0" type="button" id="BUTTON-create-encryption-parameters">
               <span class="MuiButton-label">
                 <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
                   id="BUTTON-create-encryption-parameters">Create Enc Parms</span>
@@ -419,6 +420,15 @@
               </div>
             </div>
           </div>
+          <div class="MuiGrid-root MuiGrid-item"><button
+            class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
+            tabindex="-1" type="button" id="BUTTON-create-key-pair">
+            <span class="MuiButton-label">
+              <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
+                id="BUTTON-create-key-pair-text">Encrypt</span>
+            </span>
+          </button>
+        </div>
 
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
@@ -489,6 +499,15 @@
               </div>
             </div>
           </div>
+          <div class="MuiGrid-root MuiGrid-item"><button
+            class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
+            tabindex="-1" type="button" id="BUTTON-create-key-pair">
+            <span class="MuiButton-label">
+              <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
+                id="BUTTON-create-key-pair-text">Decrypt</span>
+            </span>
+          </button>
+        </div>
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
             <div class="MuiGrid-root MuiGrid-item">
@@ -503,7 +522,8 @@
             <div class="MuiGrid-root MuiGrid-item">
               <button
                 class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
-                tabindex="-1" type="button" id="BUTTON-download-relin-key">
+                tabindex="-1" type="button" id="BUTTON-download-relin-key"
+                [attr.disabled]="isButtonDisabled ? true : null">
                 <span class="MuiButton-label">
                   <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
                     id="BUTTON-download-relin-key-text">Download</span>
@@ -515,8 +535,11 @@
       </form>
     </div>
   </main>
-  
+
 </div>
+
+
+
 
 
 <!-- <div class="MuiPaper-root MuiMenu-paper MuiPopover-paper MuiPaper-elevation8 MuiPaper-rounded" tabindex="-1"
@@ -544,5 +567,3 @@
     </li>
   </ul>
 </div> -->
-
-
