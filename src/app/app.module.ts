@@ -32,8 +32,8 @@ import { FormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     FormsModule,
 
-    
-    
+
+
   ],
   providers: [
     provideClientHydration()
