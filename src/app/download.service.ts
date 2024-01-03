@@ -9,8 +9,8 @@ export class DownloadService {
 
   constructor(private http: HttpClient) { }
 
-  downloadTxtFile(url: string): Observable<any> {
-    return this.http.get(url, { responseType: 'text' });
-  }
+  // downloadTxtFile(url: string): Observable<any> {
+  //   return this.http.get(url, { responseType: 'text' });
+  // }
 
 }

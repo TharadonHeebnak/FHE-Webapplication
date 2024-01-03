@@ -5,6 +5,9 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MainpageComponent } from './mainpage/mainpage.component';
 import { EncryptionComponent } from './encryption/encryption.component';
+import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -19,11 +22,10 @@ import { EncryptionComponent } from './encryption/encryption.component';
     AppRoutingModule,
     FormsModule,
     NgbModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatOptionModule,
+    // MatFormFieldModule,
+    // MatSelectModule,
+    // MatOptionModule,
     BrowserAnimationsModule,
-    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
