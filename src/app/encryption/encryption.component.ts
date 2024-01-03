@@ -73,12 +73,11 @@ export class EncryptionComponent {
   //   })
   // }
 
-  getkey(){
-    this.sealService.getkey().subscribe(response =>{
-      this.secretkey = response.secretBase64Key;
-      this.publickey = response.publicBase64Key;
-    })
-  }
+  // getsecretkey(){
+  //   this.sealService.getsecretkey().subscribe(response =>{
+  //     this.secretkey = response.secretBase64Key;
+  //   })
+  // }
 
   downloadTxtFile() {
     if(this.fileName == undefined || null){

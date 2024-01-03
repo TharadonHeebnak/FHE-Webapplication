@@ -6,10 +6,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SealService {
+
   private apiUrl = 'http://localhost:3000/seal-operation';
   private apiGetSchemeType = 'http://localhost:3000/getSchemeType';
-  private apiGetParms = 'http://localhost:3000/createencryptparam'
-  private apiGetSecretKey ='http://localhost:3000/creat-secret-key'
+  private apiGetParms = 'http://localhost:3000/createencryptparam';
+  private apiGetSecretKey ='http://localhost:3000/creat-secret-key';
+  private apiGetpublicKey = 'http://localhost:3000/creat-public-key';
 
 
   constructor(private http: HttpClient) { }
@@ -19,13 +21,16 @@ export class SealService {
   }
 
   getSchemeType(): Observable<{ sealOption: any}> {
-    return this.http.post<{ sealOption:any }>(this.apiGetSchemeType, {});
+    return this.http.get<{ sealOption:any }>(this.apiGetSchemeType, {});
   }
 
-  getkey():Observable<{secretBase64Key:any,publicBase64Key:any}>{
-    return this.http.post<{secretBase64Key:any,publicBase64Key:any}>(this.apiGetSecretKey,{})
+  getsecretkey(secretKeyName:string):Observable<{secretBase64Key:any,secretKeyName:string}>{
+    return this.http.post<{secretBase64Key:any,secretKeyName:string}>(this.apiGetSecretKey,{secretKeyName})
   }
 
+  getpublickey(publicKeyName:string,secretKey:any):Observable<{publicBase64Key:any,publicKeyName:string}>{
+    return this.http.post<{publicBase64Key:any,publicKeyName:string}>(this.apiGetpublicKey,{publicKeyName,secretKey})
+  }
 
 
 }

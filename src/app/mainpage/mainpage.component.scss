@@ -6,6 +6,10 @@
     min-height: 64px;
 }}
 
+.dropdown{
+  width: 100%;
+}
+
 @media (min-width: 0px) and (orientation: landscape){
 .MuiToolbar-regular {
     min-height: 48px;
@@ -341,24 +345,24 @@ input[type="text" i] {
   padding-inline: 2px;
 }
 
-.MuiSelect-select.MuiSelect-select {
-  padding-right: 24px;
-}
+// .MuiSelect-select.MuiSelect-select {
+//   padding-right: 10px;
+// }
 
-.MuiSelect-selectMenu {
-  height: auto;
-  overflow: hidden;
-  min-height: 1.1876em;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
+// .MuiSelect-selectMenu {
+//   height: auto;
+//   overflow: hidden;
+//   min-height: 1.1876em;
+//   white-space: nowrap;
+//   text-overflow: ellipsis;
+// }
 
 .MuiSelect-select {
   cursor: pointer;
   min-width: 16px;
   user-select: none;
   border-radius: 0;
-  
+
 }
 
 .MuiInputBase-input {
@@ -392,7 +396,7 @@ input[type="text" i] {
 
 label + .MuiInput-formControl {
   margin-top: 16px;
-} 
+}
 
 .MuiInput-root {
   position: relative;
@@ -521,7 +525,7 @@ div {
 ///// create button ////
 
 .asd{
-  
+
   width: 220px;
   height: 46px;
   top: 0;
@@ -672,7 +676,7 @@ element.style {
 }
 
 .MuiMenu-list {
-   outline: 0; 
+   outline: 0;
 }
 
 .MuiList-padding {
@@ -709,6 +713,7 @@ mat-form-field {
   width: 100%;
   max-width: 400px; /* Adjust the maximum width as needed */
 }
+
 
 
 

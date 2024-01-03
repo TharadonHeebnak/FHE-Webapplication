@@ -73,7 +73,7 @@ app.post('/seal-makepara',async(req,res) => {
         )
 })
 
-app.post('/getSchemeType', async(req, res) => {
+app.get('/getSchemeType', async(req, res) => {
   const seal = await SEAL();
   // สร้างตัวแปร schemeType ด้วยค่าที่คุณต้องการ
   const schemeType = seal.SchemeType;
@@ -87,6 +87,8 @@ app.post('/getSchemeType', async(req, res) => {
 
 app.post('/creat-secret-key',async(req,res)=>{
   const seal = await SEAL();
+  const secretKeyName = req.body.secretKeyName;
+  console.log('this is secretKeyName',secretKeyName);
 
 //   const parms = new EncryptionParameters();
 // parms.setPolyModulus("1x^2048 + 1");
@@ -141,15 +143,76 @@ const keyGenerator = seal.KeyGenerator(
 console.log('This is Key Generate',keyGenerator);
     // Get the SecretKey from the keyGenerator
     const secretKey = keyGenerator.secretKey();
-    const publicKey = keyGenerator.createPublicKey(secretKey);
+
     // Get the PublicKey from the keyGenerator
     const secretBase64Key = secretKey.save()
-const publicBase64Key = publicKey.save()
-console.log('This is secretKey',secretBase64Key);
-console.log('This is publicKey',publicBase64Key);
-res.status(200).json({ secretBase64Key,publicBase64Key});
+
+res.status(200).json({ secretBase64Key,secretKeyName});
 });
 
+app.post('/creat-public-key',async(req,res)=>{
+  const seal = await SEAL();
+  const secretKey = req.body.secretKey;
+  const publicKeyName = req.body.publicKeyName;
+  const inputsecretKey = req.body.secretKey;
+console.log('input secret key are :',inputsecretKey)
+console.log('publicKeyName are',publicKeyName);
+
+//   const parms = new EncryptionParameters();
+// parms.setPolyModulus("1x^2048 + 1");
+// parms.setCoeffModulus(seal.CoeffModulus.BFVDefault(2048));
+// parms.setPlainModulus(seal.PlainModulus.Batching(2048, [20, 20, 20, 20]));
+
+////////////////////////
+// Encryption Parameters
+////////////////////////
+
+const schemeType = seal.SchemeType.bfv
+const securityLevel = seal.SecurityLevel.tc128
+const polyModulusDegree = 4096
+const bitSizes = [36, 36, 37]
+const bitSize = 20
+
+
+const encParms = seal.EncryptionParameters(schemeType)
+
+// Set the PolyModulusDegree
+encParms.setPolyModulusDegree(polyModulusDegree)
+
+// Create a suitable set of CoeffModulus primes
+encParms.setCoeffModulus(
+  seal.CoeffModulus.Create(polyModulusDegree, Int32Array.from(bitSizes))
+)
+
+// Set the PlainModulus to a prime of bitSize 20.
+encParms.setPlainModulus(seal.PlainModulus.Batching(polyModulusDegree, bitSize))
+
+////////////////////////
+// Context
+////////////////////////
+
+// Create a new Context
+const context = seal.Context(
+  encParms, // Encryption Parameters
+  true, // ExpandModChain
+  securityLevel // Enforce a security level
+)
+
+if (!context.parametersSet()) {
+  throw new Error(
+    'Could not set the parameters in the given context. Please try different encryption parameters.'
+  )
+}
+const keyGenerator = seal.KeyGenerator(
+  context
+)
+    // Get the SecretKey from the keyGenerator
+    const publicKey = keyGenerator.createPublicKey(inputsecretKey);
+    // Get the PublicKey from the keyGenerator
+
+const publicBase64Key = publicKey.save()
+res.status(200).json({ publicBase64Key,publicKeyName});
+});
 
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);

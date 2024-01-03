@@ -15,13 +15,6 @@
 
 <div class="MuiContainer-root MuiContainer-maxWidthLg">
   <main class="jss11">
-    <!-- <h2 class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom">Sandbox</h2>
-    <p class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom">Experiment with homomorphic encryption
-      powered by <a target="_blank" rel="noopener" href="https://github.com/microsoft/SEAL">Microsoft SEAL</a>. All
-      cryptographic operations occur in the browser thanks to <a target="_blank" rel="noopener"
-        href="https://github.com/morfix-io/node-seal">node-seal</a>. To see what client to server interactions look
-      like, sign up to be a beta tester. </p> -->
-    <!-- <hr class="MuiDivider-root jss15"> -->
     <div class="jss19">
       <h2 class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom">Encryption Parameters</h2>
       <p class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom">These parameters can have drastic
@@ -33,16 +26,15 @@
             <label
               class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
               data-shrink="true" for="SELECT-scheme-type" id="SELECT-scheme-type-label">Scheme Type</label>
-            <div
-              class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl">
+            <div class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl">
+
               <div class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
                 tabindex="0" role="button" aria-haspopup="listbox"
-                aria-labelledby="SELECT-scheme-type-label SELECT-scheme-type" id="SELECT-scheme-type">bfv</div>
-              <input aria-hidden="true" tabindex="-1" class="MuiSelect-nativeInput"
-                aria-describedby="SELECT-scheme-type-helper-text" value="bfv">
-              <svg class="MuiSvgIcon-root MuiSelect-icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M7 10l5 5 5-5z"></path>
-              </svg>
+                aria-labelledby="SELECT-scheme-type-label SELECT-scheme-type" id="SELECT-scheme-type">
+                <select class="dropdown" id="selectedSchemeType" [(ngModel)]="selectedSchemeType" name="selectedSchemeType">
+                  <option *ngFor="let option of schemeType | keyvalue" [value]="option.key">{{ option.key }}</option>
+                </select>
+              </div>
             </div>
             <p class="MuiFormHelperText-root MuiFormHelperText-filled" id="SELECT-scheme-type-helper-text">Select a
               Scheme Type</p>
@@ -57,13 +49,11 @@
               class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl">
               <div class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
                 tabindex="0" role="button" aria-haspopup="listbox"
-                aria-labelledby="SELECT-security-level-label SELECT-security-level" id="SELECT-security-level">128 Bits
+                aria-labelledby="SELECT-security-level-label SELECT-security-level" id="SELECT-security-level">
+                 <select class="dropdown" [(ngModel)]="selectedSecurityLevel" name="dropdown">
+                  <option *ngFor="let option of securityLevelOption" [value]="option.securityLevel">{{ option.value}}</option>
+                </select>
               </div>
-              <input aria-hidden="true" tabindex="-1" class="MuiSelect-nativeInput"
-                aria-describedby="SELECT-security-level-helper-text" value="128 Bits">
-              <svg class="MuiSvgIcon-root MuiSelect-icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M7 10l5 5 5-5z"></path>
-              </svg>
             </div>
             <p class="MuiFormHelperText-root MuiFormHelperText-filled" id="SELECT-security-level-helper-text">Higher
               values allow for better security at the cost of more CPU and Memory resources</p>
@@ -80,12 +70,13 @@
               <div class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
                 tabindex="0" role="button" aria-haspopup="listbox"
                 aria-labelledby="SELECT-polymodulus-degree-label SELECT-polymodulus-degree"
-                id="SELECT-polymodulus-degree">4096 Bits</div>
-              <input aria-hidden="true" tabindex="-1" class="MuiSelect-nativeInput"
-                aria-describedby="SELECT-polymodulus-degree-helper-text" value="4096 Bits">
-              <svg class="MuiSvgIcon-root MuiSelect-icon" focusable="true" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M7 10l5 5 5-5z"></path>
-              </svg>
+                id="SELECT-polymodulus-degree">
+                <select [(ngModel)]="selectedPolyModulusDegree">
+                  <option *ngFor="let degree of polyModulusDegrees" [value]="degree">
+                    {{ degree }}
+                  </option>
+                </select>
+              </div>
             </div>
             <p class="MuiFormHelperText-root MuiFormHelperText-filled" id="SELECT-polymodulus-degree-helper-text">Higher
               values allow for more computations at the cost of more CPU and memory resources</p>
@@ -121,23 +112,9 @@
               bit-length of the prime to be generated for the Plain Modulus that will enable Batching. Max 60 bits.</p>
           </div>
         </div>
-        <!-- <div class="MuiGrid-root MuiGrid-item"><label class="MuiFormControlLabel-root"><span
-              class="MuiButtonBase-root MuiIconButton-root jss24 MuiCheckbox-root MuiCheckbox-colorPrimary jss25 Mui-checked MuiIconButton-colorPrimary"
-              aria-disabled="false"><span class="MuiIconButton-label"><input class="jss27"
-                  id="CHECKBOX-expand-modulus-chain" type="checkbox" data-indeterminate="false" value="false"
-                  checked=""><svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
-                  <path
-                    d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z">
-                  </path>
-                </svg></span><span class="MuiTouchRipple-root"></span></span><span
-              class="MuiTypography-root MuiFormControlLabel-label MuiTypography-body1">Expand Modulus
-              Chain</span></label>
-          <p class="MuiFormHelperText-root">Determines whether the modulus switching chain should be created</p>
-        </div> -->
+
         <div class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-align-items-xs-center">
           <div class="MuiGrid-root MuiGrid-item">
-            <!-- class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary" tabindex="0" (before asd)-->
-            <!-- <button mat-button class="btn btn-primary">Create</button> -->
             <button class="asd btn btn-primary" tabindex="0" type="button" id="BUTTON-create-encryption-parameters">
               <span class="MuiButton-label">
                 <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
@@ -168,35 +145,36 @@
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
                 <div class="MuiGrid-root MuiGrid-item">
-                  <div
-                    class="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal MuiFormControl-fullWidth">
-                    <label
-                      class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink Mui-disabled Mui-disabled MuiFormLabel-filled"
-                      data-shrink="true" for="INPUT-key-pair-name" id="INPUT-key-pair-name-label">Key Pair name</label>
-                    <div
-                      class="MuiInputBase-root MuiInput-root MuiInput-underline Mui-disabled Mui-disabled MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl">
-                      <input aria-invalid="false" aria-describedby="INPUT-key-pair-name-helper-text"
-                        id="INPUT-key-pair-name" name="keyPairName" type="text"
-                        class="MuiInputBase-input MuiInput-input Mui-disabled Mui-disabled" value="Keypair A">
+                  <div class="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal MuiFormControl-fullWidth">
+                    <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink Mui-disabled Mui-disabled MuiFormLabel-filled"
+                      data-shrink="true" for="INPUT-secretkey-pair-name" id="INPUT-secretkey-pair-name-label">Key Pair name</label>
+                    <div class="MuiInputBase-root MuiInput-root MuiInput-underline Mui-disabled Mui-disabled MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl">
+                      <input aria-invalid="false" aria-describedby="INPUT-secretkey-pair-name-helper-text" id="INPUT-secretkey-pair-name"
+                        name="keyPairName" type="text" class="MuiInputBase-input MuiInput-input Mui-disabled Mui-disabled">
                     </div>
-                    <p class="MuiFormHelperText-root Mui-disabled MuiFormHelperText-filled"
-                      id="INPUT-key-pair-name-helper-text">Create a new Secret and Public key pair</p>
+                    <p class="MuiFormHelperText-root Mui-disabled MuiFormHelperText-filled" id="INPUT-secretkey-pair-name-helper-text">Create
+                      a new Secret and Public key pair</p>
                   </div>
                 </div>
-                <div class="MuiGrid-root MuiGrid-item"><button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
-                    tabindex="-1" type="button" id="BUTTON-create-key-pair">
+                <div class="MuiGrid-root MuiGrid-item">
+                  <button (click)="getsecretkey()" [disabled]="isButtonDisabled">
                     <span class="MuiButton-label">
-                      <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                        id="BUTTON-create-key-pair-text">Create</span>
+                      <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock" id="BUTTON-create-key-pair-text">Create</span>
                     </span>
                   </button>
                 </div>
+
+
+                <div *ngIf="secretkey">
+                  <p>Key are generated</p>
+                  <p>{{secretKeyName}}</p>
+                </div>
+
               </div>
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
                 <div class="MuiGrid-root MuiGrid-item">
-                  <div class="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal">
+                  <!-- <div class="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal">
                     <label
                       class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated Mui-disabled Mui-disabled"
                       data-shrink="false">Active SecretKey</label>
@@ -215,7 +193,7 @@
                     </div>
                     <p class="MuiFormHelperText-root Mui-disabled">Set the active SecretKey to be used for Decryption
                     </p>
-                  </div>
+                  </div> -->
                 </div>
               </div>
 
@@ -249,7 +227,8 @@
                     </span>
                   </button>
                 </div>
-                <div class="MuiGrid-root MuiGrid-item"><button
+                <div class="MuiGrid-root MuiGrid-item">
+                  <button (click)="downloadTxtFile()" [disabled]="isButtonDisabled"
                     class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
                     tabindex="-1" type="button" id="BUTTON-download-secret-key">
                     <span class="MuiButton-label"><span
@@ -258,6 +237,7 @@
                     </span>
                   </button>
                 </div>
+
               </div>
             </div>
           </form>
@@ -270,23 +250,20 @@
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
                 <div class="MuiGrid-root MuiGrid-item">
-                  <div
-                    class="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal MuiFormControl-fullWidth">
-                    <label
-                      class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated Mui-disabled Mui-disabled"
-                      data-shrink="false" for="INPUT-public-key-name" id="INPUT-public-key-name-label">PublicKey
-                      name</label>
-                    <div
-                      class="MuiInputBase-root MuiInput-root MuiInput-underline Mui-disabled Mui-disabled MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl">
-                      <input aria-invalid="false" aria-describedby="INPUT-public-key-name-helper-text"
-                        id="INPUT-public-key-name" name="publicKeyName" type="text"
-                        class="MuiInputBase-input MuiInput-input Mui-disabled Mui-disabled" value="">
+                  <div class="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal MuiFormControl-fullWidth">
+                    <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink Mui-disabled Mui-disabled MuiFormLabel-filled"
+                      data-shrink="true" for="INPUT-public-key" id="INPUT-public-key-label">Public Key</label>
+                    <div class="MuiInputBase-root MuiInput-root MuiInput-underline Mui-disabled Mui-disabled MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl">
+                      <input aria-invalid="false" aria-describedby="INPUT-public-key-helper-text" id="INPUT-public-key"
+                        name="publicKey" type="text" class="MuiInputBase-input MuiInput-input Mui-disabled Mui-disabled">
                     </div>
-                    <p class="MuiFormHelperText-root Mui-disabled" id="INPUT-public-key-name-helper-text">Create a new
-                      PublicKey from the active SecretKey</p>
+                    <p class="MuiFormHelperText-root Mui-disabled MuiFormHelperText-filled" id="INPUT-public-key-helper-text">Enter
+                      Public Key</p>
                   </div>
                 </div>
-                <div class="MuiGrid-root MuiGrid-item"><button
+
+                <div class="MuiGrid-root MuiGrid-item">
+                  <button (click)="getpublickey()"
                     class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
                     tabindex="-1" type="button" id="BUTTON-create-public-key">
                     <span class="MuiButton-label">
@@ -295,31 +272,9 @@
                     </span>
                   </button>
                 </div>
-              </div>
-
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
-                <div class="MuiGrid-root MuiGrid-item">
-                  <div class="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal">
-                    <label
-                      class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated Mui-disabled Mui-disabled"
-                      data-shrink="false">Active PublicKey</label>
-                    <div
-                      class="MuiInputBase-root MuiInput-root MuiInput-underline Mui-disabled Mui-disabled MuiInputBase-formControl MuiInput-formControl">
-                      <div
-                        class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input Mui-disabled Mui-disabled Mui-disabled"
-                        role="button" aria-disabled="true" aria-haspopup="listbox">
-                        <span>&ZeroWidthSpace;</span>
-                      </div>
-                      <input aria-hidden="true" tabindex="-1" class="MuiSelect-nativeInput" value="">
-                      <svg class="MuiSvgIcon-root MuiSelect-icon Mui-disabled" focusable="false" viewBox="0 0 24 24"
-                        aria-hidden="true">
-                        <path d="M7 10l5 5 5-5z"></path>
-                      </svg>
-                    </div>
-                    <p class="MuiFormHelperText-root Mui-disabled">Set the active PublicKey to be used for Encryption
-                    </p>
-                  </div>
+                <div *ngIf="publickey">
+                  <p>Key are generated{{publicKeyName}}</p>
+                  <p></p>
                 </div>
               </div>
               <div
@@ -385,19 +340,6 @@
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
             <div class="MuiGrid-root MuiGrid-item">
-              <!-- <div
-                    class="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal MuiFormControl-fullWidth">
-                    <label
-                      class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated Mui-disabled Mui-disabled"
-                      data-shrink="false" for="INPUT-relin-key-name" id="INPUT-relin-key-name-label">Encrypt file
-                      name</label>
-                    <div
-                      class="MuiInputBase-root MuiInput-root MuiInput-underline Mui-disabled Mui-disabled MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl">
-                      <input aria-invalid="false" aria-describedby="INPUT-relin-key-name-helper-text" disabled=""
-                        id="INPUT-relin-key-name" name="relinKeyName" type="text"
-                        class="MuiInputBase-input MuiInput-input Mui-disabled Mui-disabled" value="">
-                    </div>
-                  </div> -->
             </div>
           </div>
 
@@ -464,19 +406,6 @@
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
             <div class="MuiGrid-root MuiGrid-item">
-              <!-- <div
-                    class="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal MuiFormControl-fullWidth">
-                    <label
-                      class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated Mui-disabled Mui-disabled"
-                      data-shrink="false" for="INPUT-relin-key-name" id="INPUT-relin-key-name-label">Encrypt file
-                      name</label>
-                    <div
-                      class="MuiInputBase-root MuiInput-root MuiInput-underline Mui-disabled Mui-disabled MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl">
-                      <input aria-invalid="false" aria-describedby="INPUT-relin-key-name-helper-text" disabled=""
-                        id="INPUT-relin-key-name" name="relinKeyName" type="text"
-                        class="MuiInputBase-input MuiInput-input Mui-disabled Mui-disabled" value="">
-                    </div>
-                  </div> -->
             </div>
           </div>
 
@@ -535,35 +464,4 @@
       </form>
     </div>
   </main>
-
 </div>
-
-
-
-
-
-<!-- <div class="MuiPaper-root MuiMenu-paper MuiPopover-paper MuiPaper-elevation8 MuiPaper-rounded" tabindex="-1"
-  style="opacity: 1; transform: none; min-width: 125px; transition: opacity 280ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 186ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; top: 169px; left: 391px; transform-origin: 0px 62px;">
-  <ul class="MuiList-root MuiMenu-list MuiList-padding" role="listbox" tabindex="-1"
-    aria-labelledby="SELECT-scheme-type-label">
-    <li
-      class="MuiButtonBase-root MuiListItem-root MuiMenuItem-root MuiMenuItem-gutters MuiListItem-gutters Mui-disabled MuiListItem-button Mui-disabled"
-      tabindex="-1" role="option" aria-disabled="true" data-value="select">Scheme Type</li>
-    <li
-      class="MuiButtonBase-root MuiListItem-root MuiMenuItem-root Mui-selected MuiMenuItem-gutters MuiListItem-gutters MuiListItem-button Mui-selected"
-      tabindex="0" role="option" aria-disabled="false" aria-selected="true" data-value="none">none<span
-        class="MuiTouchRipple-root"></span></li>
-    <li
-      class="MuiButtonBase-root MuiListItem-root MuiMenuItem-root MuiMenuItem-gutters MuiListItem-gutters MuiListItem-button"
-      tabindex="-1" role="option" aria-disabled="false" data-value="bfv">bfv<span class="MuiTouchRipple-root"></span>
-    </li>
-    <li
-      class="MuiButtonBase-root MuiListItem-root MuiMenuItem-root MuiMenuItem-gutters MuiListItem-gutters MuiListItem-button"
-      tabindex="-1" role="option" aria-disabled="false" data-value="bgv">bgv<span class="MuiTouchRipple-root"></span>
-    </li>
-    <li
-      class="MuiButtonBase-root MuiListItem-root MuiMenuItem-root MuiMenuItem-gutters MuiListItem-gutters MuiListItem-button"
-      tabindex="-1" role="option" aria-disabled="false" data-value="ckks">ckks<span class="MuiTouchRipple-root"></span>
-    </li>
-  </ul>
-</div> -->

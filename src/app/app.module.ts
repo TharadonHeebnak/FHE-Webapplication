@@ -13,7 +13,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   declarations: [
     AppComponent,
     MainpageComponent,
-    EncryptionComponent
+    EncryptionComponent,
 
   ],
   imports: [
