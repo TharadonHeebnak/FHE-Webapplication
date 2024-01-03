@@ -7,6 +7,11 @@ import { LoginComponent } from './login/login.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MainpageComponent } from './mainpage/mainpage.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -21,6 +26,12 @@ import { MainpageComponent } from './mainpage/mainpage.component';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatOptionModule,
+    BrowserAnimationsModule,
+    FormsModule,
+
     
     
   ],
