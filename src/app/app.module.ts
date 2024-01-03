@@ -3,21 +3,27 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { FormsModule } from '@angular/forms';
+import { MainpageComponent } from './mainpage/mainpage.component';
 import { EncryptionComponent } from './encryption/encryption.component';
-import { SealService } from './seal.service';
-
 
 @NgModule({
   declarations: [
     AppComponent,
+    MainpageComponent,
     EncryptionComponent
+
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    NgbModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatOptionModule,
+    BrowserAnimationsModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

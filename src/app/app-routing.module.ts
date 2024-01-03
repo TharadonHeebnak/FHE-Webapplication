@@ -1,9 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { InputFileComponent } from './input-file/input-file.component';
-import { EncryptionComponent } from './encryption/encryption.component';
+import { LoginComponent } from './login/login.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { MainpageComponent } from './mainpage/mainpage.component';
 
 const routes: Routes = [
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'forgotpassword',
+    component: ForgotPasswordComponent
+  },
+  {
+    path: 'mainpage',
+    component:MainpageComponent
+  },
   {
     path: 'input-file',
     component: InputFileComponent
