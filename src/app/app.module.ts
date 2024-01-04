@@ -5,9 +5,16 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MainpageComponent } from './mainpage/mainpage.component';
 import { EncryptionComponent } from './encryption/encryption.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { SimpleNotificationsModule  } from 'angular2-notifications';
+
 
 @NgModule({
   declarations: [
@@ -22,10 +29,18 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AppRoutingModule,
     FormsModule,
     NgbModule,
-    // MatFormFieldModule,
-    // MatSelectModule,
-    // MatOptionModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatTooltipModule,
     BrowserAnimationsModule,
+    SimpleNotificationsModule.forRoot({
+      position:["top", "right"],
+      timeOut: 5000,
+      lastOnBottom: true
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

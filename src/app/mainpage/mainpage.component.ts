@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { SealService } from '../seal.service';
+import { FormControl } from '@angular/forms';
+import { TooltipPosition } from '@angular/material/tooltip';
+// import {TooltipPosition} from '@angular/material';
+import { NotificationsService } from 'angular2-notifications';
 
 
 
@@ -11,26 +15,30 @@ import { SealService } from '../seal.service';
 
 
 export class MainpageComponent {
-  secretkey: any;
-  publickey: any;
-  secretKeyName?: string;
-  publicKeyName?: string;
-  fileName?:string;
-
-
   constructor(
     private sealService: SealService,
+    private service: NotificationsService,
     ) {}
-
-    ngOnInit(): void {
-      this.getSchemeType();
-    }
+  secretkey: any;
+  publickey: any;
+  secretKeyName?: any;
+  publicKeyName?: any;
+  fileName?:string;
+  secretkeyFile: File | null = null;
   selectedSchemeType: string = 'bfv';
   isButtonDisabled = false;
   schemeType: any;
   securityLevel: any;
   selectedSecurityLevel: any;
+  secretkeyFileReaded?:string;
 
+
+    ngOnInit(): void {
+      this.getSchemeType();
+    }
+
+    positionOptions: TooltipPosition[] = ['after', 'before', 'above', 'below', 'left', 'right'];
+    position = new FormControl(this.positionOptions[0]);
 
   securityLevelOption = [
     {securityLevel:'none',value: 'none'},
@@ -61,34 +69,40 @@ export class MainpageComponent {
       this.sealService.getsecretkey(secretKeyName).subscribe(response =>{
         this.secretkey = response.secretBase64Key;
         this.secretKeyName = response.secretKeyName;
+        this.service.success('Secret Key are created',this.secretKeyName);
       })
     }else{
-      console.log('pleas in put name');
+      this.service.info('Please Input Name');
 
     }
 
   }
 
   getpublickey(){
-
-
     const publicKeyName = (document.getElementById('INPUT-public-key') as HTMLInputElement).value;
-    console.log('GGGGGGG',publicKeyName);
-    if(publicKeyName !== '' && publicKeyName !== undefined){
-      this.sealService.getpublickey(publicKeyName,this.secretkey).subscribe(response =>{
+    if(this.secretkeyFileReaded){
+      if(publicKeyName !== '' && publicKeyName !== undefined){
+      this.sealService.getpublickey(publicKeyName,this.secretkeyFileReaded).subscribe(response =>{
         this.publickey = response.publicBase64Key;
         this.publicKeyName = response.publicKeyName;
-        console.log('SDSADAD');
+        console.log('publickey are created');
+        this.service.success('publickey are created',this.publicKeyName);
       })
+      }else{
+        this.service.info('Please Input Name');
+      }
+    }else{
+      this.service.info('Please Upload Secret Key')
+
     }
 
   }
 
-  downloadTxtFile() {
+  downloadTxtFile(key: any,keyname:string) {
     if(this.secretKeyName == undefined || null){
       this.secretKeyName = 'Key'
     }
-    this.saveTxtFiles(this.secretkey,this.secretKeyName);
+    this.saveTxtFiles(key,keyname);
   }
 
   private saveTxtFiles(data1: any, fileName: string, ) {
@@ -96,7 +110,7 @@ export class MainpageComponent {
     const blob1 = new Blob([data1], { type: 'text/plain' });
     const link1 = document.createElement('a');
     link1.href = window.URL.createObjectURL(blob1);
-    link1.download = fileName + '_Secretkey.txt' || 'Secretkey.txt';
+    link1.download = fileName;
 
     // Create Blob for File 2
 
@@ -112,5 +126,30 @@ export class MainpageComponent {
     document.body.removeChild(link1);
 
   }
+
+
+
+  onFileChange(event: any) {
+    const fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      const secretkeyFile = fileList[0];
+      // เรียกใช้ฟังก์ชั่นหรือทำสิ่งที่คุณต้องการกับไฟล์ที่อัปโหลดที่นี่
+      this.readFileContent(secretkeyFile);
+    }
+  }
+
+
+
+  readFileContent(file: File) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      this.secretkeyFileReaded = reader.result as string;
+      // ทำสิ่งที่คุณต้องการกับข้อมูลที่ได้จากไฟล์ที่อัปโหลดที่นี่
+      console.log('Secret Key File Content:', this.secretkeyFileReaded);
+    };
+
+    reader.readAsText(file);
+  }
+
 
 }

@@ -31,9 +31,14 @@
               <div class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
                 tabindex="0" role="button" aria-haspopup="listbox"
                 aria-labelledby="SELECT-scheme-type-label SELECT-scheme-type" id="SELECT-scheme-type">
-                <select class="dropdown" id="selectedSchemeType" [(ngModel)]="selectedSchemeType" name="selectedSchemeType">
+                <!-- <select class="dropdown" id="selectedSchemeType" [(ngModel)]="selectedSchemeType" name="selectedSchemeType">
                   <option *ngFor="let option of schemeType | keyvalue" [value]="option.key">{{ option.key }}</option>
-                </select>
+                </select> -->
+                <mat-select placeholder="Seclect Scheme Type" [formControl]="position">
+                  <mat-option *ngFor="let option of schemeType | keyvalue" [value]="option.key">
+                    {{option.key}}
+                  </mat-option>
+                </mat-select>
               </div>
             </div>
             <p class="MuiFormHelperText-root MuiFormHelperText-filled" id="SELECT-scheme-type-helper-text">Select a
@@ -50,9 +55,14 @@
               <div class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
                 tabindex="0" role="button" aria-haspopup="listbox"
                 aria-labelledby="SELECT-security-level-label SELECT-security-level" id="SELECT-security-level">
-                 <select class="dropdown" [(ngModel)]="selectedSecurityLevel" name="dropdown">
+                 <!-- <select class="dropdown" [(ngModel)]="selectedSecurityLevel" name="dropdown">
                   <option *ngFor="let option of securityLevelOption" [value]="option.securityLevel">{{ option.value}}</option>
-                </select>
+                </select> -->
+                  <mat-select placeholder="Seclect Security Level" [formControl]="position">
+                    <mat-option *ngFor="let option of securityLevelOption" [value]="option.securityLevel">
+                      {{option.value}}
+                    </mat-option>
+                  </mat-select>
               </div>
             </div>
             <p class="MuiFormHelperText-root MuiFormHelperText-filled" id="SELECT-security-level-helper-text">Higher
@@ -71,11 +81,16 @@
                 tabindex="0" role="button" aria-haspopup="listbox"
                 aria-labelledby="SELECT-polymodulus-degree-label SELECT-polymodulus-degree"
                 id="SELECT-polymodulus-degree">
-                <select [(ngModel)]="selectedPolyModulusDegree">
+                <!-- <select [(ngModel)]="selectedPolyModulusDegree">
                   <option *ngFor="let degree of polyModulusDegrees" [value]="degree">
                     {{ degree }}
                   </option>
-                </select>
+                </select> -->
+                <mat-select placeholder="Seclect PolyModulusDegree" [formControl]="position">
+                  <mat-option *ngFor="let degree of polyModulusDegrees" [value]="degree">
+                    {{degree}}
+                  </mat-option>
+                </mat-select>
               </div>
             </div>
             <p class="MuiFormHelperText-root MuiFormHelperText-filled" id="SELECT-polymodulus-degree-helper-text">Higher
@@ -163,13 +178,6 @@
                     </span>
                   </button>
                 </div>
-
-
-                <div *ngIf="secretkey">
-                  <p>Key are generated</p>
-                  <p>{{secretKeyName}}</p>
-                </div>
-
               </div>
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
@@ -196,39 +204,11 @@
                   </div> -->
                 </div>
               </div>
+              <div
+                class="downloadbutton">
 
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-flex-end">
-                <div class="MuiGrid-root MuiGrid-item">
-                  <div class="jss35">
-                    <div>
-                      <input id="file-upload-secretkey" class="jss37" type="file">
-                      <label for="file-upload-secretkey">
-                        <span class="MuiButtonBase-root MuiButton-root MuiButton-text Mui-disabled Mui-disabled"
-                          tabindex="-1" role="button" aria-disabled="true">
-                          <span class="MuiButton-label">
-                            <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                              id="UPLOAD secretkey">Upload</span>
-                          </span>
-                        </span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
-                <div class="MuiGrid-root MuiGrid-item">
-                  <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss34 Mui-disabled Mui-disabled"
-                    tabindex="-1" type="button" id="BUTTON-delete-secret-key">
-                    <span class="MuiButton-label">
-                      <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                        id="BUTTON-delete-secret-key-text">Delete</span>
-                    </span>
-                  </button>
-                </div>
-                <div class="MuiGrid-root MuiGrid-item">
-                  <button (click)="downloadTxtFile()" [disabled]="isButtonDisabled"
+                <div class="">
+                  <button (click)="downloadTxtFile(this.secretkey,this.secretKeyName+' SecretKey')" [disabled]="isButtonDisabled"
                     class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
                     tabindex="-1" type="button" id="BUTTON-download-secret-key">
                     <span class="MuiButton-label"><span
@@ -249,6 +229,23 @@
               class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
+                <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-flex-end">
+                <div class="MuiGrid-root MuiGrid-item">
+                  <div class="jss35">
+                    <div>
+                      <input id="file-upload-secretkey" class="jss37" type="file" (change)="onFileChange($event)">
+                      <label for="file-upload-secretkey">
+                        <span class="MuiButtonBase-root MuiButton-root MuiButton-text Mui-disabled Mui-disabled" tabindex="-1" role="button" aria-disabled="true">
+                          <span class="MuiButton-label">
+                            <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock" id="UPLOAD secretkey">Upload your secretKey</span>
+                          </span>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
                 <div class="MuiGrid-root MuiGrid-item">
                   <div class="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal MuiFormControl-fullWidth">
                     <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink Mui-disabled Mui-disabled MuiFormLabel-filled"
@@ -272,29 +269,6 @@
                     </span>
                   </button>
                 </div>
-                <div *ngIf="publickey">
-                  <p>Key are generated{{publicKeyName}}</p>
-                  <p></p>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-flex-end">
-                <div class="MuiGrid-root MuiGrid-item">
-                  <div class="jss35">
-                    <div>
-                      <input id="file-upload-publickey" class="jss37" type="file">
-                      <label for="file-upload-publickey">
-                        <span class="MuiButtonBase-root MuiButton-root MuiButton-text Mui-disabled Mui-disabled"
-                          tabindex="-1" role="button" aria-disabled="true">
-                          <span class="MuiButton-label">
-                            <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                              id="UPLOAD publickey">Upload</span>
-                          </span>
-                        </span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
               </div>
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
@@ -307,7 +281,8 @@
                     </span>
                   </button>
                 </div>
-                <div class="MuiGrid-root MuiGrid-item"><button
+                <div class="MuiGrid-root MuiGrid-item">
+                  <button (click)="downloadTxtFile(this.publickey,this.publicKeyName+' PublicKey')"
                     class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
                     tabindex="-1" type="button" id="BUTTON-download-public-key"><span class="MuiButton-label">
                       <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
@@ -465,3 +440,4 @@
     </div>
   </main>
 </div>
+
