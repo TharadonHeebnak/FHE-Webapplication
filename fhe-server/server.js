@@ -3,6 +3,8 @@ const SEAL = require('node-seal');
 const cors = require('cors');  // Import cors module
 const bodyParser = require('body-parser');
 const multer = require('multer');
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 const app = express();
 const port = 3000;
@@ -11,16 +13,9 @@ app.use(express.json());
 app.use(cors());  // Enable CORS for all routes
 app.use(bodyParser.json());
 
-const storage = multer.diskStorage({
-  destination: (req, file, callBack) => {
-      callBack(null, 'uploads')
-  },
-  filename: (req, file, callBack) => {
-      callBack(null, `FunOfHeuristic_${file.originalname}`)
-  }
-})
 
-const upload = multer({ storage: storage })
+
+
 
 
 
@@ -298,15 +293,21 @@ console.log('this is plainText',plainText);
 // ให้ Express ใช้ middleware ในการรับไฟล์
 app.post('/file', upload.single('file'), (req, res,next) => {
   // req.file จะมีข้อมูลของไฟล์ที่ถูกอัปโหลด
+
+// console.log('this is public key',publickey) ;
   const file = req.file;
   console.log('this is file',file);
   if (file) {
-    console.log('File received:', file.filename);
+    console.log('File received:', file.buffer);
     res.status(200).json({ message: 'File received successfully.' });
+    const publickey = file.buffer ? file.buffer.toString('utf8') : '';
+    console.log('This is public key:', publickey);
   } else {
     res.status(400).json({ message: 'No file received.' });
   }
+
 });
+
 
 
 // app.post('/file', upload.single('file'), (req, res, next) => {

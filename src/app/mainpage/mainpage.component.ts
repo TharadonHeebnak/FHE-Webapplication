@@ -178,7 +178,7 @@ export class MainpageComponent {
     if (fileList.length > 0) {
       this.publickey = fileList[0];
       const formData = new FormData();
-      formData.append('file', this.publickey);
+      formData.append('file', fileList[0]);
       console.log('this is form data ', formData);
       this.sealService.getEncryptionFiletest(formData).subscribe(response =>{
         // this.fileEncrypted = response.fileToEncryption;
