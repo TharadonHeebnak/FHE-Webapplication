@@ -272,7 +272,7 @@
               </div>
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
-                <div class="MuiGrid-root MuiGrid-item">
+                <!-- <div class="MuiGrid-root MuiGrid-item">
                   <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss34 Mui-disabled Mui-disabled"
                     tabindex="-1" type="button" id="BUTTON-delete-public-key">
                     <span class="MuiButton-label">
@@ -280,7 +280,7 @@
                         id="BUTTON-delete-public-key-text">Delete</span>
                     </span>
                   </button>
-                </div>
+                </div> -->
                 <div class="MuiGrid-root MuiGrid-item">
                   <button (click)="downloadTxtFile(this.publickey,this.publicKeyName+' PublicKey')"
                     class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
@@ -323,13 +323,21 @@
             <div class="MuiGrid-root MuiGrid-item">
               <div class="jss35">
                 <div>
-                  <input id="file-upload-relinkey" class="jss37" type="file">
-                  <label for="file-upload-relinkey">
-                    <span class="MuiButtonBase-root MuiButton-root MuiButton-text Mui-disabled Mui-disabled"
-                      tabindex="-1" role="button" aria-disabled="true">
+                  <input id="file-upload-secretkey" class="jss37" type="file" (change)="onFileChangeinputpublickey($event)">
+                  <label for="file-upload-secretkey">
+                    <span class="MuiButtonBase-root MuiButton-root MuiButton-text Mui-disabled Mui-disabled" tabindex="-1" role="button" aria-disabled="true">
                       <span class="MuiButton-label">
-                        <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                          id="UPLOAD relinkey">Upload</span>
+                        <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock" id="UPLOAD secretkey">Upload your public Key</span>
+                      </span>
+                    </span>
+                  </label>
+                </div>
+                <div>
+                  <input id="file-upload-secretkey" class="jss37" type="file" (change)="onFileChangeinputfile($event)">
+                  <label for="file-upload-secretkey">
+                    <span class="MuiButtonBase-root MuiButton-root MuiButton-text Mui-disabled Mui-disabled" tabindex="-1" role="button" aria-disabled="true">
+                      <span class="MuiButton-label">
+                        <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock" id="UPLOAD secretkey">Upload your File</span>
                       </span>
                     </span>
                   </label>
@@ -337,7 +345,8 @@
               </div>
             </div>
           </div>
-          <div class="MuiGrid-root MuiGrid-item"><button
+          <div class="MuiGrid-root MuiGrid-item">
+            <button (click)="Encryptionfile()"
             class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
             tabindex="-1" type="button" id="BUTTON-create-key-pair">
             <span class="MuiButton-label">
@@ -349,7 +358,7 @@
 
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
-            <div class="MuiGrid-root MuiGrid-item">
+            <!-- <div class="MuiGrid-root MuiGrid-item">
               <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss34 Mui-disabled Mui-disabled"
                 tabindex="-1" type="button" id="BUTTON-delete-relin-key">
                 <span class="MuiButton-label">
@@ -358,7 +367,7 @@
                   </span>
                 </span>
               </button>
-            </div>
+            </div> -->
             <div class="MuiGrid-root MuiGrid-item">
               <button
                 class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
