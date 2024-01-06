@@ -5,9 +5,12 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
+const fs = require('fs');
 
 const app = express();
 const port = 3000;
+
+
 
 app.use(express.json());
 app.use(cors());  // Enable CORS for all routes
@@ -296,7 +299,9 @@ app.post('/file', upload.single('file'), (req, res,next) => {
 
 // console.log('this is public key',publickey) ;
   const file = req.file;
+  const publicKey = req.publickey;
   console.log('this is file',file);
+  console.log('this is file',publicKey);
   if (file) {
     console.log('File received:', file.buffer);
     res.status(200).json({ message: 'File received successfully.' });
@@ -307,6 +312,98 @@ app.post('/file', upload.single('file'), (req, res,next) => {
   }
 
 });
+
+app.post('/testform', upload.fields([{ name: 'fileToEncryption', maxCount: 1 }, { name: 'publickey', maxCount: 1 }]), async (req, res) => {
+  const seal = await SEAL();
+
+  ////////////////////////
+// Encryption Parameters
+////////////////////////
+
+const schemeType = seal.SchemeType.bfv
+const securityLevel = seal.SecurityLevel.tc128
+const polyModulusDegree = 4096
+const bitSizes = [36, 36, 37]
+const bitSize = 20
+
+
+const encParms = seal.EncryptionParameters(schemeType)
+
+// Set the PolyModulusDegree
+encParms.setPolyModulusDegree(polyModulusDegree)
+
+// Create a suitable set of CoeffModulus primes
+encParms.setCoeffModulus(
+  seal.CoeffModulus.Create(polyModulusDegree, Int32Array.from(bitSizes))
+)
+
+// Set the PlainModulus to a prime of bitSize 20.
+encParms.setPlainModulus(seal.PlainModulus.Batching(polyModulusDegree, bitSize))
+
+////////////////////////
+// Context
+////////////////////////
+
+// Create a new Context
+const context = seal.Context(
+  encParms, // Encryption Parameters
+  true, // ExpandModChain
+  securityLevel // Enforce a security level
+)
+
+if (!context.parametersSet()) {
+  throw new Error(
+    'Could not set the parameters in the given context. Please try different encryption parameters.'
+  )
+};
+
+  const fileToEncryption = req.files['fileToEncryption'][0];
+  const textpublickey = req.files['publickey'][0];
+
+  console.log(fileToEncryption);
+
+  // ตรวจสอบว่า req.files ถูกสร้างขึ้นถูกต้อง
+  if (!fileToEncryption || !textpublickey) {
+    return res.status(400).json({ message: 'Missing files.' });
+  }
+
+  // อ่านข้อมูลจาก Buffer ของไฟล์ public key
+  const publicKeyString = textpublickey.buffer.toString('utf8');
+  // const publicKey = seal.publicBase64Key.deserializeFrom(publicKeyString);
+  // const publicKey = seal.publicBase64Key.fromString(publicKeyString);
+  const uploadedPublicKey = seal.PublicKey(); // สร้าง instance ของ PublicKey
+uploadedPublicKey.load(context, publicKeyString);
+  // const publicKey = new seal.PublicKey();
+  // publicKey.load(publicKeyString);
+
+  // อ่านข้อมูลจาก Buffer ของไฟล์ที่ต้องการเข้ารหัส
+  const fileToEncryptString = fileToEncryption.buffer.toString('utf8');
+  console.log('this is fileToEncryptString', fileToEncryptString);
+
+  // console.log(publicKeyString);
+  // สร้าง Encryptor
+  const encryptor = seal.Encryptor(context,uploadedPublicKey)
+  // const plainText = seal.plainText(fileToEncryption);
+  // console.log(plainText);
+
+  const plainTextA = seal.PlainText(fileToEncryption);
+  console.log('this is plainTextA', plainTextA);
+  // เข้ารหัสข้อมูล
+  const fileEncrypted = encryptor.encrypt(plainTextA);
+  const fileEncryptedbase64 = fileEncrypted.save()
+
+  // console.log('this is publickey', publicKeyString);
+  console.log('this is fileEncrypted', fileEncrypted);
+  console.log('this is fileEncryptedbase64', fileEncryptedbase64);
+
+  const fileEncryptedName = fileToEncryption.originalname;
+  console.log('this is fileEncryptedName', fileEncryptedName,);
+  // ทำสิ่งที่คุณต้องการกับไฟล์และข้อมูล publickey
+  res.status(200).json({ fileEncryptedbase64,fileEncryptedName});
+
+  // res.status(200).json({ message: 'Files received successfully.',plainTextA });
+});
+
 
 
 
