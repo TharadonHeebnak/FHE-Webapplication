@@ -14,6 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SimpleNotificationsModule  } from 'angular2-notifications';
+import { SecondpageComponent } from './secondpage/secondpage.component';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { SimpleNotificationsModule  } from 'angular2-notifications';
     AppComponent,
     MainpageComponent,
     EncryptionComponent,
+    SecondpageComponent,
 
   ],
   imports: [

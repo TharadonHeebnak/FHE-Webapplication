@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainpageComponent } from './mainpage/mainpage.component';
 import { EncryptionComponent } from './encryption/encryption.component';
+import { SecondpageComponent } from './secondpage/secondpage.component';
 
 const routes: Routes = [
   {
@@ -11,7 +12,12 @@ const routes: Routes = [
   {
     path: 'encryption',
     component:EncryptionComponent
-  }
+  },
+  {
+    path: 'secondpage',
+    component:SecondpageComponent
+  },
+  
 ];
 
 @NgModule({

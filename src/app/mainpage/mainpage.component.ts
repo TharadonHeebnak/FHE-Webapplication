@@ -4,7 +4,9 @@ import { FormControl } from '@angular/forms';
 import { TooltipPosition } from '@angular/material/tooltip';
 // import {TooltipPosition} from '@angular/material';
 import { NotificationsService } from 'angular2-notifications';
-
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
 
 
 @Component({
@@ -18,6 +20,7 @@ export class MainpageComponent {
   constructor(
     private sealService: SealService,
     private service: NotificationsService,
+    private http: HttpClient,
     ) {}
   secretkey: any;
   publickey: any;
@@ -185,9 +188,6 @@ export class MainpageComponent {
         console.log('File are Encrypted',this.fileEncrypted);
         // this.service.success('publickey are created',this.publicKeyName);
       })
-
-
-
       this.readPublicKeyFileContent(this.publickey);
       // เรียกใช้ฟังก์ชั่นหรือทำสิ่งที่คุณต้องการกับไฟล์ที่อัปโหลดที่นี่
     }
@@ -215,5 +215,30 @@ export class MainpageComponent {
     reader.readAsText(file);
   }
 
+  //////////// downloadfile ///////////
 
+  downloadFile() {
+    const fileId = '';
+    const fileName = '';
+
+    this.downloadFileFunction(fileId, fileName);
+  }
+
+  private downloadFileFunction(fileId: any, fileName: any): void {
+    const blob = new Blob([fileId], { type: 'application/octet-stream' });
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = fileName;
+
+    // Append the link to the document body
+    document.body.appendChild(link);
+
+    // Trigger the click event for the link
+    link.click();
+
+    // Remove the link from the document body
+    document.body.removeChild(link);
+  }
+
+  //////////////////////////////////////////////////////
 }
