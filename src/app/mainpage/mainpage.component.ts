@@ -137,7 +137,7 @@ export class MainpageComponent {
 
   private saveEncryptFiles(data1: any, fileName: string, ) {
     // Create Blob for File 1
-    const blob1 = new Blob([data1], { type: 'text/plain' });
+    const blob1 = new Blob([data1], { type: '' });
     const link1 = document.createElement('a');
     link1.href = window.URL.createObjectURL(blob1);
     link1.download = fileName;
