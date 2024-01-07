@@ -147,9 +147,9 @@
     </div>
     <div class="jss28">
       <h2 class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom">Keys</h2>
-      <p class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom">Keys are specific to the Context in
-        which they are generated. If you change the Encryption Parameters, you will need to create new keys to work
-        under the new Context. Start by creating a public/secret key pair. Don't forget to download your keys.</p>
+      <p class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom">Keys are specific to the Context in which they are generated.  </p>
+        <p>If you change the Encryption Parameters, you will need to create new keys to work under the new Context.</p>
+          <p>Start by creating a public/secret key pair. Don't forget to download your keys.</p>
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
         <div
@@ -182,9 +182,23 @@
                   </button>
                 </div>
               </div>
+              <div *ngIf="this.secretkey" class="status">
+                <p>{{secretKeyName}} Key Are Created</p>
+              </div>
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
                 <div class="MuiGrid-root MuiGrid-item">
+                    <button (click)="downloadTxtFile(this.secretkey,this.secretKeyName+' SecretKey')" [disabled]="isButtonDisabled"
+                    class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
+                    tabindex="-1" type="button" id="BUTTON-download-secret-key">
+                    <span class="MuiButton-label"><span
+                        class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
+                        id="BUTTON-download-secret-key-text">Download</span>
+                    </span>
+                  </button>
+
+
+
                   <!-- <div class="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal">
                     <label
                       class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated Mui-disabled Mui-disabled"
@@ -207,21 +221,8 @@
                   </div> -->
                 </div>
               </div>
-              <div
-                class="downloadbutton">
 
-                <div class="">
-                  <button (click)="downloadTxtFile(this.secretkey,this.secretKeyName+' SecretKey')" [disabled]="isButtonDisabled"
-                    class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
-                    tabindex="-1" type="button" id="BUTTON-download-secret-key">
-                    <span class="MuiButton-label"><span
-                        class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                        id="BUTTON-download-secret-key-text">Download</span>
-                    </span>
-                  </button>
-                </div>
 
-              </div>
             </div>
           </form>
           <form class="MuiPaper-root jss30 MuiPaper-elevation1 MuiPaper-rounded">
@@ -272,6 +273,9 @@
                     </span>
                   </button>
                 </div>
+                <div *ngIf="this.publickey" class="status">
+                  <p>{{publicKeyName}} Key Are Created</p>
+                </div>
               </div>
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
@@ -302,7 +306,8 @@
       <h2 class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom">Encryption & Decryption</h2>
       <p class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom">Encryption is the process by which a
         readable message is converted to an unreadable form to prevent unauthorized parties from reading it.
-        Decryption is the process of transforming data that has been rendered unreadable through encryption back to its
+      </p>
+      <p>Decryption is the process of transforming data that has been rendered unreadable through encryption back to its
         unencrypted form.</p>
     </div>
 
@@ -358,6 +363,9 @@
             </span>
           </button>
         </div>
+        <div *ngIf="this.fileEncrypted" class="status">
+          <p>{{fileEncryptedName}}  Are Encrypted</p>
+        </div>
 
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
@@ -373,9 +381,8 @@
             </div> -->
             <div class="MuiGrid-root MuiGrid-item">
               <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
-                tabindex="-1" type="button" id="BUTTON-download-relin-key"
-                (click)="downloadFile()">
+                (click)="downloadEncryptFile(this.fileEncrypted,this.fileEncryptedName)" class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
+                tabindex="-1" type="button" id="BUTTON-download-relin-key">
                 <span class="MuiButton-label">
                   <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
                     id="BUTTON-download-relin-key-text">Download</span>
@@ -401,7 +408,7 @@
             class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-flex-end">
             <div class="MuiGrid-root MuiGrid-item">
               <div class="jss35">
-                <div>
+                <!-- <div>
                   <input id="file-upload-relinkey" class="jss37" type="file">
                   <label for="file-upload-relinkey">
                     <span class="MuiButtonBase-root MuiButton-root MuiButton-text Mui-disabled Mui-disabled"
@@ -412,11 +419,32 @@
                       </span>
                     </span>
                   </label>
+                </div> -->
+                <div>
+                  <input id="file-upload-secretkey" class="jss37" type="file" (change)="onFileChangeinputpublickey($event)">
+                  <label for="file-upload-secretkey">
+                    <span class="MuiButtonBase-root MuiButton-root MuiButton-text Mui-disabled Mui-disabled" tabindex="-1" role="button" aria-disabled="true">
+                      <span class="MuiButton-label">
+                        <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock" id="UPLOAD secretkey">Upload your Secret Key</span>
+                      </span>
+                    </span>
+                  </label>
+                </div>
+                <div>
+                  <input id="file-upload-secretkey" class="jss37" type="file" (change)="onFileChangeinputpublickey($event)">
+                  <label for="file-upload-secretkey">
+                    <span class="MuiButtonBase-root MuiButton-root MuiButton-text Mui-disabled Mui-disabled" tabindex="-1" role="button" aria-disabled="true">
+                      <span class="MuiButton-label">
+                        <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock" id="UPLOAD secretkey">Upload your Encrypt File Key</span>
+                      </span>
+                    </span>
+                  </label>
                 </div>
               </div>
             </div>
           </div>
-          <div class="MuiGrid-root MuiGrid-item"><button
+          <div class="MuiGrid-root MuiGrid-item">
+            <button [disabled]="true"
             class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
             tabindex="-1" type="button" id="BUTTON-create-key-pair">
             <span class="MuiButton-label">
@@ -427,7 +455,7 @@
         </div>
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
-            <div class="MuiGrid-root MuiGrid-item">
+            <!-- <div class="MuiGrid-root MuiGrid-item">
               <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss34 Mui-disabled Mui-disabled"
                 tabindex="-1" type="button" id="BUTTON-delete-relin-key">
                 <span class="MuiButton-label">
@@ -435,9 +463,9 @@
                     id="BUTTON-delete-relin-key-text">Delete</span>
                 </span>
               </button>
-            </div>
+            </div> -->
             <div class="MuiGrid-root MuiGrid-item">
-              <button
+              <button [disabled]="true"
                 class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
                 tabindex="-1" type="button" id="BUTTON-download-relin-key"
                 [attr.disabled]="isButtonDisabled ? true : null"

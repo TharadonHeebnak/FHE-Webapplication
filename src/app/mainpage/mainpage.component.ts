@@ -17,6 +17,7 @@ import { Injectable } from '@angular/core';
 
 
 export class MainpageComponent {
+  fileEncryptedName: any;
   constructor(
     private sealService: SealService,
     private service: NotificationsService,
@@ -133,6 +134,32 @@ export class MainpageComponent {
 
   }
 
+  downloadEncryptFile(key: any,keyname:string) {
+    this.saveEncryptFiles(key,keyname);
+  }
+
+  private saveEncryptFiles(data1: any, fileName: string, ) {
+    // Create Blob for File 1
+    const blob1 = new Blob([data1], { type: '' });
+    const link1 = document.createElement('a');
+    link1.href = window.URL.createObjectURL(blob1);
+    link1.download = fileName;
+
+    // Create Blob for File 2
+
+    // Append the links to the document body
+    document.body.appendChild(link1);
+
+
+    // Trigger the click event for both links
+    link1.click();
+
+
+    // Remove the links from the document body
+    document.body.removeChild(link1);
+
+  }
+
 
 
   onFileChange(event: any) {
@@ -161,8 +188,12 @@ export class MainpageComponent {
 
     if(this.fileToEncryp){
       if(this.publickey !== '' && this.publickey !== undefined){
+        const publickeyformData = new FormData();
+        const fileEncrypformData = new FormData();
+        publickeyformData.append('file',this.publickey)
       this.sealService.getEncryptionFile(this.fileToEncryp,this.publickey).subscribe(response =>{
-        this.fileEncrypted = response.fileToEncryption;
+        this.fileEncrypted = response.fileEncryptedbase64;
+        this.fileEncryptedName = response.fileEncryptedName;
         console.log('File are Encrypted',this.fileEncrypted);
         this.service.success('publickey are created',this.publicKeyName);
       })
@@ -188,6 +219,17 @@ export class MainpageComponent {
         console.log('File are Encrypted',this.fileEncrypted);
         // this.service.success('publickey are created',this.publicKeyName);
       })
+      // const formData = new FormData();
+      // formData.append('file', fileList[0]);
+      // console.log('this is form data ', formData);
+      // this.sealService.getEncryptionFiletest(formData).subscribe(response =>{
+      //   // this.fileEncrypted = response.fileToEncryption;
+      //   console.log('File are Encrypted',this.fileEncrypted);
+      //   // this.service.success('publickey are created',this.publicKeyName);
+      // })
+
+
+
       this.readPublicKeyFileContent(this.publickey);
       // เรียกใช้ฟังก์ชั่นหรือทำสิ่งที่คุณต้องการกับไฟล์ที่อัปโหลดที่นี่
     }
