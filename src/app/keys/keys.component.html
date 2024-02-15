@@ -37,24 +37,20 @@
 <div class="container ">
     <div class="inner">
         <div class="row">
-            <div class="col-lg-10 ">
+            <div class="col-lg-9">
                 <!-- Encryption Form -->
                 <div class="card">
                     <div class="card-body d-flex flex-column ">
                         <h2 class="card-title fw-bold">KEYS</h2>
                         <p class="card-text">The secret code used to encrypt and decrypt data in a security system.</p>
 
-                        <mat-label class="fs-7 text-muted fw-semibold mt-1">Key Pair Name</mat-label>
+                        <mat-label class="fs-7 text-muted  mt-1">Key Pair Name</mat-label>
                         <form class="example-form ">
                             <mat-form-field class="example-full-width">
                                 <input matInput placeholder="Key Pair Name" value="">
-                                <mat-hint>Create a new Secret and Public key pair.</mat-hint>
+                                <mat-hint class="fs-7 text-muted ">Create a new Secret and Public key pair.</mat-hint>
                             </mat-form-field>
                         </form>
-                        <div class="form-group my-2">
-                            <input type="file" class="form-control" (change)="onFileChangeinputpublickey($event)">
-                            <label for="file-upload-secretkey">Upload your public Key</label>
-                        </div>
                         <div class="text-center">
                             <button class="btn btn-primary" (click)="Encryptionfile()">Create</button>
                         </div>
