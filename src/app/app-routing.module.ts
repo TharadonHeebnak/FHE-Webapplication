@@ -5,6 +5,7 @@ import { EncryptionComponent } from './encryption/encryption.component';
 import { SecondpageComponent } from './secondpage/secondpage.component';
 import { ParameterComponent } from './parameter/parameter.component';
 import { EncryptComponent } from './encrypt/encrypt.component';
+import { KeysComponent } from './keys/keys.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,9 @@ const routes: Routes = [
   {
     path: 'encrypt',
     component:EncryptComponent
+  }, {
+    path: 'keys',
+    component:KeysComponent
   },
 ];
 

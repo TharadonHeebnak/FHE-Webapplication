@@ -5,7 +5,7 @@
         <!-- Menu -->
         <ul class="menu">
             <li><a routerLink="/home">PARAMETER</a></li>
-            <li><a routerLink="/about">KEYS</a></li>
+            <li><a routerLink="/keys">KEYS</a></li>
             <li><a routerLink="/encrypt">ENCRYPTION</a></li>
 
         </ul>
@@ -38,7 +38,7 @@
         <div class="row ">
             <div class="col-lg-4 me-4">
                 <div>
-                    <mat-label>SchemeType</mat-label>
+                    <mat-label >SchemeType</mat-label>
                     <mat-select class="my-1" placeholder="Seclect Scheme Type" [formControl]="position">
                         <mat-option *ngFor="let option of schemeType | keyvalue" [value]="option.key">
                             {{option.key}}

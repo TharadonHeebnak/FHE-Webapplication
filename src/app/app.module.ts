@@ -19,6 +19,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { ParameterComponent } from './parameter/parameter.component';
 import { EncryptComponent } from './encrypt/encrypt.component';
+import { KeysComponent } from './keys/keys.component';
 
 
 
@@ -31,6 +32,7 @@ import { EncryptComponent } from './encrypt/encrypt.component';
     SecondpageComponent,
     ParameterComponent,
     EncryptComponent,
+    KeysComponent,
     
   ],
   imports: [
