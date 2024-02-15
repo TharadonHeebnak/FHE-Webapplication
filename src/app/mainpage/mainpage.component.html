@@ -3,12 +3,12 @@
     <div class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-2">
       <div class="MuiGrid-root MuiGrid-item">
         <a>
-          <span class="MuiButton-label me-4 " style="font-size: 25px;">
+          <span routerLink="F" class="MuiButton-label me-4 " style="font-size: 25px;">
             FHE ENCRYPTER
           </span>
         </a>
       </div>
-      <div class="me-4"  routerLink="/secondpage">
+      <div class="me-4" style="cursor:pointer;" routerLink="/secondpage">
         ENCRYPTION
      </div>
     </div>
@@ -175,7 +175,7 @@
                   </div>
                 </div>
                 <div class="MuiGrid-root MuiGrid-item">
-                  <button (click)="getsecretkey()" [disabled]="isButtonDisabled">
+                  <button class="btn btn-primary" (click)="getsecretkey()" [disabled]="isButtonDisabled " >
                     <span class="MuiButton-label">
                       <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock" id="BUTTON-create-key-pair-text">Create</span>
                     </span>
@@ -188,9 +188,10 @@
               <div
                 class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
                 <div class="MuiGrid-root MuiGrid-item">
-                    <button (click)="downloadTxtFile(this.secretkey,this.secretKeyName+' SecretKey')" [disabled]="isButtonDisabled"
-                    class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
-                    tabindex="-1" type="button" id="BUTTON-download-secret-key">
+                    <button class="btn btn-danger" (click)="downloadTxtFile(this.secretkey,this.secretKeyName+' SecretKey')" [disabled]="isButtonDisabled"
+                    >
+                    <!-- class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
+                    tabindex="-1" type="button" id="BUTTON-download-secret-key" -->
                     <span class="MuiButton-label"><span
                         class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
                         id="BUTTON-download-secret-key-text">Download</span>
@@ -265,7 +266,8 @@
 
                 <div class="MuiGrid-root MuiGrid-item">
                   <button (click)="getpublickey()"
-                    class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
+                  [disabled]="creationCompleted"
+                    class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled btn btn-primary"
                     tabindex="-1" type="button" id="BUTTON-create-public-key">
                     <span class="MuiButton-label">
                       <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
@@ -290,9 +292,11 @@
                 </div> -->
                 <div class="MuiGrid-root MuiGrid-item">
                   <button (click)="downloadTxtFile(this.publickey,this.publicKeyName+' PublicKey')"
-                    class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
-                    tabindex="-1" type="button" id="BUTTON-download-public-key"><span class="MuiButton-label">
-                      <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
+                  [disabled]="!creationCompleted"
+                    class=" btn btn-danger MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
+                    tabindex="-1" type="button" id="BUTTON-download-public-key">
+                    <span class="MuiButton-label">
+                      <span class=" MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
                         id="BUTTON-download-public-key-text">Download</span>
                     </span>
                   </button>
@@ -482,4 +486,5 @@
     </div>
   </main>
 </div>
+
 

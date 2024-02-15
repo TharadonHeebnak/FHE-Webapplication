@@ -1,0 +1,117 @@
+<header>
+    <nav class="navbar">
+        <!-- Logo -->
+        <a routerLink="/mainpage" class="logo">FHE ENCRYPTION</a>
+        <!-- Menu -->
+        <ul class="menu">
+            <li><a routerLink="/home">PARAMETER</a></li>
+            <li><a routerLink="/about">KEYS</a></li>
+            <li><a routerLink="/encrypt">ENCRYPTION</a></li>
+
+        </ul>
+    </nav>
+</header>
+
+<!-- Title Page -->
+<div class="toolbar py-3 pb-lg-15">
+    <div class="container-xxl d-flex flex-stack flex-wrap">
+        <div class="page-title d-flex flex-column me-3">
+            <!--begin::Title-->
+            <h3 class="d-flex text-black fw-bold my-1 fs-3">
+                Encryption Parameters
+            </h3>
+        </div>
+    </div>
+
+    <div class="container-xxl d-flex flex-stack flex-wrap">
+        <div class="page-title d-flex flex-column me-3 my-4">
+            <p>These parameters can have drastic
+                performance effects if not properly optimized. Most of these settings are arbitrarily defined and are
+                safe to
+                use; however, you are encouraged to optimize them.
+        </div>
+    </div>
+</div>
+
+<div class="container " style="padding-bottom: 24px;">
+    <div class="inner ">
+        <div class="row ">
+            <div class="col-lg-4 me-4">
+                <div>
+                    <mat-label>SchemeType</mat-label>
+                    <mat-select class="my-1" placeholder="Seclect Scheme Type" [formControl]="position">
+                        <mat-option *ngFor="let option of schemeType | keyvalue" [value]="option.key">
+                            {{option.key}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint align="end">Select a SchemeType</mat-hint>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <mat-label>Security Level</mat-label>
+                <mat-select placeholder="Seclect Security Level" [formControl]="position">
+                    <mat-option *ngFor="let option of securityLevelOption" [value]="option.securityLevel">
+                        {{option.value}}
+                    </mat-option>
+                </mat-select>
+                <mat-hint align="end">Higher values allow for better security at the cost of more CPU and Memory
+                    resources</mat-hint>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="inner ">
+        <div class="row " style="padding-bottom: 24px;">
+            <div class="col-lg-6 ">
+                <div>
+                    <mat-label>Polymodulus
+                        Degree</mat-label>
+                    <mat-select placeholder="Seclect PolyModulusDegree" [formControl]="position">
+                        <mat-option *ngFor="let degree of polyModulusDegrees" [value]="degree">
+                            {{degree}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint align="end">Higher
+                        values allow for more computations at the cost of more CPU and memory resources</mat-hint>
+                </div>
+            </div>
+        </div>
+        <div class="row " style="padding-bottom: 24px;">
+            <div class="col-lg-12">
+                <mat-label>Coefficient
+                    Modulus (Bit Sizes)
+                </mat-label>
+                <form class="example-form">
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Coefficient Modulus " value="36,36,37">
+                        <mat-hint>The
+                            bit-lengths of the primes to be generated for the Coefficient Modulus (comma separated). Max
+                            60 bits.</mat-hint>
+                    </mat-form-field>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="inner ">
+        <div class="row " style="padding-bottom: 24px;">
+            <div class="col-lg-12">
+                <mat-label>Plain Modulus
+                    (BitSize)
+                </mat-label>
+                <form class="example-form">
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Plain Modulus" value="20">
+                        <mat-hint>The bit-length of the prime to be generated for the Plain Modulus that will enable
+                            Batching. Max 60 bits.</mat-hint>
+                    </mat-form-field>
+                </form>
+            </div>
+        </div>
+        <button class="btn btn-primary" style="padding: 15px 20px;">Create Enc Parms</button>
+    </div>
+</div>

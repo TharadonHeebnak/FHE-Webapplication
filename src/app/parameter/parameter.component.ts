@@ -8,15 +8,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
-
 @Component({
-  selector: 'app-mainpage',
-  templateUrl: './mainpage.component.html',
-  styleUrl: './mainpage.component.scss',
+  selector: 'app-parameter',
+  templateUrl: './parameter.component.html',
+  styleUrl: './parameter.component.scss'
 })
+export class ParameterComponent {
 
-
-export class MainpageComponent {
   fileEncryptedName: any;
   constructor(
     private sealService: SealService,
@@ -283,5 +281,4 @@ export class MainpageComponent {
     document.body.removeChild(link);
   }
 
-  //////////////////////////////////////////////////////
 }

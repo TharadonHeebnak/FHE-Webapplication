@@ -1,183 +1,104 @@
-<div class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters">
-    <div class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
-      <div class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-2">
-        <div class="MuiGrid-root MuiGrid-item me-4">
-          <a>
-            <span class="MuiButton-label" style="font-size: 25px;" routerLink="/mainpage">
-              FHE ENCRYPTER
-            </span>
-          </a>
+<!-- Header -->
+<!-- <header>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary header align-items-stretch mb-4 ">
+    <div class="container">
+      <a class="navbar-brand" routerLink="/mainpage">FHE ENCRYPTER</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <span class="navbar-nav ml-auto">
+          <span class="nav-item">
+            <a class="nav-link" href="#">PARAMETER</a>
+          </span>
+          <span class="nav-item">
+            <a class="nav-link" href="#">CREATE KEY</a>
+          </span>
+          <span class="nav-item">
+            <a class="nav-link" href="#">ENCRYPTION</a>
+          </span>
+        </span>
+      </div>
+    </div>
+  </nav>
+</header> -->
+
+<header>
+  <nav class="navbar">
+    <!-- Logo -->
+    <a routerLink="/mainpage" class="logo">FHE ENCRYPTION</a>
+    <!-- Menu -->
+    <ul class="menu">
+      <li><a routerLink="/parameter">PARAMETER</a></li>
+      <li><a routerLink="/parameter">KEYS</a></li>
+      <li><a routerLink="/services">ENCRYPTION</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+<!-- Title Page -->
+<div class="toolbar py-3 pb-lg-15">
+  <div class="container-xxl d-flex flex-stack flex-wrap">
+    <div class="page-title d-flex flex-column me-3">
+      <!--begin::Title-->
+      <h3 class="d-flex text-black fw-bold my-1 fs-3">
+        ENCRYPTION & DECRYPTION
+      </h3>
+    </div>
+  </div>
+
+  <div class="container-xxl d-flex flex-stack flex-wrap">
+    <div class="page-title d-flex flex-column me-3 my-4">
+      <p>Encryption is the process by which a readable message is converted to an unreadable form to prevent
+        unauthorized parties from reading it.</p>
+      <p>Decryption is the process of transforming data that has been rendered unreadable through encryption back to its
+        unencrypted form.</p>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="inner">
+    <div class="row">
+      <div class="col-lg-6">
+        <!-- Encryption Form -->
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Encryption</h3>
+            <p class="card-text">Upload your file for Encryption.</p>
+            <div class="form-group">
+              <input type="file" class="form-control" (change)="onFileChangeinputpublickey($event)">
+              <label for="file-upload-secretkey">Upload your public Key</label>
+            </div>
+            <div class="form-group">
+              <input type="file" class="form-control" (change)="onFileChangeinputfile($event)">
+              <label for="file-upload-secretkey">Upload your File</label>
+            </div>
+            <button class="btn btn-primary" (click)="Encryptionfile()">Encrypt</button>
+          </div>
         </div>
-        <div class="me-4"  >
-           ENCRYPTION
+      </div>
+
+      <div class="col-lg-6">
+        <!-- Encryption Form -->
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Encryption</h3>
+            <p class="card-text">Upload your file for Encryption.</p>
+            <div class="form-group">
+              <input type="file" class="form-control" (change)="onFileChangeinputpublickey($event)">
+              <label for="file-upload-secretkey">Upload your public Key</label>
+            </div>
+            <div class="form-group">
+              <input type="file" class="form-control" (change)="onFileChangeinputfile($event)">
+              <label for="file-upload-secretkey">Upload your File</label>
+            </div>
+            <button class="btn btn-primary" (click)="Encryptionfile()">Encrypt</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-<div>
-  
-    <div class="MuiContainer-root MuiContainer-maxWidthLg">
-        <main class="jss11">
-            <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
-                
-            <hr class="MuiDivider-root jss29">
-            <h2 class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom">Encryption & Decryption</h2>
-            <p class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom">Encryption is the process by which a
-              readable message is converted to an unreadable form to prevent unauthorized parties from reading it.
-              Decryption is the process of transforming data that has been rendered unreadable through encryption back to its
-              unencrypted form.</p>
-          </div>
-      
-      
-          <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
-          <form class="MuiPaper-root jss30 MuiPaper-elevation1 MuiPaper-rounded">
-            <h3 class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom">Encryption</h3>
-            <p class="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextSecondary">Upload your flie for
-              Encryption.</p>
-            <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
-                <div class="MuiGrid-root MuiGrid-item">
-                </div>
-              </div>
-    
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-flex-end">
-                <div class="MuiGrid-root MuiGrid-item">
-                  <div class="jss35">
-                    <div>
-                      <input id="file-upload-secretkey" class="jss37" type="file" (change)="onFileChangeinputpublickey($event)">
-                      <label for="file-upload-secretkey">
-                        <span class="MuiButtonBase-root MuiButton-root MuiButton-text Mui-disabled Mui-disabled" tabindex="-1" role="button" aria-disabled="true">
-                          <span class="MuiButton-label">
-                            <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock" id="UPLOAD secretkey">Upload your public Key</span>
-                          </span>
-                        </span>
-                      </label>
-                    </div>
-                    <div>
-                      <input id="file-upload-secretkey" class="jss37" type="file" (change)="onFileChangeinputfile($event)">
-                      <label for="file-upload-secretkey">
-                        <span class="MuiButtonBase-root MuiButton-root MuiButton-text Mui-disabled Mui-disabled" tabindex="-1" role="button" aria-disabled="true">
-                          <span class="MuiButton-label">
-                            <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock" id="UPLOAD secretkey">Upload your File</span>
-                          </span>
-                        </span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="MuiGrid-root MuiGrid-item">
-                <button (click)="Encryptionfile()"
-                class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
-                tabindex="-1" type="button" id="BUTTON-create-key-pair">
-                <span class="MuiButton-label">
-                  <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                    id="BUTTON-create-key-pair-text">Encrypt</span>
-                </span>
-              </button>
-            </div>
-    
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
-                <!-- <div class="MuiGrid-root MuiGrid-item">
-                  <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss34 Mui-disabled Mui-disabled"
-                    tabindex="-1" type="button" id="BUTTON-delete-relin-key">
-                    <span class="MuiButton-label">
-                      <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                        id="BUTTON-delete-relin-key-text">Delete
-                      </span>
-                    </span>
-                  </button>
-                </div> -->
-                <div class="MuiGrid-root MuiGrid-item">
-                  <button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
-                    tabindex="-1" type="button" id="BUTTON-download-relin-key"
-                    (click)="downloadFile()">
-                    <span class="MuiButton-label">
-                      <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                        id="BUTTON-download-relin-key-text">Download</span>
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </form>
-          <form class="MuiPaper-root jss30 MuiPaper-elevation1 MuiPaper-rounded">
-            <h3 class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom">Decrytption</h3>
-            <p class="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextSecondary">Upload your encryption file
-              for Decryption.</p>
-            <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
-                <div class="MuiGrid-root MuiGrid-item">
-                </div>
-              </div>
-    
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-flex-end">
-                <div class="MuiGrid-root MuiGrid-item">
-                  <div class="jss35">
-                    <div>
-                      <input id="file-upload-relinkey" class="jss37" type="file">
-                      <label for="file-upload-relinkey">
-                        <span class="MuiButtonBase-root MuiButton-root MuiButton-text Mui-disabled Mui-disabled"
-                          tabindex="-1" role="button" aria-disabled="true">
-                          <span class="MuiButton-label">
-                            <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                              id="UPLOAD relinkey">Upload</span>
-                          </span>
-                        </span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="MuiGrid-root MuiGrid-item"><button
-                class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
-                tabindex="-1" type="button" id="BUTTON-create-key-pair">
-                <span class="MuiButton-label">
-                  <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                    id="BUTTON-create-key-pair-text">Decrypt</span>
-                </span>
-              </button>
-            </div>
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
-                <div class="MuiGrid-root MuiGrid-item">
-                  <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss34 Mui-disabled Mui-disabled"
-                    tabindex="-1" type="button" id="BUTTON-delete-relin-key">
-                    <span class="MuiButton-label">
-                      <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                        id="BUTTON-delete-relin-key-text">Delete</span>
-                    </span>
-                  </button>
-                </div>
-                <div class="MuiGrid-root MuiGrid-item">
-                  <button
-                    class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
-                    tabindex="-1" type="button" id="BUTTON-download-relin-key"
-                    [attr.disabled]="isButtonDisabled ? true : null"
-                    (click)="downloadFile()">
-                    <span class="MuiButton-label">
-                      <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                        id="BUTTON-download-relin-key-text" >Download</span>
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>    
-
-
-
+</div>

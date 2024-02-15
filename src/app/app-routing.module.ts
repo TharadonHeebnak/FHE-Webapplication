@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainpageComponent } from './mainpage/mainpage.component';
 import { EncryptionComponent } from './encryption/encryption.component';
 import { SecondpageComponent } from './secondpage/secondpage.component';
+import { ParameterComponent } from './parameter/parameter.component';
+import { EncryptComponent } from './encrypt/encrypt.component';
 
 const routes: Routes = [
   {
@@ -17,7 +19,14 @@ const routes: Routes = [
     path: 'secondpage',
     component:SecondpageComponent
   },
-  
+  {
+    path: 'parameter',
+    component:ParameterComponent
+  },
+  {
+    path: 'encrypt',
+    component:EncryptComponent
+  },
 ];
 
 @NgModule({
