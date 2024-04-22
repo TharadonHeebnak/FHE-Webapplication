@@ -1,490 +1,121 @@
-<div class="MuiToolbar-root MuiToolbar-regular MuiToolbar-gutters">
-  <div class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
-    <div class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-grid-xs-2">
-      <div class="MuiGrid-root MuiGrid-item">
-        <a>
-          <span routerLink="F" class="MuiButton-label me-4 " style="font-size: 25px;">
-            FHE ENCRYPTER
-          </span>
-        </a>
+<header>
+  <nav class="navbar">
+      <!-- Logo -->
+      <a routerLink="/mainpage" class="logo">FHE ENCRYPTION</a>
+      <!-- Menu -->
+      <ul class="menu">
+          <li><a routerLink="/mainpage">PARAMETER</a></li>
+          <!-- <li><a routerLink="/keys">KEYS</a></li> -->
+          <li><a routerLink="/encrypt">ENCRYPTION</a></li>
+          <li><a routerLink="/decrypt">DECRYPTION</a></li>
+
+      </ul>
+  </nav>
+</header>
+
+<!-- Title Page -->
+<div class="toolbar py-3 pb-lg-15">
+  <div class="container-xxl d-flex flex-stack flex-wrap">
+      <div class="page-title d-flex flex-column me-3">
+          <!--begin::Title-->
+          <h3 class="d-flex text-black fw-bold my-1 fs-3">
+              Encryption Parameters
+          </h3>
       </div>
-      <div class="me-4" style="cursor:pointer;" routerLink="/secondpage">
-        ENCRYPTION
-     </div>
-    </div>
+  </div>
+
+  <div class="container-xxl d-flex flex-stack flex-wrap">
+      <div class="page-title d-flex flex-column me-3 my-4">
+          <p>These parameters can have drastic
+              performance effects if not properly optimized. Most of these settings are arbitrarily defined and are
+              safe to
+              use; however, you are encouraged to optimize them.
+      </div>
   </div>
 </div>
 
-
-<div class="MuiContainer-root MuiContainer-maxWidthLg">
-  <main class="jss11">
-    <div class="jss19">
-      <h2 class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom">Encryption Parameters</h2>
-      <p class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom">These parameters can have drastic
-        performance effects if not properly optimized. Most of these settings are arbitrarily defined and are safe to
-        use; however, you are encouraged to optimize them.</p>
-      <div class="MuiGrid-root jss20 MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-align-items-xs-center">
-        <div class="MuiGrid-root MuiGrid-item">
-          <div class="MuiFormControl-root MuiTextField-root">
-            <label
-              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
-              data-shrink="true" for="SELECT-scheme-type" id="SELECT-scheme-type-label">Scheme Type</label>
-            <div class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl">
-
-              <div class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
-                tabindex="0" role="button" aria-haspopup="listbox"
-                aria-labelledby="SELECT-scheme-type-label SELECT-scheme-type" id="SELECT-scheme-type">
-                <!-- <select class="dropdown" id="selectedSchemeType" [(ngModel)]="selectedSchemeType" name="selectedSchemeType">
-                  <option *ngFor="let option of schemeType | keyvalue" [value]="option.key">{{ option.key }}</option>
-                </select> -->
-                <mat-select placeholder="Seclect Scheme Type" [formControl]="position">
-                  <mat-option *ngFor="let option of schemeType | keyvalue" [value]="option.key">
-                    {{option.key}}
-                  </mat-option>
-                </mat-select>
-              </div>
-            </div>
-            <p class="MuiFormHelperText-root MuiFormHelperText-filled" id="SELECT-scheme-type-helper-text">Select a
-              Scheme Type</p>
-          </div>
-        </div>
-        <div class="MuiGrid-root MuiGrid-item">
-          <div class="MuiFormControl-root MuiTextField-root">
-            <label
-              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
-              data-shrink="true" for="SELECT-security-level" id="SELECT-security-level-label">Security Level</label>
-            <div
-              class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl">
-              <div class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
-                tabindex="0" role="button" aria-haspopup="listbox"
-                aria-labelledby="SELECT-security-level-label SELECT-security-level" id="SELECT-security-level">
-                 <!-- <select class="dropdown" [(ngModel)]="selectedSecurityLevel" name="dropdown">
-                  <option *ngFor="let option of securityLevelOption" [value]="option.securityLevel">{{ option.value}}</option>
-                </select> -->
-                  <mat-select placeholder="Seclect Security Level" [formControl]="position">
-                    <mat-option *ngFor="let option of securityLevelOption" [value]="option.securityLevel">
-                      {{option.value}}
-                    </mat-option>
+<div class="container " style="padding-bottom: 24px;">
+  <div class="inner ">
+      <div class="row ">
+          <div class="col-lg-4 me-4">
+              <div>
+                  <mat-label >SchemeType</mat-label>
+                  <mat-select class="my-1" placeholder="Seclect Scheme Type" [formControl]="position">
+                      <mat-option *ngFor="let option of schemeType | keyvalue" [value]="option.key">
+                          {{option.key}}
+                      </mat-option>
                   </mat-select>
+                  <mat-hint align="end">Select a SchemeType</mat-hint>
               </div>
-            </div>
-            <p class="MuiFormHelperText-root MuiFormHelperText-filled" id="SELECT-security-level-helper-text">Higher
-              values allow for better security at the cost of more CPU and Memory resources</p>
           </div>
-        </div>
-        <div class="MuiGrid-root MuiGrid-item">
-          <div class="MuiFormControl-root MuiTextField-root">
-            <label
-              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
-              data-shrink="true" for="SELECT-polymodulus-degree" id="SELECT-polymodulus-degree-label">Polymodulus
-              Degree</label>
-            <div
-              class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl">
-              <div class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
-                tabindex="0" role="button" aria-haspopup="listbox"
-                aria-labelledby="SELECT-polymodulus-degree-label SELECT-polymodulus-degree"
-                id="SELECT-polymodulus-degree">
-                <!-- <select [(ngModel)]="selectedPolyModulusDegree">
-                  <option *ngFor="let degree of polyModulusDegrees" [value]="degree">
-                    {{ degree }}
-                  </option>
-                </select> -->
-                <mat-select placeholder="Seclect PolyModulusDegree" [formControl]="position">
-                  <mat-option *ngFor="let degree of polyModulusDegrees" [value]="degree">
-                    {{degree}}
+          <div class="col-lg-7">
+              <mat-label>Security Level</mat-label>
+              <mat-select placeholder="Seclect Security Level" [formControl]="position">
+                  <mat-option *ngFor="let option of securityLevelOption" [value]="option.securityLevel">
+                      {{option.value}}
                   </mat-option>
-                </mat-select>
-              </div>
-            </div>
-            <p class="MuiFormHelperText-root MuiFormHelperText-filled" id="SELECT-polymodulus-degree-helper-text">Higher
-              values allow for more computations at the cost of more CPU and memory resources</p>
+              </mat-select>
+              <mat-hint align="end">Higher values allow for better security at the cost of more CPU and Memory
+                  resources</mat-hint>
           </div>
-        </div>
-        <div class="MuiGrid-root MuiGrid-item">
-          <div class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"><label
-              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
-              data-shrink="true" for="INPUT-coefficient-modulus" id="INPUT-coefficient-modulus-label">Coefficient
-              Modulus (Bit Sizes)</label>
-            <div
-              class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl">
-              <input aria-invalid="false" aria-describedby="INPUT-coefficient-modulus-helper-text"
-                id="INPUT-coefficient-modulus" name="bitSizes" type="text" class="MuiInputBase-input MuiInput-input"
-                value="36,36,37">
-            </div>
-            <p class="MuiFormHelperText-root MuiFormHelperText-filled" id="INPUT-coefficient-modulus-helper-text">The
-              bit-lengths of the primes to be generated for the Coefficient Modulus (comma separated). Max 60 bits.</p>
-          </div>
-        </div>
-        <div class="MuiGrid-root MuiGrid-item">
-          <div class="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth">
-            <label
-              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
-              data-shrink="true" for="INPUT-plain-modulus" id="INPUT-plain-modulus-label">Plain Modulus
-              (BitSize)</label>
-            <div
-              class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl">
-              <input aria-invalid="false" aria-describedby="INPUT-plain-modulus-helper-text" id="INPUT-plain-modulus"
-                name="bitSize" type="text" class="MuiInputBase-input MuiInput-input" value="20">
-            </div>
-            <p class="MuiFormHelperText-root MuiFormHelperText-filled" id="INPUT-plain-modulus-helper-text">The
-              bit-length of the prime to be generated for the Plain Modulus that will enable Batching. Max 60 bits.</p>
-          </div>
-        </div>
-
-        <div class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-align-items-xs-center">
-          <div class="MuiGrid-root MuiGrid-item">
-            <button class="asd btn btn-primary" tabindex="0" type="button" id="BUTTON-create-encryption-parameters">
-              <span class="MuiButton-label">
-                <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                  id="BUTTON-create-encryption-parameters">Create Enc Parms</span>
-              </span>
-              <span class="MuiTouchRipple-root"></span>
-            </button>
-          </div>
-        </div>
       </div>
-      <hr class="MuiDivider-root jss21">
-    </div>
-    <div class="jss28">
-      <h2 class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom">Keys</h2>
-      <p class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom">Keys are specific to the Context in which they are generated.  </p>
-        <p>If you change the Encryption Parameters, you will need to create new keys to work under the new Context.</p>
-          <p>Start by creating a public/secret key pair. Don't forget to download your keys.</p>
-      <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
-          <form class="MuiPaper-root jss30 MuiPaper-elevation1 MuiPaper-rounded">
-            <h3 class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom">Secret Key</h3>
-            <p class="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextSecondary">A SecretKey allows you to
-              decrypt CipherTexts to PlainTexts.</p>
-            <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
-                <div class="MuiGrid-root MuiGrid-item">
-                  <div class="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal MuiFormControl-fullWidth">
-                    <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink Mui-disabled Mui-disabled MuiFormLabel-filled"
-                      data-shrink="true" for="INPUT-secretkey-pair-name" id="INPUT-secretkey-pair-name-label">Key Pair name</label>
-                    <div class="MuiInputBase-root MuiInput-root MuiInput-underline Mui-disabled Mui-disabled MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl">
-                      <input aria-invalid="false" aria-describedby="INPUT-secretkey-pair-name-helper-text" id="INPUT-secretkey-pair-name"
-                        name="keyPairName" type="text" class="MuiInputBase-input MuiInput-input Mui-disabled Mui-disabled">
-                    </div>
-                    <p class="MuiFormHelperText-root Mui-disabled MuiFormHelperText-filled" id="INPUT-secretkey-pair-name-helper-text">Create
-                      a new Secret and Public key pair</p>
-                  </div>
-                </div>
-                <div class="MuiGrid-root MuiGrid-item">
-                  <button class="btn btn-primary" (click)="getsecretkey()" [disabled]="isButtonDisabled " >
-                    <span class="MuiButton-label">
-                      <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock" id="BUTTON-create-key-pair-text">Create</span>
-                    </span>
-                  </button>
-                </div>
-              </div>
-              <div *ngIf="this.secretkey" class="status">
-                <p>{{secretKeyName}} Key Are Created</p>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
-                <div class="MuiGrid-root MuiGrid-item">
-                    <button class="btn btn-danger" (click)="downloadTxtFile(this.secretkey,this.secretKeyName+' SecretKey')" [disabled]="isButtonDisabled"
-                    >
-                    <!-- class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
-                    tabindex="-1" type="button" id="BUTTON-download-secret-key" -->
-                    <span class="MuiButton-label"><span
-                        class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                        id="BUTTON-download-secret-key-text">Download</span>
-                    </span>
-                  </button>
-
-
-
-                  <!-- <div class="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal">
-                    <label
-                      class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated Mui-disabled Mui-disabled"
-                      data-shrink="false">Active SecretKey</label>
-                    <div
-                      class="MuiInputBase-root MuiInput-root MuiInput-underline Mui-disabled Mui-disabled MuiInputBase-formControl MuiInput-formControl">
-                      <div
-                        class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input Mui-disabled Mui-disabled Mui-disabled"
-                        role="button" aria-disabled="true" aria-haspopup="listbox">
-                        <span>&ZeroWidthSpace;</span>
-                      </div>
-                      <input aria-hidden="true" tabindex="-1" class="MuiSelect-nativeInput" value="">
-                      <svg class="MuiSvgIcon-root MuiSelect-icon Mui-disabled" focusable="false" viewBox="0 0 24 24"
-                        aria-hidden="true">
-                        <path d="M7 10l5 5 5-5z"></path>
-                      </svg>
-                    </div>
-                    <p class="MuiFormHelperText-root Mui-disabled">Set the active SecretKey to be used for Decryption
-                    </p>
-                  </div> -->
-                </div>
-              </div>
-
-
-            </div>
-          </form>
-          <form class="MuiPaper-root jss30 MuiPaper-elevation1 MuiPaper-rounded">
-            <h3 class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom">Public Key</h3>
-            <p class="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextSecondary">A PublicKey allows you to
-              encrypt PlainTexts to CipherTexts.</p>
-            <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
-                <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-flex-end">
-                <div class="MuiGrid-root MuiGrid-item">
-                  <div class="jss35">
-                    <div>
-                      <input id="file-upload-secretkey" class="jss37" type="file" (change)="onFileChange($event)">
-                      <label for="file-upload-secretkey">
-                        <span class="MuiButtonBase-root MuiButton-root MuiButton-text Mui-disabled Mui-disabled" tabindex="-1" role="button" aria-disabled="true">
-                          <span class="MuiButton-label">
-                            <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock" id="UPLOAD secretkey">Upload your secretKey</span>
-                          </span>
-                        </span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-                <div class="MuiGrid-root MuiGrid-item">
-                  <div class="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal MuiFormControl-fullWidth">
-                    <label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink Mui-disabled Mui-disabled MuiFormLabel-filled"
-                      data-shrink="true" for="INPUT-public-key" id="INPUT-public-key-label">Public Key</label>
-                    <div class="MuiInputBase-root MuiInput-root MuiInput-underline Mui-disabled Mui-disabled MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl">
-                      <input aria-invalid="false" aria-describedby="INPUT-public-key-helper-text" id="INPUT-public-key"
-                        name="publicKey" type="text" class="MuiInputBase-input MuiInput-input Mui-disabled Mui-disabled">
-                    </div>
-                    <p class="MuiFormHelperText-root Mui-disabled MuiFormHelperText-filled" id="INPUT-public-key-helper-text">Enter
-                      Public Key</p>
-                  </div>
-                </div>
-
-                <div class="MuiGrid-root MuiGrid-item">
-                  <button (click)="getpublickey()"
-                  [disabled]="creationCompleted"
-                    class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled btn btn-primary"
-                    tabindex="-1" type="button" id="BUTTON-create-public-key">
-                    <span class="MuiButton-label">
-                      <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                        id="BUTTON-create-public-key-text">Create</span>
-                    </span>
-                  </button>
-                </div>
-                <div *ngIf="this.publickey" class="status">
-                  <p>{{publicKeyName}} Key Are Created</p>
-                </div>
-              </div>
-              <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
-                <!-- <div class="MuiGrid-root MuiGrid-item">
-                  <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss34 Mui-disabled Mui-disabled"
-                    tabindex="-1" type="button" id="BUTTON-delete-public-key">
-                    <span class="MuiButton-label">
-                      <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                        id="BUTTON-delete-public-key-text">Delete</span>
-                    </span>
-                  </button>
-                </div> -->
-                <div class="MuiGrid-root MuiGrid-item">
-                  <button (click)="downloadTxtFile(this.publickey,this.publicKeyName+' PublicKey')"
-                  [disabled]="!creationCompleted"
-                    class=" btn btn-danger MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
-                    tabindex="-1" type="button" id="BUTTON-download-public-key">
-                    <span class="MuiButton-label">
-                      <span class=" MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                        id="BUTTON-download-public-key-text">Download</span>
-                    </span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-      <hr class="MuiDivider-root jss29">
-      <h2 class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom">Encryption & Decryption</h2>
-      <p class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom">Encryption is the process by which a
-        readable message is converted to an unreadable form to prevent unauthorized parties from reading it.
-      </p>
-      <p>Decryption is the process of transforming data that has been rendered unreadable through encryption back to its
-        unencrypted form.</p>
-    </div>
-
-
-    <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
-      <form class="MuiPaper-root jss30 MuiPaper-elevation1 MuiPaper-rounded">
-        <h3 class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom">Encryption</h3>
-        <p class="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextSecondary">Upload your flie for
-          Encryption.</p>
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
-            <div class="MuiGrid-root MuiGrid-item">
-            </div>
-          </div>
-
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-flex-end">
-            <div class="MuiGrid-root MuiGrid-item">
-              <div class="jss35">
-                <div>
-                  <input id="file-upload-secretkey" class="jss37" type="file" (change)="onFileChangeinputpublickey($event)">
-                  <label for="file-upload-secretkey">
-                    <span class="MuiButtonBase-root MuiButton-root MuiButton-text Mui-disabled Mui-disabled" tabindex="-1" role="button" aria-disabled="true">
-                      <span class="MuiButton-label">
-                        <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock" id="UPLOAD secretkey">Upload your public Key</span>
-                      </span>
-                    </span>
-                  </label>
-                </div>
-                <div>
-                  <input id="file-upload-secretkey" class="jss37" type="file" (change)="onFileChangeinputfile($event)">
-                  <label for="file-upload-secretkey">
-                    <span class="MuiButtonBase-root MuiButton-root MuiButton-text Mui-disabled Mui-disabled" tabindex="-1" role="button" aria-disabled="true">
-                      <span class="MuiButton-label">
-                        <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock" id="UPLOAD secretkey">Upload your File</span>
-                      </span>
-                    </span>
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="MuiGrid-root MuiGrid-item">
-            <button (click)="Encryptionfile()"
-            class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
-            tabindex="-1" type="button" id="BUTTON-create-key-pair">
-            <span class="MuiButton-label">
-              <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                id="BUTTON-create-key-pair-text">Encrypt</span>
-            </span>
-          </button>
-        </div>
-        <div *ngIf="this.fileEncrypted" class="status">
-          <p>{{fileEncryptedName}}  Are Encrypted</p>
-        </div>
-
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
-            <!-- <div class="MuiGrid-root MuiGrid-item">
-              <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss34 Mui-disabled Mui-disabled"
-                tabindex="-1" type="button" id="BUTTON-delete-relin-key">
-                <span class="MuiButton-label">
-                  <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                    id="BUTTON-delete-relin-key-text">Delete
-                  </span>
-                </span>
-              </button>
-            </div> -->
-            <div class="MuiGrid-root MuiGrid-item">
-              <button
-                (click)="downloadEncryptFile(this.fileEncrypted,this.fileEncryptedName)" class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
-                tabindex="-1" type="button" id="BUTTON-download-relin-key">
-                <span class="MuiButton-label">
-                  <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                    id="BUTTON-download-relin-key-text">Download</span>
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </form>
-      <form class="MuiPaper-root jss30 MuiPaper-elevation1 MuiPaper-rounded">
-        <h3 class="MuiTypography-root MuiTypography-h5 MuiTypography-gutterBottom">Decrytption</h3>
-        <p class="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextSecondary">Upload your encryption file
-          for Decryption.</p>
-        <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center">
-            <div class="MuiGrid-root MuiGrid-item">
-            </div>
-          </div>
-
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-flex-end">
-            <div class="MuiGrid-root MuiGrid-item">
-              <div class="jss35">
-                <!-- <div>
-                  <input id="file-upload-relinkey" class="jss37" type="file">
-                  <label for="file-upload-relinkey">
-                    <span class="MuiButtonBase-root MuiButton-root MuiButton-text Mui-disabled Mui-disabled"
-                      tabindex="-1" role="button" aria-disabled="true">
-                      <span class="MuiButton-label">
-                        <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                          id="UPLOAD relinkey">Upload</span>
-                      </span>
-                    </span>
-                  </label>
-                </div> -->
-                <div>
-                  <input id="file-upload-secretkey" class="jss37" type="file" (change)="onFileChangeinputpublickey($event)">
-                  <label for="file-upload-secretkey">
-                    <span class="MuiButtonBase-root MuiButton-root MuiButton-text Mui-disabled Mui-disabled" tabindex="-1" role="button" aria-disabled="true">
-                      <span class="MuiButton-label">
-                        <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock" id="UPLOAD secretkey">Upload your Secret Key</span>
-                      </span>
-                    </span>
-                  </label>
-                </div>
-                <div>
-                  <input id="file-upload-secretkey" class="jss37" type="file" (change)="onFileChangeinputpublickey($event)">
-                  <label for="file-upload-secretkey">
-                    <span class="MuiButtonBase-root MuiButton-root MuiButton-text Mui-disabled Mui-disabled" tabindex="-1" role="button" aria-disabled="true">
-                      <span class="MuiButton-label">
-                        <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock" id="UPLOAD secretkey">Upload your Encrypt File Key</span>
-                      </span>
-                    </span>
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="MuiGrid-root MuiGrid-item">
-            <button [disabled]="true"
-            class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
-            tabindex="-1" type="button" id="BUTTON-create-key-pair">
-            <span class="MuiButton-label">
-              <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                id="BUTTON-create-key-pair-text">Decrypt</span>
-            </span>
-          </button>
-        </div>
-          <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between">
-            <!-- <div class="MuiGrid-root MuiGrid-item">
-              <button class="MuiButtonBase-root MuiButton-root MuiButton-text jss34 Mui-disabled Mui-disabled"
-                tabindex="-1" type="button" id="BUTTON-delete-relin-key">
-                <span class="MuiButton-label">
-                  <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                    id="BUTTON-delete-relin-key-text">Delete</span>
-                </span>
-              </button>
-            </div> -->
-            <div class="MuiGrid-root MuiGrid-item">
-              <button [disabled]="true"
-                class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary Mui-disabled Mui-disabled"
-                tabindex="-1" type="button" id="BUTTON-download-relin-key"
-                [attr.disabled]="isButtonDisabled ? true : null"
-                (click)="downloadFile()">
-                <span class="MuiButton-label">
-                  <span class="MuiTypography-root MuiTypography-button MuiTypography-displayBlock"
-                    id="BUTTON-download-relin-key-text" >Download</span>
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-  </main>
+  </div>
 </div>
+
+<div class="container">
+  <div class="inner ">
+      <div class="row " style="padding-bottom: 24px;">
+          <div class="col-lg-6 ">
+              <div >
+                  <mat-label>Polymodulus
+                      Degree</mat-label>
+                  <mat-select placeholder="Seclect PolyModulusDegree" [formControl]="position">
+                      <mat-option *ngFor="let degree of polyModulusDegrees" [value]="degree">
+                          {{degree}}
+                      </mat-option>
+                  </mat-select>
+                  <mat-hint align="end">Higher
+                      values allow for more computations at the cost of more CPU and memory resources</mat-hint>
+              </div>
+          </div>
+      </div>
+      <div class="row " style="padding-bottom: 24px;">
+          <div class="col-lg-12">
+              <mat-label>Coefficient
+                  Modulus (Bit Sizes)
+              </mat-label>
+              <form class="example-form">
+                  <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Coefficient Modulus " value="36,36,37">
+                      <mat-hint>The
+                          bit-lengths of the primes to be generated for the Coefficient Modulus (comma separated). Max
+                          60 bits.</mat-hint>
+                  </mat-form-field>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="inner ">
+      <div class="row " style="padding-bottom: 24px;">
+          <div class="col-lg-12">
+              <mat-label>Plain Modulus
+                  (BitSize)
+              </mat-label>
+              <form class="example-form">
+                  <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Plain Modulus" value="20">
+                      <mat-hint>The bit-length of the prime to be generated for the Plain Modulus that will enable
+                          Batching. Max 60 bits.</mat-hint>
+                  </mat-form-field>
+              </form>
+          </div>
+      </div>
+      <button  routerLink="/keys" class="btn btn-primary" style="padding: 15px 20px;">Create Enc Parms</button>
+  </div>
+</div>
+
 
 

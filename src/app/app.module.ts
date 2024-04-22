@@ -17,9 +17,9 @@ import { SimpleNotificationsModule  } from 'angular2-notifications';
 import { SecondpageComponent } from './secondpage/secondpage.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { ParameterComponent } from './parameter/parameter.component';
 import { EncryptComponent } from './encrypt/encrypt.component';
 import { KeysComponent } from './keys/keys.component';
+import { DecryptComponent } from './decrypt/decrypt.component';
 
 
 
@@ -30,9 +30,9 @@ import { KeysComponent } from './keys/keys.component';
     MainpageComponent,
     EncryptionComponent,
     SecondpageComponent,
-    ParameterComponent,
     EncryptComponent,
     KeysComponent,
+    DecryptComponent,
     
   ],
   imports: [

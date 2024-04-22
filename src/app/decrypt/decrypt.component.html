@@ -43,28 +43,29 @@
         <div class="page-title d-flex flex-column me-3">
             <!--begin::Title-->
             <h3 class="d-flex text-black fw-bold my-1 fs-3">
-                Encryption 
+                 Decrytption
             </h3>
         </div>
     </div>
 
     <div class="container-xxl d-flex flex-stack flex-wrap">
         <div class="page-title d-flex flex-column me-3 my-4">
-            <p>Encryption is the process by which a readable message is converted to an unreadable form to prevent
-                unauthorized parties from reading it.</p>
+            <p>Decryption is the process of transforming data that has been rendered unreadable through encryption back
+                to its
+                unencrypted form.</p>
         </div>
     </div>
 </div>
 
-<div class="container" style="margin-left: 425;margin-left: 425px;">
-    <div class="inner ">
-        <div class="row ">
-            <div class="col-lg-6 ">
+<div class="container  " style="margin-left: 425;margin-left: 425px;">
+    <div class="inner">
+        <div class="row">
+            <div class="col-lg-6">
                 <!-- Encryption Form -->
                 <div class="card">
                     <div class="card-body d-flex flex-column ">
-                        <h2 class="card-title fw-bold">Encryption</h2>
-                        <p class="card-text">Upload your file for Encryption.</p>
+                        <h2 class="card-title fw-bold">Decryption</h2>
+                        <p class="card-text">Upload your encryption file for Decryption.</p>
                         <div class="form-group">
                             <input type="file" class="form-control" (change)="onFileChangeinputpublickey($event)">
                             <label for="file-upload-secretkey">Upload your public Key</label>
@@ -74,7 +75,7 @@
                             <label for="file-upload-secretkey">Upload your File</label>
                         </div>
                         <div class="text-center">
-                            <button class="btn btn-primary" (click)="Encryptionfile()">Encrypt</button>
+                            <button class="btn btn-primary" (click)="Encryptionfile()">Dencrypt</button>
                         </div>
                         <div *ngIf="this.secretkey" class="status">
                             <p>{{secretKeyName}} Key Are Created</p>
