@@ -55,10 +55,11 @@
                         </div>
                         <div *ngIf="this.secretkey" class="status">
                             <p>{{secretKeyName}} Key Are Created</p>
+                            <p>{{publicKeyName}} Key Are Created</p>
                         </div>
                         <div>
                             <button class="btn btn-danger"
-                                (click)="downloadTxtFile(this.secretkey,this.secretKeyName+' SecretKey')"
+                                (click)="downloadTxtFile(this.secretkey,this.publickey,this.secretKeyName+' SecretKey')"
                                 [disabled]="isButtonDisabled">Download </button>
                         </div>
                     </div>

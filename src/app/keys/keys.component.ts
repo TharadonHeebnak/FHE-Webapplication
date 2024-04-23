@@ -107,14 +107,11 @@ export class KeysComponent {
   
   }
   
-  downloadTxtFile(key: any,keyname:string) {
-    if(this.secretKeyName == undefined || null){
-      this.secretKeyName = 'Key'
-    }
-    this.saveTxtFiles(key,keyname);
+  downloadTxtFile(skey: any,pkey,keyname:string) {
+    this.saveTxtFiles(skey,pkey,keyname);
   }
   
-  private saveTxtFiles(data1: any, fileName: string, ) {
+  private saveTxtFiles(data1: any,data2: any, fileName: string, ) {
     // Create Blob for File 1
     const blob1 = new Blob([data1], { type: 'text/plain' });
     const link1 = document.createElement('a');
