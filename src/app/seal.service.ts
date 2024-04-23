@@ -52,6 +52,10 @@ export class SealService {
     return this.http.post<{}>(this.apiTest,file)
   }
 
+  tests():Observable<any>{
+    return this.http.post<{}>(this.Url+'tests',{})
+  }
+
   
 
 }

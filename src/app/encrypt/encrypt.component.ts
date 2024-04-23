@@ -240,5 +240,10 @@ export class EncryptComponent {
   }
   
   //////////////////////////////////////////////////////
+  tests(){
+    this.sealService.tests().subscribe({
+
+    })
+  }
   
 }

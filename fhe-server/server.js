@@ -519,7 +519,7 @@ const plainText = "Hello world";
   // const plainText = encoder.encode(message)
   // const plainText = message
 
-  const plainTextArray = new Uint32Array(plainText.length);
+  const plainTextArray = new Int32Array(plainText.length);
     for (let i = 0; i < plainText.length; i++) {
         plainTextArray[i] = plainText.charCodeAt(i);
     }
