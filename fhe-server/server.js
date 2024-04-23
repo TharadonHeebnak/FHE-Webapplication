@@ -359,7 +359,9 @@ if (!context.parametersSet()) {
 
   const fileToEncryption = req.files['fileToEncryption'][0];
   const textpublickey = req.files['publickey'][0];
-
+  const fileToEncryptString = fileToEncryption.buffer.toString('utf8');
+  console.log('Length of fileToEncryptString:', fileToEncryptString.length);
+  console.log('Length of fileToEncryptString:', fileToEncryptString);
   console.log(fileToEncryption);
 
   // ตรวจสอบว่า req.files ถูกสร้างขึ้นถูกต้อง
@@ -377,8 +379,8 @@ uploadedPublicKey.load(context, publicKeyString);
   // publicKey.load(publicKeyString);
 
   // อ่านข้อมูลจาก Buffer ของไฟล์ที่ต้องการเข้ารหัส
-  const fileToEncryptString = fileToEncryption.buffer.toString('utf8');
-  console.log('this is fileToEncryptString', fileToEncryptString);
+  // const fileToEncryptString = fileToEncryption.buffer.toString('utf8');
+  // console.log('this is fileToEncryptString', fileToEncryptString);
 
   // console.log(publicKeyString);
   // สร้าง Encryptor
