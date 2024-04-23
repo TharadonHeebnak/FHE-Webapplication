@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SealService {
+  [x: string]: any;
 
   private apiUrl = 'http://localhost:3000/seal-operation';
   private apiGetSchemeType = 'http://localhost:3000/getSchemeType';
@@ -46,5 +47,7 @@ export class SealService {
     console.log('this is form Data in service',file)
     return this.http.post<{}>(this.apiTest,file)
   }
+
+  
 
 }

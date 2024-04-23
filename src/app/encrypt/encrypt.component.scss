@@ -4,6 +4,8 @@
   overflow: hidden;
 }
 
+
+
 .navbar .logo {
   float: left;
   padding: 16px 126px;
@@ -12,6 +14,7 @@
   text-decoration: none;
   
 }
+
 
 .menu {
   float: right;
@@ -31,15 +34,30 @@
 }
 
 .menu li a:hover {
- 
+
   color: blue($color: #000000);
 }
 
 
-.example-full-width {
-  width: 100%;
+// button 
+.text-center {
+  text-align: center;
+  /* Center-align the content */
+  margin-top: 10px;
+  /* Add margin as needed */
 }
 
-.status{
-  color: green;
+
+// card 
+.card-body {
+  padding: 2rem 2.25rem;
+}
+
+.card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
 }
