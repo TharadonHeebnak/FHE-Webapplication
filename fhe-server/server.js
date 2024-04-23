@@ -391,60 +391,61 @@ uploadedPublicKey.load(context, publicKeyString);
   const encryptor = seal.Encryptor(context,uploadedPublicKey)
   // const plainText = seal.plainText(fileToEncryption);
   // console.log(plainText);
-
-  const encoder = seal.BatchEncoder(context)
-
-  const plainTextArray = new Uint32Array(plainText.length);
-  for (let i = 0; i < plainText.length; i++) {
-      plainTextArray[i] = plainText.charCodeAt(i);
-  }
-
-  const encodedPlainText = encoder.encode(plainTextArray);
-
-  console.log('encodedPlainText',encodedPlainText);
-
-  // const plainTextA = seal.PlainText(fileToEncryption);
-  // console.log('this is plainTextA', plainTextA);
-  // เข้ารหัสข้อมูล
-  const fileEncrypted = encryptor.encrypt(encodedPlainText);
-  const fileEncryptedbase64 = fileEncrypted.save()
-
   const keyGenerator = seal.KeyGenerator(
     context
   );
   const secretKey = keyGenerator.secretKey();
+  
+  const publicKey = keyGenerator.createPublicKey();
+  const encoder = seal.BatchEncoder(context)
+  console.log("this is plantext",plainText);
+  const plainTextArray = new Int32Array(plainText.length);
+  for (let i = 0; i < plainText.length; i++) {
+      plainTextArray[i] = plainText.charCodeAt(i);
+  }
+  console.log("this is plainTextArray",plainTextArray);
+
+
+  const encodedPlainText = encoder.encode(plainTextArray);
+
+  const encryptors = seal.Encryptor(context, publicKey);
+
+  // สร้าง Decryptor object เพื่อถอดรหัสข้อมูล
   const decryptor = seal.Decryptor(context, secretKey);
+  
+  // Encrypt the PlainText
+  const ciphertext = encryptors.encrypt(encodedPlainText);
+  console.log('ciphertext',ciphertext);
+  const cipherAbase64 = ciphertext.save() 
+  console.log('cipherAbase64',cipherAbase64);
+  const uploadedCipherText = seal.CipherText()
+  uploadedCipherText.load(context, cipherAbase64)
+  console.log('uploadedCipherText',uploadedCipherText);
 
-// Encrypt the PlainText
-
-// Decrypt the CipherText
-const decryptedPlainText = decryptor.decrypt(fileEncrypted);
-
-// Decode the decrypted PlainText
-const decryptedArray = encoder.decode(decryptedPlainText);
-
-const asciiCodes = Array.from(decryptedArray);
-
-
-// Convert ASCII codes to characters
-const characters = asciiCodes.map(code => String.fromCharCode(code));
-
-
-// Join characters to form the original message
-const originalMessage = characters.join('');
-
-console.log('Original Message:', originalMessage);
-
-  // console.log('decryptedPlainText',decryptedPlainText);
-
-  // console.log('this is publickey', publicKeyString);
-  console.log('this is fileEncrypted', fileEncrypted);
-  console.log('this is fileEncryptedbase64', fileEncryptedbase64);
-
-  const fileEncryptedName = fileToEncryption.originalname;
-  console.log('this is fileEncryptedName', fileEncryptedName,);
-  // ทำสิ่งที่คุณต้องการกับไฟล์และข้อมูล publickey
-  res.status(200).json({ fileEncryptedbase64,fileEncryptedName});
+  // Decrypt the CipherText
+  const decryptedPlainText = decryptor.decrypt(uploadedCipherText);
+  console.log('decryptedPlainText',decryptedPlainText);
+  
+  // Decode the decrypted PlainText
+  const decryptedArray = encoder.decode(decryptedPlainText);
+  console.log('decryptedArray Message:', decryptedArray);
+  
+  const asciiCodes = Array.from(decryptedArray);
+  console.log('asciiCodes Message:', asciiCodes);
+  
+  
+  // Convert ASCII codes to characters
+  const characters = asciiCodes.map(code => String.fromCharCode(code));
+  console.log('characters Message:', characters);
+  
+  
+  // Join characters to form the original message
+  const originalMessage = characters.join('');
+  const stringer = originalMessage;
+  
+  console.log('Original Message:', originalMessage);
+  console.log('stringer Message:', stringer);
+  res.status(200).json({ });
 
   // res.status(200).json({ message: 'Files received successfully.',plainTextA });
 });
@@ -467,7 +468,7 @@ app.post('/tests',async(req, res) => {
   const seal = await SEAL();
   const schemeType = seal.SchemeType.bfv
   const securityLevel = seal.SecurityLevel.tc128
-  const polyModulusDegree = 32768
+  const polyModulusDegree = 4096
   const bitSizes = [36, 36, 37]
   const bitSize = 20
 
@@ -513,7 +514,7 @@ const publicBase64Key = publicKey.save()
 // console.log('this is test publicKey ',publicBase64Key);
 const encoder = seal.BatchEncoder(context)
 const array = Int32Array.from([2, 22, 3, 4, 5])
-const plainText = "";
+const plainText = "Hello world";
 
   // Encode the Array
   // const plainText = encoder.encode(message)
@@ -523,7 +524,6 @@ const plainText = "";
     for (let i = 0; i < plainText.length; i++) {
         plainTextArray[i] = plainText.charCodeAt(i);
     }
-    console.log("format array suc",plainTextArray);
 
     const encodedPlainText = encoder.encode(plainTextArray);
 
