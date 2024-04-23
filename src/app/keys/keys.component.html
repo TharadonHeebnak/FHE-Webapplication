@@ -46,12 +46,12 @@
                         <mat-label class="fs-7 text-muted  mt-1">Key Pair Name</mat-label>
                         <form class="example-form ">
                             <mat-form-field class="example-full-width">
-                                <input matInput placeholder="Key Pair Name" value="">
+                                <input matInput placeholder="Key Pair Name" value="" id="INPUT-secretkey-pair-name">
                                 <mat-hint class="fs-7 text-muted ">Create a new Secret and Public key pair.</mat-hint>
                             </mat-form-field>
                         </form>
                         <div class="text-center">
-                            <button class="btn btn-primary" (click)="Encryptionfile()">Create</button>
+                            <button class="btn btn-primary" (click)="getsecretkey()">Create</button>
                         </div>
                         <div *ngIf="this.secretkey" class="status">
                             <p>{{secretKeyName}} Key Are Created</p>
