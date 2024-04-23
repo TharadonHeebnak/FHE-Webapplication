@@ -102,8 +102,8 @@ app.get('/getSchemeType', async(req, res) => {
 
 app.post('/creat-two-key',async(req,res)=>{
   const seal = await SEAL();
-  const keyName = req.body.secretKeyName;
-  console.log('this is secretKeyName',keyName);
+  const keyName = req.body.twoKeyName;
+  console.log('this is keyName',keyName);
 
 //   const parms = new EncryptionParameters();
 // parms.setPolyModulus("1x^2048 + 1");
@@ -161,7 +161,7 @@ console.log('This is Key Generate',keyGenerator);
 
     // Get the PublicKey from the keyGenerator
     const secretBase64Key = secretKey.save()
-    const publicKey = keyGenerator.createPublicKey(inputsecretKey);
+    const publicKey = keyGenerator.createPublicKey(secretKey);
     // Get the PublicKey from the keyGenerator
     const publicBase64Key = publicKey.save()
 

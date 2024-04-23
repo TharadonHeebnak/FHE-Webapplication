@@ -32,6 +32,10 @@ export class SealService {
     return this.http.post<{secretBase64Key:any,secretKeyName:string}>(this.Url+'creat-secret-key',{secretKeyName})
   }
 
+  getTwokey(twoKeyName:string):Observable<{secretBase64Key:any,keyName:string,publicBase64Key:any}>{
+    return this.http.post<{secretBase64Key:any,keyName:string,publicBase64Key:any}>(this.Url+'creat-two-key',{twoKeyName})
+  }
+
   getpublickey(publicKeyName:string,secretKey:any):Observable<{publicBase64Key:any,publicKeyName:string}>{
     return this.http.post<{publicBase64Key:any,publicKeyName:string}>(this.Url+'creat-public-key',{publicKeyName,secretKey})
   }

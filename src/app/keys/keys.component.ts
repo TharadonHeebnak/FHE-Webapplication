@@ -66,14 +66,19 @@ export class KeysComponent {
       });
   }
   
-  getsecretkey(){
-    const secretKeyName = (document.getElementById('INPUT-secretkey-pair-name') as HTMLInputElement).value;
-    if(secretKeyName !== '' && secretKeyName !== undefined){
-      console.log('Key Pair Name:', secretKeyName);
-      this.sealService.getsecretkey(secretKeyName).subscribe(response =>{
+  createTwoKey(){
+    const twoKeyName = (document.getElementById('INPUT-secretkey-pair-name') as HTMLInputElement).value;
+    if(twoKeyName !== '' && twoKeyName !== undefined){
+      console.log('Key Pair Name:', twoKeyName);
+      this.sealService.getTwokey(twoKeyName).subscribe(response =>{
         this.secretkey = response.secretBase64Key;
-        this.secretKeyName = response.secretKeyName;
+        this.publickey = response.publicBase64Key;
+        this.secretKeyName = response.keyName;
+        this.publicKeyName = response.keyName;
+        console.log('secretKeyName:', this.secretKeyName);
+        console.log('publicKeyName:', this.publicKeyName);
         this.service.success('Secret Key are created',this.secretKeyName);
+        this.service.success('Public Key are created',this.publicKeyName);
       })
     }else{
       this.service.info('Please Input Name');
