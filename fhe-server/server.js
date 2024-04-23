@@ -467,7 +467,7 @@ app.post('/tests',async(req, res) => {
   const seal = await SEAL();
   const schemeType = seal.SchemeType.bfv
   const securityLevel = seal.SecurityLevel.tc128
-  const polyModulusDegree = 4096
+  const polyModulusDegree = 32768
   const bitSizes = [36, 36, 37]
   const bitSize = 20
 
@@ -513,7 +513,7 @@ const publicBase64Key = publicKey.save()
 // console.log('this is test publicKey ',publicBase64Key);
 const encoder = seal.BatchEncoder(context)
 const array = Int32Array.from([2, 22, 3, 4, 5])
-const plainText = "Hello world";
+const plainText = "";
 
   // Encode the Array
   // const plainText = encoder.encode(message)
@@ -523,6 +523,7 @@ const plainText = "Hello world";
     for (let i = 0; i < plainText.length; i++) {
         plainTextArray[i] = plainText.charCodeAt(i);
     }
+    console.log("format array suc",plainTextArray);
 
     const encodedPlainText = encoder.encode(plainTextArray);
 
