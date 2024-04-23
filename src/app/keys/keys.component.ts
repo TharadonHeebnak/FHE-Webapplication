@@ -15,11 +15,13 @@ import { Injectable } from '@angular/core';
 })
 export class KeysComponent {
 
+
   constructor(
     private sealService: SealService,
     private service: NotificationsService,
     private http: HttpClient,
     ) {}
+  keyName: any;
   secretkey: any;
   publickey: any;
   secretKeyName?: any;
@@ -75,6 +77,7 @@ export class KeysComponent {
         this.publickey = response.publicBase64Key;
         this.secretKeyName = response.keyName;
         this.publicKeyName = response.keyName;
+        this.keyName = response.keyName;
         console.log('secretKeyName:', this.secretKeyName);
         console.log('publicKeyName:', this.publicKeyName);
         this.service.success('Secret Key are created',this.secretKeyName);
@@ -107,30 +110,58 @@ export class KeysComponent {
   
   }
   
-  downloadTxtFile(skey: any,pkey,keyname:string) {
+  downloadTxtFile(skey: any,pkey: any,keyname:string) {
     this.saveTxtFiles(skey,pkey,keyname);
+    console.log('this key name',keyname);
+    
   }
   
+  // private saveTxtFiles(data1: any,data2: any, fileName: string, ) {
+  //   // Create Blob for File 1
+  //   const blob1 = new Blob([data1], { type: 'text/plain' });
+  //   const link1 = document.createElement('a');
+  //   link1.href = window.URL.createObjectURL(blob1);
+  //   link1.download = fileName;
+  
+  //   // Create Blob for File 2
+  
+  //   // Append the links to the document body
+  //   document.body.appendChild(link1);
+  
+  
+  //   // Trigger the click event for both links
+  //   link1.click();
+  
+  
+  //   // Remove the links from the document body
+  //   document.body.removeChild(link1);
+  
+  // }
+
   private saveTxtFiles(data1: any,data2: any, fileName: string, ) {
     // Create Blob for File 1
     const blob1 = new Blob([data1], { type: 'text/plain' });
     const link1 = document.createElement('a');
     link1.href = window.URL.createObjectURL(blob1);
-    link1.download = fileName;
-  
+    link1.download = fileName + '_Secretkey.txt' || 'Secretkey.txt';
+
     // Create Blob for File 2
-  
+    const blob2 = new Blob([data2], { type: 'text/plain' });
+    const link2 = document.createElement('a');
+    link2.href = window.URL.createObjectURL(blob2);
+    link2.download = fileName + '_Publickey.txt' || 'Publickey.txt';
+
     // Append the links to the document body
     document.body.appendChild(link1);
-  
-  
+    document.body.appendChild(link2);
+
     // Trigger the click event for both links
     link1.click();
-  
-  
+    link2.click();
+
     // Remove the links from the document body
     document.body.removeChild(link1);
-  
+    document.body.removeChild(link2);
   }
   
   
