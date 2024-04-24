@@ -192,7 +192,7 @@ export class KeysComponent {
     if(this.fileToEncryp){
       if(this.publickey !== '' && this.publickey !== undefined){
       this.sealService.getEncryptionFile(this.fileToEncryp,this.publickey).subscribe(response =>{
-        this.fileEncrypted = response.fileEncryptedbase64;
+        this.fileEncrypted = response.cipherAbase64;
         console.log('File are Encrypted',this.fileEncrypted);
         this.service.success('publickey are created',this.publicKeyName);
       })

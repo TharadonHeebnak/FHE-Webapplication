@@ -7,6 +7,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { response } from 'express';
 
 
 @Component({
@@ -161,7 +162,7 @@ export class EncryptComponent {
     if(this.fileToEncryp){
       if(this.publickey !== '' && this.publickey !== undefined){
       this.sealService.getEncryptionFile(this.fileToEncryp,this.publickey).subscribe(response =>{
-        this.fileEncrypted = response.fileEncryptedbase64;
+        this.fileEncrypted = response.cipherAbase64;
         console.log('File are Encrypted',this.fileEncrypted);
         this.service.success('publickey are created',this.publicKeyName);
       })
@@ -241,7 +242,9 @@ export class EncryptComponent {
   
   //////////////////////////////////////////////////////
   tests(){
-    this.sealService.tests().subscribe({
+    this.sealService.tests().subscribe(response =>{
+      this.fileEncrypted = response
+      
 
     })
   }

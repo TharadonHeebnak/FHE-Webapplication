@@ -328,7 +328,7 @@ app.post('/testform', upload.fields([{ name: 'fileToEncryption', maxCount: 1 }, 
 const schemeType = seal.SchemeType.bfv
 const securityLevel = seal.SecurityLevel.tc128
 const polyModulusDegree = 4096
-const bitSizes = [36, 36, 37]
+const bitSizes = [36,36,37]
 const bitSize = 20
 
 
@@ -365,7 +365,7 @@ if (!context.parametersSet()) {
   const fileToEncryption = req.files['fileToEncryption'][0];
   const textpublickey = req.files['publickey'][0];
 
-  console.log(fileToEncryption);
+
 
   // ตรวจสอบว่า req.files ถูกสร้างขึ้นถูกต้อง
   if (!fileToEncryption || !textpublickey) {
@@ -377,13 +377,13 @@ if (!context.parametersSet()) {
   // const publicKey = seal.publicBase64Key.deserializeFrom(publicKeyString);
   // const publicKey = seal.publicBase64Key.fromString(publicKeyString);
   const uploadedPublicKey = seal.PublicKey(); // สร้าง instance ของ PublicKey
-uploadedPublicKey.load(context, publicKeyString);
+  uploadedPublicKey.load(context, publicKeyString);
   // const publicKey = new seal.PublicKey();
   // publicKey.load(publicKeyString);
 
   // อ่านข้อมูลจาก Buffer ของไฟล์ที่ต้องการเข้ารหัส
   const fileToEncryptString = fileToEncryption.buffer.toString('utf8');
-  console.log('this is fileToEncryptString', fileToEncryptString);
+  // console.log('this is fileToEncryptString', fileToEncryptString);
   const plainText = fileToEncryptString;
 
   // console.log(publicKeyString);
@@ -398,12 +398,13 @@ uploadedPublicKey.load(context, publicKeyString);
   
   const publicKey = keyGenerator.createPublicKey();
   const encoder = seal.BatchEncoder(context)
-  console.log("this is plantext",plainText);
+  // console.log("this is plantext",plainText);
   const plainTextArray = new Int32Array(plainText.length);
   for (let i = 0; i < plainText.length; i++) {
       plainTextArray[i] = plainText.charCodeAt(i);
   }
-  console.log("this is plainTextArray",plainTextArray);
+  // console.log("this is plainTextArray  length",plainTextArray.length);
+  // console.log("this is plainTextArray",plainTextArray);
 
 
   const encodedPlainText = encoder.encode(plainTextArray);
@@ -415,7 +416,7 @@ uploadedPublicKey.load(context, publicKeyString);
   
   // Encrypt the PlainText
   const ciphertext = encryptors.encrypt(encodedPlainText);
-  console.log('ciphertext',ciphertext);
+  // console.log('ciphertext',ciphertext);
   const cipherAbase64 = ciphertext.save() 
   console.log('cipherAbase64',cipherAbase64);
   const uploadedCipherText = seal.CipherText()
@@ -424,19 +425,19 @@ uploadedPublicKey.load(context, publicKeyString);
 
   // Decrypt the CipherText
   const decryptedPlainText = decryptor.decrypt(uploadedCipherText);
-  console.log('decryptedPlainText',decryptedPlainText);
+  // console.log('decryptedPlainText',decryptedPlainText);
   
   // Decode the decrypted PlainText
   const decryptedArray = encoder.decode(decryptedPlainText);
-  console.log('decryptedArray Message:', decryptedArray);
+  // console.log('decryptedArray Message:', decryptedArray);
   
   const asciiCodes = Array.from(decryptedArray);
-  console.log('asciiCodes Message:', asciiCodes);
+  // console.log('asciiCodes Message:', asciiCodes);
   
   
   // Convert ASCII codes to characters
   const characters = asciiCodes.map(code => String.fromCharCode(code));
-  console.log('characters Message:', characters);
+  // console.log('characters Message:', characters);
   
   
   // Join characters to form the original message
@@ -445,7 +446,7 @@ uploadedPublicKey.load(context, publicKeyString);
   
   console.log('Original Message:', originalMessage);
   console.log('stringer Message:', stringer);
-  res.status(200).json({ });
+  res.status(200).json({cipherAbase64 });
 
   // res.status(200).json({ message: 'Files received successfully.',plainTextA });
 });
@@ -692,8 +693,8 @@ app.post('/creat-two-key',async(req,res)=>{
 
 const schemeType = seal.SchemeType.bfv
 const securityLevel = seal.SecurityLevel.tc128
-const polyModulusDegree = 4096
-const bitSizes = [36, 36, 37]
+const polyModulusDegree = 32768
+const bitSizes = [55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,56]
 const bitSize = 20
 
 const encParms = seal.EncryptionParameters(schemeType)

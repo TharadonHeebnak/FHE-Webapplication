@@ -44,7 +44,7 @@ export class SealService {
     formdata.append('fileToEncryption',fileToEncryption);
     formdata.append('publickey',publickey);
     console.log('this is publickey in service',publickey)
-    return this.http.post<{fileEncryptedbase64:File,fileEncryptedName:string}>(this.Url+'testform',formdata)
+    return this.http.post<{cipherAbase64:File}>(this.Url+'testform',formdata)
   }
 
   getEncryptionFiletest(file:FormData){
