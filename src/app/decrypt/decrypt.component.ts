@@ -128,7 +128,8 @@ export class DecryptComponent {
       this.sealService.getDecryptionFile(this.fileToDecrypt,this.secretkey).subscribe(response =>{
         this.fileDecrypted = response.decryptedFile;
         console.log('File are Encrypted',this.fileDecrypted);
-        this.service.success('File are Decrypted',this.fileDecrypted);
+        this.fileName = response.fileDecryptedName;
+        this.service.success('File are Decrypted',this.fileName);
       })
       }else{
         this.service.info('Please Input Name');

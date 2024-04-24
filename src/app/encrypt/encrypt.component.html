@@ -78,7 +78,7 @@
                         </div>
                         <div>
                             <button class="btn btn-danger"
-                                (click)="downloadTxtFile(this.fileEncrypted,' Encrypted File')"
+                                (click)="downloadTxtFile(this.fileEncrypted,'Encrypted File'+this.fileName)"
                                 [disabled]="isButtonDisabled">Download </button>
                         </div>
                         <button (click)="tests()">Test</button>

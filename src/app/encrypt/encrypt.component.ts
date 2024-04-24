@@ -164,7 +164,8 @@ export class EncryptComponent {
       this.sealService.getEncryptionFile(this.fileToEncryp,this.publickey).subscribe(response =>{
         this.fileEncrypted = response.cipherAbase64;
         console.log('File are Encrypted',this.fileEncrypted);
-        this.service.success('File are Encrypted',this.publicKeyName);
+        this.fileName = response.fileEncryptedName;
+        this.service.success('File are Encrypted',this.fileName);
       })
       }else{
         this.service.info('Please Input Name');

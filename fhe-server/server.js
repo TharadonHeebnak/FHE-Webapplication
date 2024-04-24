@@ -446,7 +446,8 @@ if (!context.parametersSet()) {
   
   console.log('Original Message:', originalMessage);
   // console.log('stringer Message:', stringer);
-  res.status(200).json({cipherAbase64 });
+  const fileEncryptedName = fileToEncryption.originalname;
+  res.status(200).json({cipherAbase64,fileEncryptedName });
 
   // res.status(200).json({ message: 'Files received successfully.',plainTextA });
 });
@@ -579,7 +580,8 @@ if (!context.parametersSet()) {
   
   console.log('Original Message:', originalMessage);
   // console.log('stringer Message:', stringer);
-  res.status(200).json({decryptedFile });
+  const fileDecryptedName = fileToDecryption.originalname;
+  res.status(200).json({decryptedFile,fileDecryptedName });
 
   // res.status(200).json({ message: 'Files received successfully.',plainTextA });
 });
