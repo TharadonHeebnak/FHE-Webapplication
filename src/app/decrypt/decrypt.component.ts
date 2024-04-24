@@ -14,6 +14,7 @@ import { Injectable } from '@angular/core';
   styleUrl: './decrypt.component.scss'
 })
 export class DecryptComponent {
+ 
   constructor(
     private sealService: SealService,
     private service: NotificationsService,
@@ -33,6 +34,7 @@ export class DecryptComponent {
   secretkeyFileReaded?:string;
   publickeyFileReaded?:string;
   fileToEncryp:File | null = null;
+  fileToDecrypt: File | null = null;
   fileEncrypted:File | null = null;
   
   
@@ -64,42 +66,7 @@ export class DecryptComponent {
         console.error('Error fetching schemeType:', error);
       });
   }
-  
-  getsecretkey(){
-    const secretKeyName = (document.getElementById('INPUT-secretkey-pair-name') as HTMLInputElement).value;
-    if(secretKeyName !== '' && secretKeyName !== undefined){
-      console.log('Key Pair Name:', secretKeyName);
-      this.sealService.getsecretkey(secretKeyName).subscribe(response =>{
-        this.secretkey = response.secretBase64Key;
-        this.secretKeyName = response.secretKeyName;
-        this.service.success('Secret Key are created',this.secretKeyName);
-      })
-    }else{
-      this.service.info('Please Input Name');
-  
-    }
-  
-  }
-  
-  getpublickey(){
-    const publicKeyName = (document.getElementById('INPUT-public-key') as HTMLInputElement).value;
-    if(this.secretkeyFileReaded){
-      if(publicKeyName !== '' && publicKeyName !== undefined){
-      this.sealService.getpublickey(publicKeyName,this.secretkeyFileReaded).subscribe(response =>{
-        this.publickey = response.publicBase64Key;
-        this.publicKeyName = response.publicKeyName;
-        console.log('publickey are created');
-        this.service.success('publickey are created',this.publicKeyName);
-      })
-      }else{
-        this.service.info('Please Input Name');
-      }
-    }else{
-      this.service.info('Please Upload Secret Key')
-  
-    }
-  
-  }
+
   
   downloadTxtFile(key: any,keyname:string) {
     if(this.secretKeyName == undefined || null){
@@ -153,14 +120,13 @@ export class DecryptComponent {
     reader.readAsText(file);
   }
   
-  Encryptionfile(){
-  
-    if(this.fileToEncryp){
-      if(this.publickey !== '' && this.publickey !== undefined){
-      this.sealService.getEncryptionFile(this.fileToEncryp,this.publickey).subscribe(response =>{
+  Decryptionfile(){
+    if(this.fileToDecrypt){
+      if(this.secretkey !== '' && this.secretkey !== undefined){
+      this.sealService.getDecryptionFile(this.fileToDecrypt,this.secretkey).subscribe(response =>{
         this.fileEncrypted = response.cipherAbase64;
         console.log('File are Encrypted',this.fileEncrypted);
-        this.service.success('publickey are created',this.publicKeyName);
+        this.service.success('File are Decrypted',this.fileEncrypted);
       })
       }else{
         this.service.info('Please Input Name');
@@ -175,16 +141,11 @@ export class DecryptComponent {
   onFileChangeinputpublickey(event: any) {
     const fileList: FileList = event.target.files;
     if (fileList.length > 0) {
-      this.publickey = fileList[0];
+      this.secretkey = fileList[0];
       const formData = new FormData();
-      formData.append('file', this.publickey);
+      formData.append('file', this.secretkey);
       console.log('this is form data ', formData);
-      this.sealService.getEncryptionFiletest(formData).subscribe(response =>{
-        // this.fileEncrypted = response.fileToEncryption;
-        console.log('File are Encrypted',this.fileEncrypted);
-        // this.service.success('publickey are created',this.publicKeyName);
-      })
-      this.readPublicKeyFileContent(this.publickey);
+      this.readPublicKeyFileContent(this.secretkey);
       // เรียกใช้ฟังก์ชั่นหรือทำสิ่งที่คุณต้องการกับไฟล์ที่อัปโหลดที่นี่
     }
   }
@@ -195,19 +156,18 @@ export class DecryptComponent {
       const file = fileList[0];
       // เรียกใช้ฟังก์ชั่นหรือทำสิ่งที่คุณต้องการกับไฟล์ที่อัปโหลดที่นี่
       console.log('this is file use for encryption',file)
-      this.fileToEncryp = file;
-      console.log('this is file use for encryption',this.fileToEncryp)
+      this.fileToDecrypt = file;
+      console.log('this is file use for fileToDecrypt',this.fileToDecrypt)
     }
   }
   
   readPublicKeyFileContent(file: File) {
     const reader = new FileReader();
     reader.onload = (e) => {
-      this.publickeyFileReaded = reader.result as string;
+      this.secretkeyFileReaded = reader.result as string;
       // ทำสิ่งที่คุณต้องการกับข้อมูลที่ได้จากไฟล์ที่อัปโหลดที่นี่
-      // console.log('publickeyFileReaded Key File Content:', this.publickeyFileReaded);
+      console.log('secretkeyFileReaded Key File Content:', this.secretkeyFileReaded);
     };
-  
     reader.readAsText(file);
   }
   

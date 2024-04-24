@@ -164,7 +164,7 @@ export class EncryptComponent {
       this.sealService.getEncryptionFile(this.fileToEncryp,this.publickey).subscribe(response =>{
         this.fileEncrypted = response.cipherAbase64;
         console.log('File are Encrypted',this.fileEncrypted);
-        this.service.success('publickey are created',this.publicKeyName);
+        this.service.success('File are Encrypted',this.publicKeyName);
       })
       }else{
         this.service.info('Please Input Name');
@@ -183,11 +183,6 @@ export class EncryptComponent {
       const formData = new FormData();
       formData.append('file', this.publickey);
       console.log('this is form data ', formData);
-      this.sealService.getEncryptionFiletest(formData).subscribe(response =>{
-        // this.fileEncrypted = response.fileToEncryption;
-        console.log('File are Encrypted',this.fileEncrypted);
-        // this.service.success('publickey are created',this.publicKeyName);
-      })
       this.readPublicKeyFileContent(this.publickey);
       // เรียกใช้ฟังก์ชั่นหรือทำสิ่งที่คุณต้องการกับไฟล์ที่อัปโหลดที่นี่
     }

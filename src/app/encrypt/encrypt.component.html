@@ -76,9 +76,6 @@
                         <div class="text-center">
                             <button class="btn btn-primary" (click)="Encryptionfile()">Encrypt</button>
                         </div>
-                        <div *ngIf="this.secretkey" class="status">
-                            <p>{{secretKeyName}} Key Are Created</p>
-                        </div>
                         <div>
                             <button class="btn btn-danger"
                                 (click)="downloadTxtFile(this.fileEncrypted,' Encrypted File')"

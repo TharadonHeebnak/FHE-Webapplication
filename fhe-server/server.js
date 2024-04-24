@@ -388,7 +388,7 @@ if (!context.parametersSet()) {
 
   // console.log(publicKeyString);
   // สร้าง Encryptor
-  const encryptor = seal.Encryptor(context,uploadedPublicKey)
+  
   // const plainText = seal.plainText(fileToEncryption);
   // console.log(plainText);
   const keyGenerator = seal.KeyGenerator(
@@ -409,19 +409,19 @@ if (!context.parametersSet()) {
 
   const encodedPlainText = encoder.encode(plainTextArray);
 
-  const encryptors = seal.Encryptor(context, publicKey);
+  const encryptor = seal.Encryptor(context,uploadedPublicKey)
 
   // สร้าง Decryptor object เพื่อถอดรหัสข้อมูล
   const decryptor = seal.Decryptor(context, secretKey);
   
   // Encrypt the PlainText
-  const ciphertext = encryptors.encrypt(encodedPlainText);
+  const ciphertext = encryptor.encrypt(encodedPlainText);
   // console.log('ciphertext',ciphertext);
   const cipherAbase64 = ciphertext.save() 
-  console.log('cipherAbase64',cipherAbase64);
+  // console.log('cipherAbase64',cipherAbase64);
   const uploadedCipherText = seal.CipherText()
   uploadedCipherText.load(context, cipherAbase64)
-  console.log('uploadedCipherText',uploadedCipherText);
+  // console.log('uploadedCipherText',uploadedCipherText);
 
   // Decrypt the CipherText
   const decryptedPlainText = decryptor.decrypt(uploadedCipherText);
@@ -429,15 +429,15 @@ if (!context.parametersSet()) {
   
   // Decode the decrypted PlainText
   const decryptedArray = encoder.decode(decryptedPlainText);
-  // console.log('decryptedArray Message:', decryptedArray);
+  console.log('decryptedArray Message:', decryptedArray);
   
   const asciiCodes = Array.from(decryptedArray);
-  // console.log('asciiCodes Message:', asciiCodes);
+  console.log('asciiCodes Message:', asciiCodes);
   
   
   // Convert ASCII codes to characters
   const characters = asciiCodes.map(code => String.fromCharCode(code));
-  // console.log('characters Message:', characters);
+  console.log('characters Message:', characters);
   
   
   // Join characters to form the original message
@@ -445,8 +445,141 @@ if (!context.parametersSet()) {
   const stringer = originalMessage;
   
   console.log('Original Message:', originalMessage);
-  console.log('stringer Message:', stringer);
+  // console.log('stringer Message:', stringer);
   res.status(200).json({cipherAbase64 });
+
+  // res.status(200).json({ message: 'Files received successfully.',plainTextA });
+});
+
+app.post('/decrypt_file', upload.fields([{ name: 'fileToDecryption', maxCount: 1 }, { name: 'secretkey', maxCount: 1 }]), async (req, res) => {
+  const seal = await SEAL();
+
+  ////////////////////////
+// Encryption Parameters
+////////////////////////
+
+const schemeType = seal.SchemeType.bfv
+const securityLevel = seal.SecurityLevel.tc128
+const polyModulusDegree = 4096
+const bitSizes = [36,36,37]
+const bitSize = 20
+
+
+const encParms = seal.EncryptionParameters(schemeType)
+
+// Set the PolyModulusDegree
+encParms.setPolyModulusDegree(polyModulusDegree)
+
+// Create a suitable set of CoeffModulus primes
+encParms.setCoeffModulus(
+  seal.CoeffModulus.Create(polyModulusDegree, Int32Array.from(bitSizes))
+)
+
+// Set the PlainModulus to a prime of bitSize 20.
+encParms.setPlainModulus(seal.PlainModulus.Batching(polyModulusDegree, bitSize))
+
+////////////////////////
+// Context
+////////////////////////
+
+// Create a new Context
+const context = seal.Context(
+  encParms, // Encryption Parameters
+  true, // ExpandModChain
+  securityLevel // Enforce a security level
+)
+
+if (!context.parametersSet()) {
+  throw new Error(
+    'Could not set the parameters in the given context. Please try different encryption parameters.'
+  )
+};
+
+  const fileToDecryption = req.files['fileToDecryption'][0];
+  const textsecretkey = req.files['secretkey'][0];
+
+
+
+  // ตรวจสอบว่า req.files ถูกสร้างขึ้นถูกต้อง
+  if (!fileToDecryption || !textsecretkey) {
+    return res.status(400).json({ message: 'Missing files.' });
+  }
+  console.log("this is textsecretkey ",textsecretkey);
+  // อ่านข้อมูลจาก Buffer ของไฟล์ public key
+  const secretKeyString = textsecretkey.buffer.toString('utf8');
+  // const publicKey = seal.publicBase64Key.deserializeFrom(publicKeyString);
+  // const publicKey = seal.publicBase64Key.fromString(publicKeyString);
+  const uploadedSecretkey = seal.SecretKey(); // สร้าง instance ของ PublicKey
+  uploadedSecretkey.load(context, secretKeyString);
+  // const publicKey = new seal.PublicKey();
+  // publicKey.load(publicKeyString);
+
+  // อ่านข้อมูลจาก Buffer ของไฟล์ที่ต้องการเข้ารหัส
+  const fileToDecryptionString = fileToDecryption.buffer.toString('utf8');
+  console.log('this is fileToDecryptionString', fileToDecryptionString);
+  // const plainText = fileToEncryptString;
+
+  // console.log(publicKeyString);
+  // สร้าง Encryptor
+  // const encryptor = seal.Encryptor(context,uploadedPublicKey)
+  // const plainText = seal.plainText(fileToEncryption);
+  // console.log(plainText);
+  const keyGenerator = seal.KeyGenerator(
+    context
+  );
+  const secretKey = keyGenerator.secretKey();
+  
+  // const publicKey = keyGenerator.createPublicKey();
+  const encoder = seal.BatchEncoder(context)
+  // console.log("this is plantext",plainText);
+  // const plainTextArray = new Int32Array(plainText.length);
+  // for (let i = 0; i < plainText.length; i++) {
+  //     plainTextArray[i] = plainText.charCodeAt(i);
+  // }
+  // console.log("this is plainTextArray  length",plainTextArray.length);
+  // console.log("this is plainTextArray",plainTextArray);
+
+
+  // const encodedPlainText = encoder.encode(plainTextArray);
+
+  // const encryptors = seal.Encryptor(context, publicKey);
+
+  // สร้าง Decryptor object เพื่อถอดรหัสข้อมูล
+  const decryptor = seal.Decryptor(context, uploadedSecretkey);
+  
+  // Encrypt the PlainText
+  // const ciphertext = encryptors.encrypt(encodedPlainText);
+  // console.log('ciphertext',ciphertext);
+  // const cipherAbase64 = ciphertext.save() 
+  // console.log('cipherAbase64',cipherAbase64);
+  const uploadedCipherText = seal.CipherText()
+  uploadedCipherText.load(context, fileToDecryptionString)
+  console.log('uploadedCipherText',uploadedCipherText);
+
+  // Decrypt the CipherText
+  const decryptedPlainText = decryptor.decrypt(uploadedCipherText);
+  console.log('decryptedPlainText',decryptedPlainText);
+  
+  // Decode the decrypted PlainText
+  const decryptedArray = encoder.decode(decryptedPlainText);
+  console.log('decryptedArray Message:', decryptedArray);
+  
+  const asciiCodes = Array.from(decryptedArray);
+  console.log('asciiCodes Message:', asciiCodes);
+  
+  
+  // Convert ASCII codes to characters
+  const characters = asciiCodes.map(code => String.fromCharCode(code));
+  console.log('characters Message:', characters);
+  
+  
+  // Join characters to form the original message
+  const originalMessage = characters.join('');
+  const stringer = originalMessage;
+  
+  console.log('Original Message:', originalMessage);
+  // console.log('stringer Message:', stringer);
+  res.status(200).json({ });
 
   // res.status(200).json({ message: 'Files received successfully.',plainTextA });
 });
