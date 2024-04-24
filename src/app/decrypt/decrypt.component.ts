@@ -14,6 +14,7 @@ import { Injectable } from '@angular/core';
   styleUrl: './decrypt.component.scss'
 })
 export class DecryptComponent {
+  
  
   constructor(
     private sealService: SealService,
@@ -36,6 +37,7 @@ export class DecryptComponent {
   fileToEncryp:File | null = null;
   fileToDecrypt: File | null = null;
   fileEncrypted:File | null = null;
+  fileDecrypted: File | null = null;
   
   
     ngOnInit(): void {
@@ -124,9 +126,9 @@ export class DecryptComponent {
     if(this.fileToDecrypt){
       if(this.secretkey !== '' && this.secretkey !== undefined){
       this.sealService.getDecryptionFile(this.fileToDecrypt,this.secretkey).subscribe(response =>{
-        this.fileEncrypted = response.cipherAbase64;
-        console.log('File are Encrypted',this.fileEncrypted);
-        this.service.success('File are Decrypted',this.fileEncrypted);
+        this.fileDecrypted = response.decryptedFile;
+        console.log('File are Encrypted',this.fileDecrypted);
+        this.service.success('File are Decrypted',this.fileDecrypted);
       })
       }else{
         this.service.info('Please Input Name');

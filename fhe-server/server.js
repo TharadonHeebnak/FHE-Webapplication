@@ -575,11 +575,11 @@ if (!context.parametersSet()) {
   
   // Join characters to form the original message
   const originalMessage = characters.join('');
-  const stringer = originalMessage;
+  const decryptedFile = originalMessage;
   
   console.log('Original Message:', originalMessage);
   // console.log('stringer Message:', stringer);
-  res.status(200).json({ });
+  res.status(200).json({decryptedFile });
 
   // res.status(200).json({ message: 'Files received successfully.',plainTextA });
 });
