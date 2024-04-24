@@ -25,7 +25,7 @@ export class DecryptComponent {
   publickey: any;
   secretKeyName?: any;
   publicKeyName?: any;
-  fileName?:string;
+  fileName = '';
   secretkeyFile: File | null = null;
   selectedSchemeType: string = 'bfv';
   isButtonDisabled = false;

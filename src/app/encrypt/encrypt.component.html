@@ -74,14 +74,14 @@
                             <label for="file-upload-secretkey">Upload your File</label>
                         </div>
                         <div class="text-center">
-                            <button class="btn btn-primary" (click)="Encryptionfile()">Encrypt</button>
+                            <button class="btn btn-primary w-100 mb-3" (click)="Encryptionfile()">Encrypt</button>
+                            <div *ngIf="this.fileEncrypted">
+                                <button class="btn btn-danger w-100 mb-3"
+                                    (click)="downloadTxtFile(this.fileEncrypted,'E'+this.fileName)"
+                                    [disabled]="isButtonDisabled">Download{{this.fileName}} </button>
+                            </div>
                         </div>
-                        <div>
-                            <button class="btn btn-danger"
-                                (click)="downloadTxtFile(this.fileEncrypted,'Encrypted File'+this.fileName)"
-                                [disabled]="isButtonDisabled">Download </button>
-                        </div>
-                        <button (click)="tests()">Test</button>
+
                     </div>
                 </div>
             </div>

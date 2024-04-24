@@ -68,23 +68,25 @@
                         <p class="card-text">Upload your encryption file for Decryption.</p>
                         <div class="form-group">
                             <input type="file" class="form-control" (change)="onFileChangeinputpublickey($event)">
-                            <label for="file-upload-secretkey">Upload your public Key</label>
+                            <label for="file-upload-secretkey">Upload your Secret Key</label>
                         </div>
                         <div class="form-group">
                             <input type="file" class="form-control" (change)="onFileChangeinputfile($event)">
                             <label for="file-upload-secretkey">Upload your File</label>
                         </div>
                         <div class="text-center">
-                            <button class="btn btn-primary" (click)="Decryptionfile()">Dencrypt</button>
+                            <button class="btn btn-primary w-100 mb-3" (click)="Decryptionfile()">Dencrypt</button>
+                            <div *ngIf="this.fileDecrypted">
+                                <button class="btn btn-danger w-100"
+                                    (click)="downloadTxtFile(this.fileDecrypted,'D'+this.fileName)"
+                                    [disabled]="isButtonDisabled">Download {{this.fileName}} </button>
+                            </div>
                         </div>
-                        <div *ngIf="this.secretkey" class="status">
-                            <p>{{secretKeyName}} Key Are Created</p>
+                        
+                        <div *ngIf="this.fileDecrypted" class="status">
+                            <p>{{this.fileName}} Key Are Decrypted</p>                            
                         </div>
-                        <div>
-                            <button class="btn btn-danger"
-                                (click)="downloadTxtFile(this.fileDecrypted,' Decrypted File'+this.fileName)"
-                                [disabled]="isButtonDisabled">Download </button>
-                        </div>
+
                     </div>
                 </div>
             </div>
