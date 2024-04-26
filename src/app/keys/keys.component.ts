@@ -60,15 +60,12 @@ export class KeysComponent {
   createTwoKey(){
     const twoKeyName = (document.getElementById('INPUT-secretkey-pair-name') as HTMLInputElement).value;
     if(twoKeyName !== '' && twoKeyName !== undefined){
-      console.log('Key Pair Name:', twoKeyName);
       this.sealService.getTwokey(twoKeyName).subscribe(response =>{
         this.secretkey = response.secretBase64Key;
         this.publickey = response.publicBase64Key;
         this.secretKeyName = response.keyName;
         this.publicKeyName = response.keyName;
         this.keyName = response.keyName;
-        console.log('secretKeyName:', this.secretKeyName);
-        console.log('publicKeyName:', this.publicKeyName);
         this.service.success('Secret Key are created',this.secretKeyName);
         this.service.success('Public Key are created',this.publicKeyName);
       })
@@ -79,9 +76,7 @@ export class KeysComponent {
   
   
   downloadTxtFile(skey: any,pkey: any,keyname:string) {
-    this.saveTxtFiles(skey,pkey,keyname);
-    console.log('this key name',keyname);
-    
+    this.saveTxtFiles(skey,pkey,keyname);   
   }
 
   private saveTxtFiles(data1: any,data2: any, fileName: string, ) {

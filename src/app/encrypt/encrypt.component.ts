@@ -98,7 +98,6 @@ export class EncryptComponent {
     reader.onload = (e) => {
       this.secretkeyFileReaded = reader.result as string;
       // ทำสิ่งที่คุณต้องการกับข้อมูลที่ได้จากไฟล์ที่อัปโหลดที่นี่
-      console.log('Secret Key File Content:', this.secretkeyFileReaded);
     };
   
     reader.readAsText(file);
@@ -110,7 +109,6 @@ export class EncryptComponent {
       if(this.publickey !== '' && this.publickey !== undefined){
       this.sealService.getEncryptionFile(this.fileToEncryp,this.publickey).subscribe(response =>{
         this.fileEncrypted = response.cipherAbase64;
-        console.log('File are Encrypted',this.fileEncrypted);
         this.fileName = response.fileEncryptedName;
         this.service.success(this.fileName,'File are Encrypted');
       })
@@ -141,9 +139,7 @@ export class EncryptComponent {
     if (fileList.length > 0) {
       const file = fileList[0];
       // เรียกใช้ฟังก์ชั่นหรือทำสิ่งที่คุณต้องการกับไฟล์ที่อัปโหลดที่นี่
-      console.log('this is file use for encryption',file)
       this.fileToEncryp = file;
-      console.log('this is file use for encryption',this.fileToEncryp)
     }
   }
   

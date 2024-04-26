@@ -49,7 +49,6 @@ export class DecryptComponent {
     reader.onload = (e) => {
       this.secretkeyFileReaded = reader.result as string;
       // ทำสิ่งที่คุณต้องการกับข้อมูลที่ได้จากไฟล์ที่อัปโหลดที่นี่
-      console.log('Secret Key File Content:', this.secretkeyFileReaded);
     };
   
     reader.readAsText(file);
@@ -60,7 +59,6 @@ export class DecryptComponent {
       if(this.secretkey !== '' && this.secretkey !== undefined){
       this.sealService.getDecryptionFile(this.fileToDecrypt,this.secretkey).subscribe(response =>{
         this.fileDecrypteds = response.decryptedFile;
-        console.log('File are Decrypted',this.fileDecrypted);
         this.fileName = response.fileDecryptedName;
         this.service.success('File are Decrypted',this.fileName);
       })
@@ -73,24 +71,14 @@ export class DecryptComponent {
   
   }
   downloadBase64(base64Data: string, filename: string) {
-    console.log("base64Data",base64Data.length);
     const binaryString = atob(base64Data);
-    console.log("binaryString",binaryString);
     const length = binaryString.length;
         const bytes = new Uint8Array(length);
         for (let i = 0; i < length; i++) {
           bytes[i] = binaryString.charCodeAt(i);
         }
         const fileType = this.getFileMimeType(filename);
-        console.log("fileType",fileType);
-        console.log("bytes",bytes);
-
         const blob = new Blob([bytes.buffer], { type: fileType });
-        console.log("blob",blob);
-
-        
-        
-
         // Create a download link
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -108,7 +96,6 @@ export class DecryptComponent {
       this.secretkey = fileList[0];
       const formData = new FormData();
       formData.append('file', this.secretkey);
-      console.log('this is form data ', formData);
       this.readPublicKeyFileContent(this.secretkey);
       // เรียกใช้ฟังก์ชั่นหรือทำสิ่งที่คุณต้องการกับไฟล์ที่อัปโหลดที่นี่
     }
@@ -119,9 +106,7 @@ export class DecryptComponent {
     if (fileList.length > 0) {
       const file = fileList[0];
       // เรียกใช้ฟังก์ชั่นหรือทำสิ่งที่คุณต้องการกับไฟล์ที่อัปโหลดที่นี่
-      console.log('this is file use for encryption',file)
       this.fileToDecrypt = file;
-      console.log('this is file use for fileToDecrypt',this.fileToDecrypt)
     }
   }
   
@@ -130,7 +115,6 @@ export class DecryptComponent {
     reader.onload = (e) => {
       this.secretkeyFileReaded = reader.result as string;
       // ทำสิ่งที่คุณต้องการกับข้อมูลที่ได้จากไฟล์ที่อัปโหลดที่นี่
-      console.log('secretkeyFileReaded Key File Content:', this.secretkeyFileReaded);
     };
     reader.readAsText(file);
   }
