@@ -40,7 +40,6 @@ export class KeysComponent {
   
   
     ngOnInit(): void {
-      this.getSchemeType();
     }
   
     positionOptions: TooltipPosition[] = ['after', 'before', 'above', 'below', 'left', 'right'];
@@ -56,17 +55,7 @@ export class KeysComponent {
   polyModulusDegrees: number[] = [1024, 2048, 4096, 8192, 16384, 32768];
   selectedPolyModulusDegree: number = this.polyModulusDegrees[0];
   
-  getSchemeType() {
-    this.sealService.getSchemeType().subscribe(response => {
-      console.log(response)
-        this.schemeType = response.sealOption.SchemeType;
-        this.securityLevel = response.sealOption.SecurityLevel;
-        console.log('Received schemeType:', this.schemeType);
-        console.log('securityLevel :',this.securityLevel)
-      }, error => {
-        console.error('Error fetching schemeType:', error);
-      });
-  }
+
   
   createTwoKey(){
     const twoKeyName = (document.getElementById('INPUT-secretkey-pair-name') as HTMLInputElement).value;
@@ -85,30 +74,9 @@ export class KeysComponent {
       })
     }else{
       this.service.info('Please Input Name');
-  
     }
-  
   }
   
-  getpublickey(){
-    const publicKeyName = (document.getElementById('INPUT-public-key') as HTMLInputElement).value;
-    if(this.secretkeyFileReaded){
-      if(publicKeyName !== '' && publicKeyName !== undefined){
-      this.sealService.getpublickey(publicKeyName,this.secretkeyFileReaded).subscribe(response =>{
-        this.publickey = response.publicBase64Key;
-        this.publicKeyName = response.publicKeyName;
-        console.log('publickey are created');
-        this.service.success('publickey are created',this.publicKeyName);
-      })
-      }else{
-        this.service.info('Please Input Name');
-      }
-    }else{
-      this.service.info('Please Upload Secret Key')
-  
-    }
-  
-  }
   
   downloadTxtFile(skey: any,pkey: any,keyname:string) {
     this.saveTxtFiles(skey,pkey,keyname);
@@ -166,84 +134,15 @@ export class KeysComponent {
   
   
   
-  onFileChange(event: any) {
-    const fileList: FileList = event.target.files;
-    if (fileList.length > 0) {
-      const secretkeyFile = fileList[0];
-      // เรียกใช้ฟังก์ชั่นหรือทำสิ่งที่คุณต้องการกับไฟล์ที่อัปโหลดที่นี่
-      this.readFileContent(secretkeyFile);
-    }
-  }
+
 
   
-  readFileContent(file: File) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      this.secretkeyFileReaded = reader.result as string;
-      // ทำสิ่งที่คุณต้องการกับข้อมูลที่ได้จากไฟล์ที่อัปโหลดที่นี่
-      console.log('Secret Key File Content:', this.secretkeyFileReaded);
-    };
+
   
-    reader.readAsText(file);
-  }
+
   
-  Encryptionfile(){
-  
-    if(this.fileToEncryp){
-      if(this.publickey !== '' && this.publickey !== undefined){
-      this.sealService.getEncryptionFile(this.fileToEncryp,this.publickey).subscribe(response =>{
-        this.fileEncrypted = response.cipherAbase64;
-        console.log('File are Encrypted',this.fileEncrypted);
-        this.service.success('publickey are created',this.publicKeyName);
-      })
-      }else{
-        this.service.info('Please Input Name');
-      }
-    }else{
-      this.service.info('Please Upload Secret Key')
-  
-    }
-  
-  }
-  
-  onFileChangeinputpublickey(event: any) {
-    const fileList: FileList = event.target.files;
-    if (fileList.length > 0) {
-      this.publickey = fileList[0];
-      const formData = new FormData();
-      formData.append('file', this.publickey);
-      console.log('this is form data ', formData);
-      this.sealService.getEncryptionFiletest(formData).subscribe(response =>{
-        // this.fileEncrypted = response.fileToEncryption;
-        console.log('File are Encrypted',this.fileEncrypted);
-        // this.service.success('publickey are created',this.publicKeyName);
-      })
-      this.readPublicKeyFileContent(this.publickey);
-      // เรียกใช้ฟังก์ชั่นหรือทำสิ่งที่คุณต้องการกับไฟล์ที่อัปโหลดที่นี่
-    }
-  }
-  
-  onFileChangeinputfile(event: any) {
-    const fileList: FileList = event.target.files;
-    if (fileList.length > 0) {
-      const file = fileList[0];
-      // เรียกใช้ฟังก์ชั่นหรือทำสิ่งที่คุณต้องการกับไฟล์ที่อัปโหลดที่นี่
-      console.log('this is file use for encryption',file)
-      this.fileToEncryp = file;
-      console.log('this is file use for encryption',this.fileToEncryp)
-    }
-  }
-  
-  readPublicKeyFileContent(file: File) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      this.publickeyFileReaded = reader.result as string;
-      // ทำสิ่งที่คุณต้องการกับข้อมูลที่ได้จากไฟล์ที่อัปโหลดที่นี่
-      // console.log('publickeyFileReaded Key File Content:', this.publickeyFileReaded);
-    };
-  
-    reader.readAsText(file);
-  }
+
+
   
    //////////// downloadfile ///////////
   

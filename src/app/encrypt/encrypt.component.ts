@@ -41,7 +41,7 @@ export class EncryptComponent {
   
   
     ngOnInit(): void {
-      this.getSchemeType();
+
     }
   
     positionOptions: TooltipPosition[] = ['after', 'before', 'above', 'below', 'left', 'right'];
@@ -57,54 +57,8 @@ export class EncryptComponent {
   polyModulusDegrees: number[] = [1024, 2048, 4096, 8192, 16384, 32768];
   selectedPolyModulusDegree: number = this.polyModulusDegrees[0];
   
-  getSchemeType() {
-    this.sealService.getSchemeType().subscribe(response => {
-      console.log(response)
-        this.schemeType = response.sealOption.SchemeType;
-        this.securityLevel = response.sealOption.SecurityLevel;
-        console.log('Received schemeType:', this.schemeType);
-        console.log('securityLevel :',this.securityLevel)
-      }, error => {
-        console.error('Error fetching schemeType:', error);
-      });
-  }
   
-  getsecretkey(){
-    const secretKeyName = (document.getElementById('INPUT-secretkey-pair-name') as HTMLInputElement).value;
-    if(secretKeyName !== '' && secretKeyName !== undefined){
-      console.log('Key Pair Name:', secretKeyName);
-      this.sealService.getsecretkey(secretKeyName).subscribe(response =>{
-        this.secretkey = response.secretBase64Key;
-        this.secretKeyName = response.secretKeyName;
-        this.service.success('Secret Key are created',this.secretKeyName);
-      })
-    }else{
-      this.service.info('Please Input Name');
-  
-    }
-  
-  }
-  
-  getpublickey(){
-    const publicKeyName = (document.getElementById('INPUT-public-key') as HTMLInputElement).value;
-    if(this.secretkeyFileReaded){
-      if(publicKeyName !== '' && publicKeyName !== undefined){
-      this.sealService.getpublickey(publicKeyName,this.secretkeyFileReaded).subscribe(response =>{
-        this.publickey = response.publicBase64Key;
-        this.publicKeyName = response.publicKeyName;
-        console.log('publickey are created');
-        this.service.success('publickey are created',this.publicKeyName);
-      })
-      }else{
-        this.service.info('Please Input Name');
-      }
-    }else{
-      this.service.info('Please Upload Secret Key')
-  
-    }
-  
-  }
-  
+
   downloadTxtFile(key: any,keyname:string) {
     if(this.secretKeyName == undefined || null){
       this.secretKeyName = 'Key'
@@ -136,14 +90,7 @@ export class EncryptComponent {
   
   
   
-  onFileChange(event: any) {
-    const fileList: FileList = event.target.files;
-    if (fileList.length > 0) {
-      const secretkeyFile = fileList[0];
-      // เรียกใช้ฟังก์ชั่นหรือทำสิ่งที่คุณต้องการกับไฟล์ที่อัปโหลดที่นี่
-      this.readFileContent(secretkeyFile);
-    }
-  }
+
 
   
   readFileContent(file: File) {
@@ -165,13 +112,13 @@ export class EncryptComponent {
         this.fileEncrypted = response.cipherAbase64;
         console.log('File are Encrypted',this.fileEncrypted);
         this.fileName = response.fileEncryptedName;
-        this.service.success('File are Encrypted',this.fileName);
+        this.service.success(this.fileName,'File are Encrypted');
       })
       }else{
-        this.service.info('Please Input Name');
+        this.service.info('Please Upload Publickey');
       }
     }else{
-      this.service.info('Please Upload Secret Key')
+      this.service.info('Please Upload file To Encrypt')
   
     }
   
@@ -237,12 +184,4 @@ export class EncryptComponent {
   }
   
   //////////////////////////////////////////////////////
-  tests(){
-    this.sealService.tests().subscribe(response =>{
-      this.fileEncrypted = response
-      
-
-    })
-  }
-  
 }
