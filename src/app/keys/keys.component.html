@@ -47,20 +47,18 @@
                         <form class="example-form ">
                             <mat-form-field class="example-full-width">
                                 <input matInput placeholder="Key Pair Name" value="" id="INPUT-secretkey-pair-name">
-                                <mat-hint class="fs-7 text-muted ">Create a new Secret and Public key pair.</mat-hint>
+                                <mat-hint class="fs-7 text-muted ">Create a new Secret and Public key.</mat-hint>
                             </mat-form-field>
                         </form>
                         <div class="text-center">
-                            <button class="btn btn-primary" (click)="createTwoKey()">Create</button>
+                            <button class="btn btn-primary w-100 mb-3" (click)="createTwoKey()">Create</button>
                         </div>
                         <div *ngIf="this.secretkey" class="status">
-                            <p>{{secretKeyName}} Secret Key Are Created</p>
-                            <p>{{publicKeyName}} Public Key Are Created</p>
-                        </div>
-                        <div>
-                            <button class="btn btn-danger"
-                                (click)="downloadTxtFile(this.secretkey,this.publickey,this.keyName)"
-                                [disabled]="isButtonDisabled">Download </button>
+                            <div>
+                                <button class="btn btn-danger w-100 mb-3"
+                                    (click)="downloadTxtFile(this.secretkey,this.publickey,this.keyName)"
+                                    [disabled]="isButtonDisabled">Download {{this.keyName}} Key</button>
+                            </div>
                         </div>
                     </div>
                 </div>

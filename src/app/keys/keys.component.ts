@@ -83,28 +83,6 @@ export class KeysComponent {
     console.log('this key name',keyname);
     
   }
-  
-  // private saveTxtFiles(data1: any,data2: any, fileName: string, ) {
-  //   // Create Blob for File 1
-  //   const blob1 = new Blob([data1], { type: 'text/plain' });
-  //   const link1 = document.createElement('a');
-  //   link1.href = window.URL.createObjectURL(blob1);
-  //   link1.download = fileName;
-  
-  //   // Create Blob for File 2
-  
-  //   // Append the links to the document body
-  //   document.body.appendChild(link1);
-  
-  
-  //   // Trigger the click event for both links
-  //   link1.click();
-  
-  
-  //   // Remove the links from the document body
-  //   document.body.removeChild(link1);
-  
-  // }
 
   private saveTxtFiles(data1: any,data2: any, fileName: string, ) {
     // Create Blob for File 1
@@ -131,43 +109,6 @@ export class KeysComponent {
     document.body.removeChild(link1);
     document.body.removeChild(link2);
   }
-  
-  
-  
 
-
-  
-
-  
-
-  
-
-
-  
-   //////////// downloadfile ///////////
-  
-   downloadFile() {
-    const fileId = '';
-    const fileName = '';
-  
-    this.downloadFileFunction(fileId, fileName);
-  }
-  
-  private downloadFileFunction(fileId: any, fileName: any): void {
-    const blob = new Blob([fileId], { type: 'application/octet-stream' });
-    const link = document.createElement('a');
-    link.href = window.URL.createObjectURL(blob);
-    link.download = fileName;
-  
-    // Append the link to the document body
-    document.body.appendChild(link);
-  
-    // Trigger the click event for the link
-    link.click();
-  
-    // Remove the link from the document body
-    document.body.removeChild(link);
-  }
-
-  
+   //////////// downloadfile ///////////  
 }

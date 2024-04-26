@@ -77,8 +77,8 @@
                             <button class="btn btn-primary w-100 mb-3" (click)="Encryptionfile()">Encrypt</button>
                             <div *ngIf="this.fileEncrypted">
                                 <button class="btn btn-danger w-100 mb-3"
-                                    (click)="downloadTxtFile(this.fileEncrypted,'E'+this.fileName)"
-                                    [disabled]="isButtonDisabled">Download{{this.fileName}} </button>
+                                    (click)="downloadTxtFile(this.fileEncrypted,'e'+this.fileName)"
+                                    [disabled]="isButtonDisabled">Download {{this.fileName}} </button>
                             </div>
                         </div>
 

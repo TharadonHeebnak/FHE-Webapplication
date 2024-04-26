@@ -78,7 +78,7 @@
                             <button class="btn btn-primary w-100 mb-3" (click)="Decryptionfile()">Dencrypt</button>
                             <div *ngIf="this.fileDecrypteds">
                                 <button class="btn btn-danger w-100"
-                                    (click)="downloadBase64(this.fileDecrypteds,'D'+this.fileName)"
+                                    (click)="downloadBase64(this.fileDecrypteds,'d'+this.fileName)"
                                     [disabled]="isButtonDisabled">Download {{this.fileName}} </button>
                             </div>
                         </div>
@@ -94,20 +94,6 @@
     </div>
 </div>
 
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>File to Base64 and Back</title>
-</head>
-<body>
-  <input type="file" #fileInput />
-  <button (click)="convertToFile()">Convert File</button>
-  <textarea id="base64TextArea" cols="30" rows="10" readonly>{{ base64Data }}</textarea>
-</body>
-</html>
 
 
 

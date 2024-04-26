@@ -15,10 +15,7 @@ import { log } from 'console';
   styleUrl: './decrypt.component.scss'
 })
 export class DecryptComponent {
-  @ViewChild('fileInput') fileInputRef!: ElementRef;
-  fileDecrypteds?: string;
-  
- 
+  @ViewChild('fileInput') fileInputRef!: ElementRef; 
   constructor(
     private sealService: SealService,
     private service: NotificationsService,
@@ -41,60 +38,12 @@ export class DecryptComponent {
   fileToDecrypt: File | null = null;
   fileEncrypted:File | null = null;
   fileDecrypted: File | null = null;
+  fileDecrypteds?: string;
   
   
     ngOnInit(): void {
     }
-  
-    positionOptions: TooltipPosition[] = ['after', 'before', 'above', 'below', 'left', 'right'];
-    position = new FormControl(this.positionOptions[0]);
-  
-  securityLevelOption = [
-    {securityLevel:'none',value: 'none'},
-    {securityLevel:'tc128', value:'128 Bits'},
-    {securityLevel:'tc192', value: '192 Bits'},
-    {securityLevel:'tc256', value: '256 Bits'},
-  ];
-  polyModulusDegreeArray = [1024, 2048, 4096, 8192, 16384, 32768];
-  polyModulusDegrees: number[] = [1024, 2048, 4096, 8192, 16384, 32768];
-  selectedPolyModulusDegree: number = this.polyModulusDegrees[0];
-  
 
-  
-  downloadTxtFile(data: any,fileName:string) {
-    if(this.fileName == undefined || null){
-      this.fileName = 'fileName'
-    }
-    this.saveTxtFiles(data,fileName);
-  }
-  
-  private saveTxtFiles(data1: any, fileName: string, ) {
-    // Create Blob for File 1
-    const blob1 = new Blob([data1], { type: 'text/plain' });
-    const link1 = document.createElement('a');
-    link1.href = window.URL.createObjectURL(blob1);
-    link1.download = fileName;
-  
-    // Create Blob for File 2
-  
-    // Append the links to the document body
-    document.body.appendChild(link1);
-  
-  
-    // Trigger the click event for both links
-    link1.click();
-  
-  
-    // Remove the links from the document body
-    document.body.removeChild(link1);
-  
-  }
-  
-  
-  
-
-
-  
   readFileContent(file: File) {
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -152,10 +101,7 @@ export class DecryptComponent {
         window.URL.revokeObjectURL(url);
 
   }
-  
-  
-  
-  
+
   onFileChangeinputpublickey(event: any) {
     const fileList: FileList = event.target.files;
     if (fileList.length > 0) {
@@ -188,71 +134,6 @@ export class DecryptComponent {
     };
     reader.readAsText(file);
   }
-  
-   //////////// downloadfile ///////////
-  
-   downloadFile() {
-    const fileId = '';
-    const fileName = '';
-  
-    this.downloadFileFunction(fileId, fileName);
-  }
-  
-  private downloadFileFunction(fileId: any, fileName: any): void {
-    const blob = new Blob([fileId], { type: 'application/octet-stream' });
-    const link = document.createElement('a');
-    link.href = window.URL.createObjectURL(blob);
-    link.download = fileName;
-  
-    // Append the link to the document body
-    document.body.appendChild(link);
-  
-    // Trigger the click event for the link
-    link.click();
-  
-    // Remove the link from the document body
-    document.body.removeChild(link);
-  }
-  
-  //////////////////////////////////////////////////////
-  base64Data: string | null = null;
-
-  convertToFile(): void {
-    const fileInput = this.fileInputRef.nativeElement as HTMLInputElement;
-    const file = fileInput.files?.[0];
-
-    if (file) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = (event) => {
-        const base64String = (event?.target?.result as string)?.split(',')?.[1];
-        this.base64Data = base64String;
-        console.log("base64String",base64String);
-        console.log("base64Data",this.base64Data);
-        const binaryString = atob(base64String);
-        console.log("base64Data",binaryString);
-        const length = binaryString.length;
-        const bytes = new Uint8Array(length);
-        for (let i = 0; i < length; i++) {
-          bytes[i] = binaryString.charCodeAt(i);
-        }
-        console.log("type: file.type",file.type);
-        
-        const blob = new Blob([bytes.buffer], { type: file.type });
-
-        // Create a download link
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        document.body.appendChild(a);
-        a.href = url;
-        a.download = file.name;
-        a.click();
-        window.URL.revokeObjectURL(url);
-
-      };
-    }
-  }
-
   getFileMimeType(fileName: string): string {
     const extension = fileName.split('.').pop()?.toLowerCase();
     switch (extension) {
