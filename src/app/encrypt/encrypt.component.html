@@ -64,18 +64,27 @@
                 <div class="card">
                     <div class="card-body d-flex flex-column ">
                         <h2 class="card-title fw-bold">Encryption</h2>
-                        <p class="card-text">Upload your file for Encryption.</p>
+                        <p class="card-text">Upload your file and publickey for Encryption.</p>
+                        <br>
+                        <br>
                         <div class="form-group">
                             <input type="file" class="form-control" (change)="onFileChangeinputpublickey($event)">
                             <label for="file-upload-secretkey">Upload your public Key</label>
                         </div>
+                        <br>
                         <div class="form-group">
                             <input type="file" class="form-control" (change)="onFileChangeinputfile($event)">
                             <label for="file-upload-secretkey">Upload your File</label>
+                            <label for="file-upload-secretkey" style="color: red;">* Maximum are 24 kb</label>
                         </div>
                         <div class="text-center">
                             <button class="btn btn-primary w-100 mb-3" (click)="Encryptionfile()">Encrypt</button>
-                            <div *ngIf="this.fileEncrypted">
+                            <div class="spinner-container" *ngIf="isLoading">
+                                <br>
+                                <mat-spinner></mat-spinner>
+                                <br>
+                            </div>                           
+                            <div *ngIf="this.fileEncrypted && !this.isLoading">
                                 <button class="btn btn-danger w-100 mb-3"
                                     (click)="downloadTxtFile(this.fileEncrypted,'e'+this.fileName)"
                                     [disabled]="isButtonDisabled">Download {{this.fileName}} </button>

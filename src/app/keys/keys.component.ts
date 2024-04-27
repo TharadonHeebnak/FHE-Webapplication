@@ -14,6 +14,7 @@ import { Injectable } from '@angular/core';
   styleUrl: './keys.component.scss'
 })
 export class KeysComponent {
+  isLoading = false;
 
 
   constructor(
@@ -39,6 +40,7 @@ export class KeysComponent {
   fileEncrypted:File | null = null;
   
   
+  
     ngOnInit(): void {
     }
   
@@ -58,8 +60,10 @@ export class KeysComponent {
 
   
   createTwoKey(){
+ 
     const twoKeyName = (document.getElementById('INPUT-secretkey-pair-name') as HTMLInputElement).value;
     if(twoKeyName !== '' && twoKeyName !== undefined){
+      this.isLoading = true
       this.sealService.getTwokey(twoKeyName).subscribe(response =>{
         this.secretkey = response.secretBase64Key;
         this.publickey = response.publicBase64Key;
@@ -68,6 +72,7 @@ export class KeysComponent {
         this.keyName = response.keyName;
         this.service.success('Secret Key are created',this.secretKeyName);
         this.service.success('Public Key are created',this.publicKeyName);
+        this.isLoading = false
       })
     }else{
       this.service.info('Please Input Name');

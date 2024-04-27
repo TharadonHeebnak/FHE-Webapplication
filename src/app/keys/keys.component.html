@@ -53,11 +53,19 @@
                         <div class="text-center">
                             <button class="btn btn-primary w-100 mb-3" (click)="createTwoKey()">Create</button>
                         </div>
-                        <div *ngIf="this.secretkey" class="status">
+                        <div class="spinner-container">
+                            <div class="spinner-w" *ngIf="isLoading">
+                                <br>
+                                    <mat-spinner></mat-spinner>
+                                <br>
+                            </div>
+                        </div>
+
+                        <div *ngIf="this.secretkey && !this.isLoading" class="status">
                             <div>
                                 <button class="btn btn-danger w-100 mb-3"
                                     (click)="downloadTxtFile(this.secretkey,this.publickey,this.keyName)"
-                                    [disabled]="isButtonDisabled">Download {{this.keyName}} Key</button>
+                                    [disabled]="isButtonDisabled">Download {{this.keyName}} Key </button>
                             </div>
                         </div>
                     </div>
@@ -66,3 +74,4 @@
         </div>
     </div>
 </div>
+

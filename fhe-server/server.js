@@ -36,8 +36,8 @@ app.post('/seal-makepara',async(req,res) => {
   const seal = await SEAL();
   const schemeType = seal.SchemeType.bfv
   const securityLevel = seal.SecurityLevel.tc128
-  const polyModulusDegree = 4096
-  const bitSizes = [36,36,37]
+  const polyModulusDegree = 32768
+  const bitSizes = [55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,56]
   const bitSize = 20
 
   const encParms = seal.EncryptionParameters(schemeType)
@@ -96,6 +96,7 @@ app.get('/getSchemeType', async(req, res) => {
 });
 
 app.post('/encrypt_files', upload.fields([{ name: 'fileToEncryption', maxCount: 1 }, { name: 'publickey', maxCount: 1 }]), async (req, res) => {
+  console.log("Encrypting...");
   const seal = await SEAL();
 
   ////////////////////////
@@ -104,8 +105,8 @@ app.post('/encrypt_files', upload.fields([{ name: 'fileToEncryption', maxCount: 
 
 const schemeType = seal.SchemeType.bfv
 const securityLevel = seal.SecurityLevel.tc128
-const polyModulusDegree = 4096
-const bitSizes = [36,36,37]
+const polyModulusDegree = 32768
+const bitSizes = [55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,56]
 const bitSize = 20
 
 
@@ -181,6 +182,7 @@ if (!context.parametersSet()) {
   const ciphertext = encryptor.encrypt(encodedPlainText);
   const cipherAbase64 = ciphertext.save() 
   const fileEncryptedName = fileToEncryption.originalname;
+  console.log("Encrypted");
   res.status(200).json({cipherAbase64,fileEncryptedName });
 });
 
@@ -193,8 +195,8 @@ app.post('/decrypt_file', upload.fields([{ name: 'fileToDecryption', maxCount: 1
 
 const schemeType = seal.SchemeType.bfv
 const securityLevel = seal.SecurityLevel.tc128
-const polyModulusDegree = 4096
-const bitSizes = [36,36,37]
+const polyModulusDegree = 32768
+const bitSizes = [55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,56]
 const bitSize = 20
 
 
@@ -320,6 +322,7 @@ if (!context.parametersSet()) {
   // res.status(200).json({ message: 'Files received successfully.',plainTextA });
 });
 app.post('/decrypt_files', upload.fields([{ name: 'fileToDecryption', maxCount: 1 }, { name: 'secretkey', maxCount: 1 }]), async (req, res) => {
+  console.log("Decrypting...");
   const seal = await SEAL();
 
   ////////////////////////
@@ -328,8 +331,8 @@ app.post('/decrypt_files', upload.fields([{ name: 'fileToDecryption', maxCount: 
 
 const schemeType = seal.SchemeType.bfv
 const securityLevel = seal.SecurityLevel.tc128
-const polyModulusDegree = 4096
-const bitSizes = [36,36,37]
+const polyModulusDegree = 32768
+const bitSizes = [55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,56]
 const bitSize = 20
 
 
@@ -407,6 +410,7 @@ const asciiString = String.fromCharCode.apply(null, asciiArray);
 
   decryptedFile = asciiString;
   const fileDecryptedName = fileToDecryption.originalname;
+  console.log("Decrypted");
   res.status(200).json({decryptedFile,fileDecryptedName });
 
   // res.status(200).json({ message: 'Files received successfully.',plainTextA });
@@ -473,8 +477,8 @@ app.post('/creat-two-key',async(req,res)=>{
 
 const schemeType = seal.SchemeType.bfv
 const securityLevel = seal.SecurityLevel.tc128
-const polyModulusDegree = 4096
-const bitSizes = [36, 36, 37]
+const polyModulusDegree = 32768
+const bitSizes = [55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,56]
 const bitSize = 20
 
 

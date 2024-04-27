@@ -19,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { EncryptComponent } from './encrypt/encrypt.component';
 import { KeysComponent } from './keys/keys.component';
 import { DecryptComponent } from './decrypt/decrypt.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 
@@ -48,6 +49,7 @@ import { DecryptComponent } from './decrypt/decrypt.component';
     BrowserAnimationsModule,
     MatCardModule,
     MatButtonModule,
+    MatProgressSpinnerModule,
     SimpleNotificationsModule.forRoot({
       position:["top", "right"],
       timeOut: 5000,

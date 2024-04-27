@@ -38,6 +38,7 @@ export class EncryptComponent {
   publickeyFileReaded?:string;
   fileToEncryp:File | null = null;
   fileEncrypted:File | null = null;
+  isLoading: boolean = false;
   
   
     ngOnInit(): void {
@@ -104,20 +105,22 @@ export class EncryptComponent {
   }
   
   Encryptionfile(){
+    
   
-    if(this.fileToEncryp){
+    if(this.fileToEncryp != null && this.fileToEncryp.size <= 24000){
       if(this.publickey !== '' && this.publickey !== undefined){
+      this.isLoading = true
       this.sealService.getEncryptionFile(this.fileToEncryp,this.publickey).subscribe(response =>{
         this.fileEncrypted = response.cipherAbase64;
         this.fileName = response.fileEncryptedName;
         this.service.success(this.fileName,'File are Encrypted');
+        this.isLoading = false
       })
       }else{
         this.service.info('Please Upload Publickey');
       }
     }else{
-      this.service.info('Please Upload file To Encrypt')
-  
+      this.service.warn("Please select a file with size less than or equal to 24kb.");
     }
   
   }
@@ -138,8 +141,14 @@ export class EncryptComponent {
     const fileList: FileList = event.target.files;
     if (fileList.length > 0) {
       const file = fileList[0];
-      // เรียกใช้ฟังก์ชั่นหรือทำสิ่งที่คุณต้องการกับไฟล์ที่อัปโหลดที่นี่
-      this.fileToEncryp = file;
+      if (file.size <= 24000) { // 32kb in bytes
+        this.fileToEncryp = file;
+      } else {
+        // Handle file size exceeds 32kb
+        this.service.warn("Please select a file with size less than or equal to 24kb.");
+        // alert("Please select a file with size less than or equal to 32kb.");
+        // สามารถใส่ข้อความเพื่อแจ้งเตือนผู้ใช้ได้ตามที่ต้องการ
+      }
     }
   }
   

@@ -12,6 +12,13 @@
     text-decoration: none;
     
   }
+
+  .spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25%; /* ปรับตามความสูงของคอนเทนเนอร์ที่คุณต้องการ */
+  }
   
   
   

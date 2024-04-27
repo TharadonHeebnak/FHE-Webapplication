@@ -39,6 +39,7 @@ export class DecryptComponent {
   fileEncrypted:File | null = null;
   fileDecrypted: File | null = null;
   fileDecrypteds?: string;
+  isLoading = false
   
   
     ngOnInit(): void {
@@ -57,10 +58,12 @@ export class DecryptComponent {
   Decryptionfile(){
     if(this.fileToDecrypt){
       if(this.secretkey !== '' && this.secretkey !== undefined){
+      this.isLoading = true
       this.sealService.getDecryptionFile(this.fileToDecrypt,this.secretkey).subscribe(response =>{
         this.fileDecrypteds = response.decryptedFile;
         this.fileName = response.fileDecryptedName;
         this.service.success('File are Decrypted',this.fileName);
+        this.isLoading = false
       })
       }else{
         this.service.info('Please Upload Secret Key');
