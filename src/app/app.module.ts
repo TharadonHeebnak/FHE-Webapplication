@@ -14,12 +14,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SimpleNotificationsModule  } from 'angular2-notifications';
-import { SecondpageComponent } from './secondpage/secondpage.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { EncryptComponent } from './encrypt/encrypt.component';
 import { KeysComponent } from './keys/keys.component';
 import { DecryptComponent } from './decrypt/decrypt.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 
@@ -29,7 +29,6 @@ import { DecryptComponent } from './decrypt/decrypt.component';
     AppComponent,
     MainpageComponent,
     EncryptionComponent,
-    SecondpageComponent,
     EncryptComponent,
     KeysComponent,
     DecryptComponent,
@@ -50,6 +49,7 @@ import { DecryptComponent } from './decrypt/decrypt.component';
     BrowserAnimationsModule,
     MatCardModule,
     MatButtonModule,
+    MatProgressSpinnerModule,
     SimpleNotificationsModule.forRoot({
       position:["top", "right"],
       timeOut: 5000,

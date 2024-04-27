@@ -7,6 +7,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { response } from 'express';
 
 
 @Component({
@@ -26,7 +27,7 @@ export class EncryptComponent {
   publickey: any;
   secretKeyName?: any;
   publicKeyName?: any;
-  fileName?:string;
+  fileName = '';
   secretkeyFile: File | null = null;
   selectedSchemeType: string = 'bfv';
   isButtonDisabled = false;
@@ -37,10 +38,11 @@ export class EncryptComponent {
   publickeyFileReaded?:string;
   fileToEncryp:File | null = null;
   fileEncrypted:File | null = null;
+  isLoading: boolean = false;
   
   
     ngOnInit(): void {
-      this.getSchemeType();
+
     }
   
     positionOptions: TooltipPosition[] = ['after', 'before', 'above', 'below', 'left', 'right'];
@@ -56,54 +58,8 @@ export class EncryptComponent {
   polyModulusDegrees: number[] = [1024, 2048, 4096, 8192, 16384, 32768];
   selectedPolyModulusDegree: number = this.polyModulusDegrees[0];
   
-  getSchemeType() {
-    this.sealService.getSchemeType().subscribe(response => {
-      console.log(response)
-        this.schemeType = response.sealOption.SchemeType;
-        this.securityLevel = response.sealOption.SecurityLevel;
-        console.log('Received schemeType:', this.schemeType);
-        console.log('securityLevel :',this.securityLevel)
-      }, error => {
-        console.error('Error fetching schemeType:', error);
-      });
-  }
   
-  getsecretkey(){
-    const secretKeyName = (document.getElementById('INPUT-secretkey-pair-name') as HTMLInputElement).value;
-    if(secretKeyName !== '' && secretKeyName !== undefined){
-      console.log('Key Pair Name:', secretKeyName);
-      this.sealService.getsecretkey(secretKeyName).subscribe(response =>{
-        this.secretkey = response.secretBase64Key;
-        this.secretKeyName = response.secretKeyName;
-        this.service.success('Secret Key are created',this.secretKeyName);
-      })
-    }else{
-      this.service.info('Please Input Name');
-  
-    }
-  
-  }
-  
-  getpublickey(){
-    const publicKeyName = (document.getElementById('INPUT-public-key') as HTMLInputElement).value;
-    if(this.secretkeyFileReaded){
-      if(publicKeyName !== '' && publicKeyName !== undefined){
-      this.sealService.getpublickey(publicKeyName,this.secretkeyFileReaded).subscribe(response =>{
-        this.publickey = response.publicBase64Key;
-        this.publicKeyName = response.publicKeyName;
-        console.log('publickey are created');
-        this.service.success('publickey are created',this.publicKeyName);
-      })
-      }else{
-        this.service.info('Please Input Name');
-      }
-    }else{
-      this.service.info('Please Upload Secret Key')
-  
-    }
-  
-  }
-  
+
   downloadTxtFile(key: any,keyname:string) {
     if(this.secretKeyName == undefined || null){
       this.secretKeyName = 'Key'
@@ -135,14 +91,7 @@ export class EncryptComponent {
   
   
   
-  onFileChange(event: any) {
-    const fileList: FileList = event.target.files;
-    if (fileList.length > 0) {
-      const secretkeyFile = fileList[0];
-      // เรียกใช้ฟังก์ชั่นหรือทำสิ่งที่คุณต้องการกับไฟล์ที่อัปโหลดที่นี่
-      this.readFileContent(secretkeyFile);
-    }
-  }
+
 
   
   readFileContent(file: File) {
@@ -150,27 +99,28 @@ export class EncryptComponent {
     reader.onload = (e) => {
       this.secretkeyFileReaded = reader.result as string;
       // ทำสิ่งที่คุณต้องการกับข้อมูลที่ได้จากไฟล์ที่อัปโหลดที่นี่
-      console.log('Secret Key File Content:', this.secretkeyFileReaded);
     };
   
     reader.readAsText(file);
   }
   
   Encryptionfile(){
+    
   
-    if(this.fileToEncryp){
+    if(this.fileToEncryp != null && this.fileToEncryp.size <= 24000){
       if(this.publickey !== '' && this.publickey !== undefined){
+      this.isLoading = true
       this.sealService.getEncryptionFile(this.fileToEncryp,this.publickey).subscribe(response =>{
-        this.fileEncrypted = response.fileEncryptedbase64;
-        console.log('File are Encrypted',this.fileEncrypted);
-        this.service.success('publickey are created',this.publicKeyName);
+        this.fileEncrypted = response.cipherAbase64;
+        this.fileName = response.fileEncryptedName;
+        this.service.success(this.fileName,'File are Encrypted');
+        this.isLoading = false
       })
       }else{
-        this.service.info('Please Input Name');
+        this.service.info('Please Upload Publickey');
       }
     }else{
-      this.service.info('Please Upload Secret Key')
-  
+      this.service.warn("Please select a file with size less than or equal to 24kb.");
     }
   
   }
@@ -182,11 +132,6 @@ export class EncryptComponent {
       const formData = new FormData();
       formData.append('file', this.publickey);
       console.log('this is form data ', formData);
-      this.sealService.getEncryptionFiletest(formData).subscribe(response =>{
-        // this.fileEncrypted = response.fileToEncryption;
-        console.log('File are Encrypted',this.fileEncrypted);
-        // this.service.success('publickey are created',this.publicKeyName);
-      })
       this.readPublicKeyFileContent(this.publickey);
       // เรียกใช้ฟังก์ชั่นหรือทำสิ่งที่คุณต้องการกับไฟล์ที่อัปโหลดที่นี่
     }
@@ -196,10 +141,14 @@ export class EncryptComponent {
     const fileList: FileList = event.target.files;
     if (fileList.length > 0) {
       const file = fileList[0];
-      // เรียกใช้ฟังก์ชั่นหรือทำสิ่งที่คุณต้องการกับไฟล์ที่อัปโหลดที่นี่
-      console.log('this is file use for encryption',file)
-      this.fileToEncryp = file;
-      console.log('this is file use for encryption',this.fileToEncryp)
+      if (file.size <= 24000) { // 32kb in bytes
+        this.fileToEncryp = file;
+      } else {
+        // Handle file size exceeds 32kb
+        this.service.warn("Please select a file with size less than or equal to 24kb.");
+        // alert("Please select a file with size less than or equal to 32kb.");
+        // สามารถใส่ข้อความเพื่อแจ้งเตือนผู้ใช้ได้ตามที่ต้องการ
+      }
     }
   }
   
@@ -240,5 +189,4 @@ export class EncryptComponent {
   }
   
   //////////////////////////////////////////////////////
-  
 }

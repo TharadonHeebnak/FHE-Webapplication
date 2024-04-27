@@ -1,4 +1,5 @@
 /* navbar.component.css */
+
 .navbar {
     background-color: #0043CE;
     overflow: hidden;
@@ -12,7 +13,17 @@
     text-decoration: none;
     
   }
+
+  .spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* ปรับตามความสูงของคอนเทนเนอร์ที่คุณต้องการ */
+  }
   
+  .spiner-w{
+    width: 20px;
+  }
   
   .menu {
     list-style-type: none;

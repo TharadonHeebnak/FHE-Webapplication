@@ -193,8 +193,8 @@ export class MainpageComponent {
         const fileEncrypformData = new FormData();
         publickeyformData.append('file',this.publickey)
       this.sealService.getEncryptionFile(this.fileToEncryp,this.publickey).subscribe(response =>{
-        this.fileEncrypted = response.fileEncryptedbase64;
-        this.fileEncryptedName = response.fileEncryptedName;
+        this.fileEncrypted = response.cipherAbase64;
+        this.fileEncryptedName = response.cipherAbase64;
         console.log('File are Encrypted',this.fileEncrypted);
         this.service.success('publickey are created',this.publicKeyName);
       })

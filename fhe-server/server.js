@@ -6,6 +6,7 @@ const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 const fs = require('fs');
+const { log } = require('console');
 
 const app = express();
 const port = 3000;
@@ -15,12 +16,6 @@ const port = 3000;
 app.use(express.json());
 app.use(cors());  // Enable CORS for all routes
 app.use(bodyParser.json());
-
-
-
-
-
-
 
 
 app.post('/seal-operation', async (req, res) => {
@@ -41,8 +36,8 @@ app.post('/seal-makepara',async(req,res) => {
   const seal = await SEAL();
   const schemeType = seal.SchemeType.bfv
   const securityLevel = seal.SecurityLevel.tc128
-  const polyModulusDegree = 4096
-  const bitSizes = [36,36,37]
+  const polyModulusDegree = 32768
+  const bitSizes = [55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,56]
   const bitSize = 20
 
   const encParms = seal.EncryptionParameters(schemeType)
@@ -100,25 +95,20 @@ app.get('/getSchemeType', async(req, res) => {
   res.status(200).json({ schemeType,securityLevel,polyModulusDegree,sealOption });
 });
 
-app.post('/creat-two-key',async(req,res)=>{
+app.post('/encrypt_files', upload.fields([{ name: 'fileToEncryption', maxCount: 1 }, { name: 'publickey', maxCount: 1 }]), async (req, res) => {
+  console.log("Encrypting...");
   const seal = await SEAL();
-  const keyName = req.body.twoKeyName;
-  console.log('this is keyName',keyName);
 
-//   const parms = new EncryptionParameters();
-// parms.setPolyModulus("1x^2048 + 1");
-// parms.setCoeffModulus(seal.CoeffModulus.BFVDefault(2048));
-// parms.setPlainModulus(seal.PlainModulus.Batching(2048, [20, 20, 20, 20]));
-
-////////////////////////
+  ////////////////////////
 // Encryption Parameters
 ////////////////////////
 
 const schemeType = seal.SchemeType.bfv
 const securityLevel = seal.SecurityLevel.tc128
-const polyModulusDegree = 4096
-const bitSizes = [36, 36, 37]
+const polyModulusDegree = 32768
+const bitSizes = [55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,56]
 const bitSize = 20
+
 
 const encParms = seal.EncryptionParameters(schemeType)
 
@@ -143,9 +133,378 @@ const context = seal.Context(
   true, // ExpandModChain
   securityLevel // Enforce a security level
 )
- console.log('This is parms',encParms);
- console.log('This is context',context);
- console.log('This is securityLevel',securityLevel);
+
+if (!context.parametersSet()) {
+  throw new Error(
+    'Could not set the parameters in the given context. Please try different encryption parameters.'
+  )
+};
+  const fileToEncryption = req.files['fileToEncryption'][0];
+  const textpublickey = req.files['publickey'][0];
+
+
+
+  // ตรวจสอบว่า req.files ถูกสร้างขึ้นถูกต้อง
+  if (!fileToEncryption || !textpublickey) {
+    return res.status(400).json({ message: 'Missing files.' });
+  }
+
+ 
+  // อ่านข้อมูลจาก Buffer ของไฟล์ public key
+  const publicKeyString = textpublickey.buffer.toString('utf8');
+  const uploadedPublicKey = seal.PublicKey(); // สร้าง instance ของ PublicKey
+  uploadedPublicKey.load(context, publicKeyString);
+
+  // อ่านข้อมูลจาก Buffer ของไฟล์ที่ต้องการเข้ารหัส
+  const base64String = Buffer.from(fileToEncryption.buffer).toString('base64');
+
+  const plainText = base64String;
+
+  const keyGenerator = seal.KeyGenerator(
+    context
+  );
+
+  const encoder = seal.BatchEncoder(context)
+  // console.log("this is plantext",plainText);
+  const plainTextArray = new Int32Array(plainText.length);
+  for (let i = 0; i < plainText.length; i++) {
+      plainTextArray[i] = plainText.charCodeAt(i);
+  }
+  // console.log("this is plainTextArray  length",plainTextArray.length);
+
+
+  const encodedPlainText = encoder.encode(plainTextArray);
+
+  const encryptor = seal.Encryptor(context,uploadedPublicKey)
+
+
+  // Encrypt the PlainText
+  const ciphertext = encryptor.encrypt(encodedPlainText);
+  const cipherAbase64 = ciphertext.save() 
+  const fileEncryptedName = fileToEncryption.originalname;
+  console.log("Encrypted");
+  res.status(200).json({cipherAbase64,fileEncryptedName });
+});
+
+app.post('/decrypt_file', upload.fields([{ name: 'fileToDecryption', maxCount: 1 }, { name: 'secretkey', maxCount: 1 }]), async (req, res) => {
+  const seal = await SEAL();
+
+  ////////////////////////
+// Encryption Parameters
+////////////////////////
+
+const schemeType = seal.SchemeType.bfv
+const securityLevel = seal.SecurityLevel.tc128
+const polyModulusDegree = 32768
+const bitSizes = [55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,56]
+const bitSize = 20
+
+
+const encParms = seal.EncryptionParameters(schemeType)
+
+// Set the PolyModulusDegree
+encParms.setPolyModulusDegree(polyModulusDegree)
+
+// Create a suitable set of CoeffModulus primes
+encParms.setCoeffModulus(
+  seal.CoeffModulus.Create(polyModulusDegree, Int32Array.from(bitSizes))
+)
+
+// Set the PlainModulus to a prime of bitSize 20.
+encParms.setPlainModulus(seal.PlainModulus.Batching(polyModulusDegree, bitSize))
+
+////////////////////////
+// Context
+////////////////////////
+
+// Create a new Context
+const context = seal.Context(
+  encParms, // Encryption Parameters
+  true, // ExpandModChain
+  securityLevel // Enforce a security level
+)
+
+if (!context.parametersSet()) {
+  throw new Error(
+    'Could not set the parameters in the given context. Please try different encryption parameters.'
+  )
+};
+
+  const fileToDecryption = req.files['fileToDecryption'][0];
+  const textsecretkey = req.files['secretkey'][0];
+
+
+
+  // ตรวจสอบว่า req.files ถูกสร้างขึ้นถูกต้อง
+  if (!fileToDecryption || !textsecretkey) {
+    return res.status(400).json({ message: 'Missing files.' });
+  }
+  console.log("this is textsecretkey ",textsecretkey);
+  // อ่านข้อมูลจาก Buffer ของไฟล์ public key
+  const secretKeyString = textsecretkey.buffer.toString('utf8');
+  // const publicKey = seal.publicBase64Key.deserializeFrom(publicKeyString);
+  // const publicKey = seal.publicBase64Key.fromString(publicKeyString);
+  const uploadedSecretkey = seal.SecretKey(); // สร้าง instance ของ PublicKey
+  uploadedSecretkey.load(context, secretKeyString);
+  // const publicKey = new seal.PublicKey();
+  // publicKey.load(publicKeyString);
+
+  // อ่านข้อมูลจาก Buffer ของไฟล์ที่ต้องการเข้ารหัส
+  const fileToDecryptionString = fileToDecryption.buffer.toString('utf8');
+  // console.log('this is fileToDecryptionString', fileToDecryptionString);
+
+  // const plainText = fileToEncryptString;
+
+  // console.log(publicKeyString);
+  // สร้าง Encryptor
+  // const encryptor = seal.Encryptor(context,uploadedPublicKey)
+  // const plainText = seal.plainText(fileToEncryption);
+  // console.log(plainText);
+  const keyGenerator = seal.KeyGenerator(
+    context
+  );
+  const secretKey = keyGenerator.secretKey();
+  
+  // const publicKey = keyGenerator.createPublicKey();
+  const encoder = seal.BatchEncoder(context)
+  // console.log("this is plantext",plainText);
+  // const plainTextArray = new Int32Array(plainText.length);
+  // for (let i = 0; i < plainText.length; i++) {
+  //     plainTextArray[i] = plainText.charCodeAt(i);
+  // }
+  // console.log("this is plainTextArray  length",plainTextArray.length);
+  // console.log("this is plainTextArray",plainTextArray);
+
+
+  // const encodedPlainText = encoder.encode(plainTextArray);
+
+  // const encryptors = seal.Encryptor(context, publicKey);
+
+  // สร้าง Decryptor object เพื่อถอดรหัสข้อมูล
+  const decryptor = seal.Decryptor(context, uploadedSecretkey);
+  
+  // Encrypt the PlainText
+  // const ciphertext = encryptors.encrypt(encodedPlainText);
+  // console.log('ciphertext',ciphertext);
+  // const cipherAbase64 = ciphertext.save() 
+  // console.log('cipherAbase64',cipherAbase64);
+  const uploadedCipherText = seal.CipherText()
+  uploadedCipherText.load(context, fileToDecryptionString)
+  console.log('uploadedCipherText',uploadedCipherText);
+
+  // Decrypt the CipherText
+  const decryptedPlainText = decryptor.decrypt(uploadedCipherText);
+  console.log('decryptedPlainText',decryptedPlainText);
+  
+  // Decode the decrypted PlainText
+  const decryptedArray = encoder.decode(decryptedPlainText);
+  console.log('decryptedArray Message:', decryptedArray);
+  
+  const asciiCodes = Array.from(decryptedArray);
+  console.log('asciiCodes Message:', asciiCodes);
+  
+  
+  // Convert ASCII codes to characters
+  const characters = asciiCodes.map(code => String.fromCharCode(code));
+  console.log('characters Message:', characters);
+  
+  
+  // Join characters to form the original message
+  const originalMessage = characters.join('');
+  const decryptedFile = originalMessage;
+  
+  
+  console.log('Original Message:', originalMessage);
+  // console.log('stringer Message:', stringer);
+  const fileDecryptedName = fileToDecryption.originalname;
+  res.status(200).json({decryptedFile,fileDecryptedName });
+
+  // res.status(200).json({ message: 'Files received successfully.',plainTextA });
+});
+app.post('/decrypt_files', upload.fields([{ name: 'fileToDecryption', maxCount: 1 }, { name: 'secretkey', maxCount: 1 }]), async (req, res) => {
+  console.log("Decrypting...");
+  const seal = await SEAL();
+
+  ////////////////////////
+// Encryption Parameters
+////////////////////////
+
+const schemeType = seal.SchemeType.bfv
+const securityLevel = seal.SecurityLevel.tc128
+const polyModulusDegree = 32768
+const bitSizes = [55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,56]
+const bitSize = 20
+
+
+const encParms = seal.EncryptionParameters(schemeType)
+
+// Set the PolyModulusDegree
+encParms.setPolyModulusDegree(polyModulusDegree)
+
+// Create a suitable set of CoeffModulus primes
+encParms.setCoeffModulus(
+  seal.CoeffModulus.Create(polyModulusDegree, Int32Array.from(bitSizes))
+)
+
+// Set the PlainModulus to a prime of bitSize 20.
+encParms.setPlainModulus(seal.PlainModulus.Batching(polyModulusDegree, bitSize))
+
+////////////////////////
+// Context
+////////////////////////
+
+// Create a new Context
+const context = seal.Context(
+  encParms, // Encryption Parameters
+  true, // ExpandModChain
+  securityLevel // Enforce a security level
+)
+
+if (!context.parametersSet()) {
+  throw new Error(
+    'Could not set the parameters in the given context. Please try different encryption parameters.'
+  )
+};
+
+  const fileToDecryption = req.files['fileToDecryption'][0];
+  const textsecretkey = req.files['secretkey'][0];
+
+
+
+  // ตรวจสอบว่า req.files ถูกสร้างขึ้นถูกต้อง
+  if (!fileToDecryption || !textsecretkey) {
+    return res.status(400).json({ message: 'Missing files.' });
+  }
+  // อ่านข้อมูลจาก Buffer ของไฟล์ public key
+  const secretKeyString = textsecretkey.buffer.toString('utf8');
+  const uploadedSecretkey = seal.SecretKey(); // สร้าง instance ของ PublicKey
+  uploadedSecretkey.load(context, secretKeyString);
+  // อ่านข้อมูลจาก Buffer ของไฟล์ที่ต้องการเข้ารหัส
+  const fileToDecryptionString = fileToDecryption.buffer.toString('utf8');
+  
+  const keyGenerator = seal.KeyGenerator(
+    context
+  );
+  const secretKey = keyGenerator.secretKey();
+  
+  // const publicKey = keyGenerator.createPublicKey();
+  const encoder = seal.BatchEncoder(context)
+
+  // สร้าง Decryptor object เพื่อถอดรหัสข้อมูล
+  const decryptor = seal.Decryptor(context, uploadedSecretkey);
+  const uploadedCipherText = seal.CipherText()
+  uploadedCipherText.load(context, fileToDecryptionString)
+
+  // Decrypt the CipherText
+  const decryptedPlainText = decryptor.decrypt(uploadedCipherText);
+  
+  // Decode the decrypted PlainText
+  const decryptedArray = encoder.decode(decryptedPlainText);
+
+  // จำนวนตำแหน่งที่ไม่เท่ากับ 0 ใน decryptedArray
+const length = decryptedArray.findIndex(value => value === 0);
+// สร้าง Int32Array ที่มีขนาดเท่ากับความยาวของข้อมูลที่ไม่เท่ากับ 0
+const asciiArray = decryptedArray.slice(0, length);
+// แปลง ASCII codes เป็นตัวอักษร
+const asciiString = String.fromCharCode.apply(null, asciiArray);
+
+  decryptedFile = asciiString;
+  const fileDecryptedName = fileToDecryption.originalname;
+  console.log("Decrypted");
+  res.status(200).json({decryptedFile,fileDecryptedName });
+
+  // res.status(200).json({ message: 'Files received successfully.',plainTextA });
+});
+
+
+
+app.post('/createparms', async (req, res) => {
+  const seal = await SEAL();
+  encParmss = await getpara(req.body);
+  GKey = await getSecretKey(req.body);
+  console.log('securityLevel',securityLevel);
+  console.log('this is encParms test/ ', encParms);
+  // console.log('---',encParms.parametersSet());
+  // console.log('----',encParms instanceof EncryptionParameters);
+
+  // console.log('this is context form parms ',await global.contexter);
+
+  // G = seal.Context(
+  //   encParms,
+  //   true,
+  //   securityLevel
+  // )
+
+  // console.log('This is G',G);
+  // console.log('this is SecretKey form parms ',await GKey);
+  // console.log('this is SecretKey form parms ',await GKey.save());
+
+
+  // const keyGenerator = seal.KeyGenerator(global.contexter);
+  // console.log('This is Key Generate', keyGenerator);
+
+  // const secretKey = keyGenerator.secretKey();
+
+  // app.post('/tests', (req, res) => {
+  //   console.log('this is global.polyModulusDegree tests/ ', global.polyModulusDegree);
+  // });
+
+
+
+  app.post('/creat-secret-key', async (req, res) => {
+    const seal = await SEAL();
+    const secretKeyName = req.body.secretKeyName;
+    console.log('this is secretKeyName', secretKeyName);
+    console.log('this is context generate key/ ', context);
+
+    const keyGenerator = seal.KeyGenerator(context);
+    console.log('This is Key Generate', keyGenerator);
+
+    const secretKey = keyGenerator.secretKey();
+    const secretBase64Key = secretKey.save();
+
+    res.status(200).json({ secretBase64Key, secretKeyName });
+  });
+});
+
+app.post('/creat-two-key',async(req,res)=>{
+  const seal = await SEAL();
+  const keyName = req.body.twoKeyName;
+
+////////////////////////
+// Encryption Parameters
+////////////////////////
+
+const schemeType = seal.SchemeType.bfv
+const securityLevel = seal.SecurityLevel.tc128
+const polyModulusDegree = 32768
+const bitSizes = [55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,56]
+const bitSize = 20
+
+
+const encParms = seal.EncryptionParameters(schemeType)
+
+// Set the PolyModulusDegree
+encParms.setPolyModulusDegree(polyModulusDegree)
+
+// Create a suitable set of CoeffModulus primes
+encParms.setCoeffModulus(
+  seal.CoeffModulus.Create(polyModulusDegree, Int32Array.from(bitSizes))
+)
+
+// Set the PlainModulus to a prime of bitSize 20.
+encParms.setPlainModulus(seal.PlainModulus.Batching(polyModulusDegree, bitSize))
+
+////////////////////////
+// Context
+////////////////////////
+
+// Create a new Context
+const context = seal.Context(
+  encParms, // Encryption Parameters
+  true, // ExpandModChain
+  securityLevel // Enforce a security level
+)
 
 if (!context.parametersSet()) {
   throw new Error(
@@ -155,7 +514,6 @@ if (!context.parametersSet()) {
 const keyGenerator = seal.KeyGenerator(
   context
 )
-console.log('This is Key Generate',keyGenerator);
     // Get the SecretKey from the keyGenerator
     const secretKey = keyGenerator.secretKey();
 
@@ -168,323 +526,146 @@ console.log('This is Key Generate',keyGenerator);
 res.status(200).json({ secretBase64Key,keyName,publicBase64Key});
 });
 
-app.post('/creat-secret-key',async(req,res)=>{
+async function getpara(parms){
   const seal = await SEAL();
-  const secretKeyName = req.body.secretKeyName;
-  console.log('this is secretKeyName',secretKeyName);
+  polyModulusDegree = parms.polyModulusDegreeArrayValue;
+  bitSizes = parms.CoefficientModulus
+  bitSize = parms.PlainModulus
 
-//   const parms = new EncryptionParameters();
-// parms.setPolyModulus("1x^2048 + 1");
-// parms.setCoeffModulus(seal.CoeffModulus.BFVDefault(2048));
-// parms.setPlainModulus(seal.PlainModulus.Batching(2048, [20, 20, 20, 20]));
-
-////////////////////////
-// Encryption Parameters
-////////////////////////
-
-const schemeType = seal.SchemeType.bfv
-const securityLevel = seal.SecurityLevel.tc128
-const polyModulusDegree = 4096
-const bitSizes = [36, 36, 37]
-const bitSize = 20
-
-const encParms = seal.EncryptionParameters(schemeType)
-
-// Set the PolyModulusDegree
-encParms.setPolyModulusDegree(polyModulusDegree)
-
-// Create a suitable set of CoeffModulus primes
-encParms.setCoeffModulus(
-  seal.CoeffModulus.Create(polyModulusDegree, Int32Array.from(bitSizes))
-)
-
-// Set the PlainModulus to a prime of bitSize 20.
-encParms.setPlainModulus(seal.PlainModulus.Batching(polyModulusDegree, bitSize))
-
-////////////////////////
-// Context
-////////////////////////
-
-// Create a new Context
-const context = seal.Context(
-  encParms, // Encryption Parameters
-  true, // ExpandModChain
-  securityLevel // Enforce a security level
-)
- console.log('This is parms',encParms);
- console.log('This is context',context);
- console.log('This is securityLevel',securityLevel);
-
-if (!context.parametersSet()) {
-  throw new Error(
-    'Could not set the parameters in the given context. Please try different encryption parameters.'
-  )
-}
-const keyGenerator = seal.KeyGenerator(
-  context
-)
-console.log('This is Key Generate',keyGenerator);
-    // Get the SecretKey from the keyGenerator
-    const secretKey = keyGenerator.secretKey();
-
-    // Get the PublicKey from the keyGenerator
-    const secretBase64Key = secretKey.save()
-
-res.status(200).json({ secretBase64Key,secretKeyName});
-});
-
-app.post('/creat-public-key',async(req,res)=>{
-  const seal = await SEAL();
-  const secretKey = req.body.secretKey;
-  const publicKeyName = req.body.publicKeyName;
-  const inputsecretKey = req.body.secretKey;
-console.log('input secret key are :',inputsecretKey)
-console.log('publicKeyName are',publicKeyName);
-
-//   const parms = new EncryptionParameters();
-// parms.setPolyModulus("1x^2048 + 1");
-// parms.setCoeffModulus(seal.CoeffModulus.BFVDefault(2048));
-// parms.setPlainModulus(seal.PlainModulus.Batching(2048, [20, 20, 20, 20]));
-
-////////////////////////
-// Encryption Parameters
-////////////////////////
-
-const schemeType = seal.SchemeType.bfv
-const securityLevel = seal.SecurityLevel.tc128
-const polyModulusDegree = 4096
-const bitSizes = [36, 36, 37]
-const bitSize = 20
-
-
-const encParms = seal.EncryptionParameters(schemeType)
-
-// Set the PolyModulusDegree
-encParms.setPolyModulusDegree(polyModulusDegree)
-
-// Create a suitable set of CoeffModulus primes
-encParms.setCoeffModulus(
-  seal.CoeffModulus.Create(polyModulusDegree, Int32Array.from(bitSizes))
-)
-
-// Set the PlainModulus to a prime of bitSize 20.
-encParms.setPlainModulus(seal.PlainModulus.Batching(polyModulusDegree, bitSize))
-
-////////////////////////
-// Context
-////////////////////////
-
-// Create a new Context
-const context = seal.Context(
-  encParms, // Encryption Parameters
-  true, // ExpandModChain
-  securityLevel // Enforce a security level
-)
-
-if (!context.parametersSet()) {
-  throw new Error(
-    'Could not set the parameters in the given context. Please try different encryption parameters.'
-  )
-}
-const keyGenerator = seal.KeyGenerator(
-  context
-)
-    // Get the SecretKey from the keyGenerator
-    const publicKey = keyGenerator.createPublicKey(inputsecretKey);
-    // Get the PublicKey from the keyGenerator
-
-const publicBase64Key = publicKey.save()
-res.status(200).json({ publicBase64Key,publicKeyName});
-});
-
-
-app.post('/encryption-file',async(req,res)=>{
-const seal = await SEAL();
-const plainText = req.body.fileToEncryption;
-const publickey = req.body.publickey;
-
-
-////////////////////////
-// Encryption Parameters
-////////////////////////
-
-const schemeType = seal.SchemeType.bfv
-const securityLevel = seal.SecurityLevel.tc128
-const polyModulusDegree = 4096
-const bitSizes = [36, 36, 37]
-const bitSize = 20
-
-
-const encParms = seal.EncryptionParameters(schemeType)
-
-// Set the PolyModulusDegree
-encParms.setPolyModulusDegree(polyModulusDegree)
-
-// Create a suitable set of CoeffModulus primes
-encParms.setCoeffModulus(
-  seal.CoeffModulus.Create(polyModulusDegree, Int32Array.from(bitSizes))
-)
-
-// Set the PlainModulus to a prime of bitSize 20.
-encParms.setPlainModulus(seal.PlainModulus.Batching(polyModulusDegree, bitSize))
-
-////////////////////////
-// Context
-////////////////////////
-
-// Create a new Context
-const context = seal.Context(
-  encParms, // Encryption Parameters
-  true, // ExpandModChain
-  securityLevel // Enforce a security level
-)
-
-if (!context.parametersSet()) {
-  throw new Error(
-    'Could not set the parameters in the given context. Please try different encryption parameters.'
-  )
-};
-
-console.log(context,publickey);
-console.log('this is publickey',publickey);
-console.log('this is plainText',plainText);
-
-// const encryptor = seal.Encryptor(context,publickey);
-
-
-// const cipherText = encryptor.encrypt(plainText)
-
-// console.log('this is CipherText',cipherText);
-// res.status(200).json({cipherText});
-});
-
-// กำหนดที่เก็บไฟล์ที่รับเข้ามา
-
-
-// ให้ Express ใช้ middleware ในการรับไฟล์
-app.post('/file', upload.single('file'), (req, res,next) => {
-  // req.file จะมีข้อมูลของไฟล์ที่ถูกอัปโหลด
-
-// console.log('this is public key',publickey) ;
-  const file = req.file;
-  const publicKey = req.publickey;
-  console.log('this is file',file);
-  console.log('this is file',publicKey);
-  if (file) {
-    console.log('File received:', file.buffer);
-    res.status(200).json({ message: 'File received successfully.' });
-    const publickey = file.buffer ? file.buffer.toString('utf8') : '';
-    console.log('This is public key:', publickey);
-  } else {
-    res.status(400).json({ message: 'No file received.' });
+  switch (parms.schemeType) {
+    case 'bfv':
+      schemeType = seal.SchemeType.bfv;
+      break;
+    case 'bgv':
+      schemeType = seal.SchemeType.bgv;
+      break;
+    case 'ckks':
+      schemeType = seal.SchemeType.ckks;
+      break;
+    default:
+      schemeType = seal.SchemeType.none;
+      break;
   }
 
-});
-
-app.post('/testform', upload.fields([{ name: 'fileToEncryption', maxCount: 1 }, { name: 'publickey', maxCount: 1 }]), async (req, res) => {
-  const seal = await SEAL();
-
-  ////////////////////////
-// Encryption Parameters
-////////////////////////
-
-const schemeType = seal.SchemeType.bfv
-const securityLevel = seal.SecurityLevel.tc128
-const polyModulusDegree = 4096
-const bitSizes = [36, 36, 37]
-const bitSize = 20
-
-
-const encParms = seal.EncryptionParameters(schemeType)
-
-// Set the PolyModulusDegree
-encParms.setPolyModulusDegree(polyModulusDegree)
-
-// Create a suitable set of CoeffModulus primes
-encParms.setCoeffModulus(
-  seal.CoeffModulus.Create(polyModulusDegree, Int32Array.from(bitSizes))
-)
-
-// Set the PlainModulus to a prime of bitSize 20.
-encParms.setPlainModulus(seal.PlainModulus.Batching(polyModulusDegree, bitSize))
-
-////////////////////////
-// Context
-////////////////////////
-
-// Create a new Context
-const context = seal.Context(
-  encParms, // Encryption Parameters
-  true, // ExpandModChain
-  securityLevel // Enforce a security level
-)
-
-if (!context.parametersSet()) {
-  throw new Error(
-    'Could not set the parameters in the given context. Please try different encryption parameters.'
-  )
-};
-
-  const fileToEncryption = req.files['fileToEncryption'][0];
-  const textpublickey = req.files['publickey'][0];
-
-  console.log(fileToEncryption);
-
-  // ตรวจสอบว่า req.files ถูกสร้างขึ้นถูกต้อง
-  if (!fileToEncryption || !textpublickey) {
-    return res.status(400).json({ message: 'Missing files.' });
+  switch (parms.SecurityLevelOptionValue) {
+    case 'tc128':
+      securityLevel = seal.SecurityLevel.tc128;
+      break;
+    case 'tc192':
+      securityLevel = seal.SecurityLevel.tc192;
+      break;
+    case 'tc256':
+      securityLevel = seal.SecurityLevel.tc256;
+      break;
+    default:
+      securityLevel = seal.SecurityLevel.none;
+      break;
   }
 
-  // อ่านข้อมูลจาก Buffer ของไฟล์ public key
-  const publicKeyString = textpublickey.buffer.toString('utf8');
-  // const publicKey = seal.publicBase64Key.deserializeFrom(publicKeyString);
-  // const publicKey = seal.publicBase64Key.fromString(publicKeyString);
-  const uploadedPublicKey = seal.PublicKey(); // สร้าง instance ของ PublicKey
-uploadedPublicKey.load(context, publicKeyString);
-  // const publicKey = new seal.PublicKey();
-  // publicKey.load(publicKeyString);
+  const parmset = seal.EncryptionParameters(schemeType)
 
-  // อ่านข้อมูลจาก Buffer ของไฟล์ที่ต้องการเข้ารหัส
-  const fileToEncryptString = fileToEncryption.buffer.toString('utf8');
-  console.log('this is fileToEncryptString', fileToEncryptString);
+  parmset.setPolyModulusDegree(polyModulusDegree)
 
-  // console.log(publicKeyString);
-  // สร้าง Encryptor
-  const encryptor = seal.Encryptor(context,uploadedPublicKey)
-  // const plainText = seal.plainText(fileToEncryption);
-  // console.log(plainText);
+  parmset.setCoeffModulus(
+    seal.CoeffModulus.Create(polyModulusDegree, Int32Array.from(bitSizes))
+  )
 
-  const plainTextA = seal.PlainText(fileToEncryption);
-  console.log('this is plainTextA', plainTextA);
-  // เข้ารหัสข้อมูล
-  const fileEncrypted = encryptor.encrypt(plainTextA);
-  const fileEncryptedbase64 = fileEncrypted.save()
+  parmset.setPlainModulus(seal.PlainModulus.Batching(polyModulusDegree, bitSize))
 
-  // console.log('this is publickey', publicKeyString);
-  console.log('this is fileEncrypted', fileEncrypted);
-  console.log('this is fileEncryptedbase64', fileEncryptedbase64);
+  encParms = parmset
+  context = seal.Context(
+    encParms,
+    true,
+    securityLevel
+  )
 
-  const fileEncryptedName = fileToEncryption.originalname;
-  console.log('this is fileEncryptedName', fileEncryptedName,);
-  // ทำสิ่งที่คุณต้องการกับไฟล์และข้อมูล publickey
-  res.status(200).json({ fileEncryptedbase64,fileEncryptedName});
+  // console.log(context instanceof SEALContext);
+  console.log(context.parametersSet()); // ตรวจสอบว่าพารามิเตอร์ของ context ถูกตั้งค่าหรือไม่
 
-  // res.status(200).json({ message: 'Files received successfully.',plainTextA });
-});
+  if (!context.parametersSet()) {
+    throw new Error('Could not set the parameters in the given context. Please try different encryption parameters.')
+  }
+
+  const keyGenerator = seal.KeyGenerator(context)
+  const secretKey = keyGenerator.secretKey();
+
+  console.log('this is schemeType', schemeType);
+  // console.log('this is context', context);
+  console.log('this is secretKey', secretKey);
+  return encParms;
+}
+
+async function getSecretKey(parms){
+  const seal = await SEAL();
+  polyModulusDegree = parms.polyModulusDegreeArrayValue;
+  const bitSizes = parms.CoefficientModulus
+  const bitSize = parms.PlainModulus
+
+  let schemeType;
+
+  switch (parms.schemeType) {
+    case 'bfv':
+      schemeType = seal.SchemeType.bfv;
+      break;
+    case 'bgv':
+      schemeType = seal.SchemeType.bgv;
+      break;
+    case 'ckks':
+      schemeType = seal.SchemeType.ckks;
+      break;
+    default:
+      schemeType = seal.SchemeType.none;
+      break;
+  }
+
+  switch (parms.SecurityLevelOptionValue) {
+    case 'tc128':
+      securityLevel = seal.SecurityLevel.tc128;
+      break;
+    case 'tc192':
+      securityLevel = seal.SecurityLevel.tc192;
+      break;
+    case 'tc256':
+      securityLevel = seal.SecurityLevel.tc256;
+      break;
+    default:
+      securityLevel = seal.SecurityLevel.none;
+      break;
+  }
+
+  const parmset = seal.EncryptionParameters(schemeType)
+
+  parmset.setPolyModulusDegree(polyModulusDegree)
+
+  parmset.setCoeffModulus(
+    seal.CoeffModulus.Create(polyModulusDegree, Int32Array.from(bitSizes))
+  )
+
+  parmset.setPlainModulus(seal.PlainModulus.Batching(polyModulusDegree, bitSize))
+
+  const encParms = parmset
+  const context = seal.Context(
+    encParms,
+    true,
+    securityLevel
+  )
+
+  if (!context.parametersSet()) {
+    throw new Error('Could not set the parameters in the given context. Please try different encryption parameters.')
+  }
+
+  const keyGenerator = seal.KeyGenerator(context)
+  const secretKey = keyGenerator.secretKey();
+
+  console.log('this is schemeType', schemeType);
+  // console.log('this is context', context);
+  console.log('this is secretKey', secretKey);
+  return secretKey;
+}
 
 
 
 
-// app.post('/file', upload.single('file'), (req, res, next) => {
-//   const file = req.file;
-//   console.log(file.filename);
-//   if (!file) {
-//     const error = new Error('No File')
-//     error.httpStatusCode = 400
-//     return next(error)
-//   }
-//     res.send(file);
-// })
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
