@@ -5,7 +5,7 @@
         <a routerLink="/mainpage" class="logo">FHE ENCRYPTION</a>
         <!-- Menu -->
         <ul class="menu">
-            <li><a routerLink="/mainpage">PARAMETER</a></li>
+          <li><a routerLink="/mainpage">GET START</a></li>
             <li><a routerLink="/encrypt">ENCRYPTION</a></li>
             <li><a routerLink="/decrypt">DECRYPTION</a></li>
         </ul>
@@ -58,16 +58,16 @@
                                 <br>
                                 <mat-spinner></mat-spinner>
                                 <br>
-                            </div> 
+                            </div>
                             <div *ngIf="this.fileDecrypteds && !this.isLoading">
-                                <button class="btn btn-danger w-100" 
+                                <button class="btn btn-danger w-100"
                                     (click)="downloadBase64(this.fileDecrypteds,'d'+this.fileName)"
                                     [disabled]="isButtonDisabled">Download {{this.fileName}} </button>
                             </div>
                         </div>
-                        
+
                         <div *ngIf="this.fileDecrypted" class="status">
-                            <p>{{this.fileName}} Key Are Decrypted</p>                            
+                            <p>{{this.fileName}} Key Are Decrypted</p>
                         </div>
 
                     </div>

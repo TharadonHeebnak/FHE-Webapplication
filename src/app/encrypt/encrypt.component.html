@@ -30,7 +30,7 @@
         <a routerLink="/mainpage" class="logo">FHE ENCRYPTION</a>
         <!-- Menu -->
         <ul class="menu">
-            <li><a routerLink="/mainpage">PARAMETER</a></li>
+          <li><a routerLink="/mainpage">GET START</a></li>
             <li><a routerLink="/encrypt">ENCRYPTION</a></li>
             <li><a routerLink="/decrypt">DECRYPTION</a></li>
         </ul>
@@ -43,7 +43,7 @@
         <div class="page-title d-flex flex-column me-3">
             <!--begin::Title-->
             <h3 class="d-flex text-black fw-bold my-1 fs-3">
-                Encryption 
+                Encryption
             </h3>
         </div>
     </div>
@@ -83,7 +83,7 @@
                                 <br>
                                 <mat-spinner></mat-spinner>
                                 <br>
-                            </div>                           
+                            </div>
                             <div *ngIf="this.fileEncrypted && !this.isLoading">
                                 <button class="btn btn-danger w-100 mb-3"
                                     (click)="downloadTxtFile(this.fileEncrypted,'e'+this.fileName)"
