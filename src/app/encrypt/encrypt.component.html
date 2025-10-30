@@ -68,12 +68,12 @@
                         <br>
                         <br>
                         <div class="form-group">
-                            <input type="file" class="form-control" (change)="onFileChangeinputpublickey($event)">
+                            <input type="file" class="form-control" id="fileEncryptInput" (change)="onFileChangeinputpublickey($event)">
                             <label for="file-upload-secretkey">Upload your public Key</label>
                         </div>
                         <br>
                         <div class="form-group">
-                            <input type="file" class="form-control" (change)="onFileChangeinputfile($event)">
+                            <input type="file" class="form-control" id="publicKeyInput" (change)="onFileChangeinputfile($event)">
                             <label for="file-upload-secretkey">Upload your File</label>
                             <label for="file-upload-secretkey" style="color: red;">* Maximum are 24 kb</label>
                         </div>

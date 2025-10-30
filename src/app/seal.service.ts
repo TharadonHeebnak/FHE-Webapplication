@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -39,18 +39,28 @@ export class SealService {
   getpublickey(publicKeyName:string,secretKey:any):Observable<{publicBase64Key:any,publicKeyName:string}>{
     return this.http.post<{publicBase64Key:any,publicKeyName:string}>(this.Url+'creat-public-key',{publicKeyName,secretKey})
   }
-  getEncryptionFile(fileToEncryption:File,publickey:any){
+  getEncryptionFile(fileToEncryption: File, publickey: any) {
     const formdata = new FormData();
-    formdata.append('fileToEncryption',fileToEncryption);
-    formdata.append('publickey',publickey);
-    return this.http.post<{cipherAbase64:File,fileEncryptedName:string}>(this.Url+'encrypt_files',formdata)
+    formdata.append('fileToEncryption', fileToEncryption);
+    formdata.append('publickey', publickey);
+    return this.http.post<{ cipherAbase64: File, fileEncryptedName: string }>(this.Url + 'encrypt_files', formdata).pipe(
+      catchError(err => {
+        console.error('Encryption request failed', err);
+        return throwError(() => err);
+      })
+    );
   }
 
   getDecryptionFile(fileToDecryption:File,secretkey:any){
     const formdata = new FormData();
     formdata.append('fileToDecryption',fileToDecryption);
     formdata.append('secretkey',secretkey);
-    return this.http.post<{decryptedFile:string,fileDecryptedName:string}>(this.Url+'decrypt_files',formdata)
+    return this.http.post<{decryptedFile:string,fileDecryptedName:string}>(this.Url+'decrypt_files',formdata).pipe(
+      catchError(err => {
+        console.error('Decryption request failed', err);
+        return throwError(() => err);
+      })
+    );
   }
 
   getEncryptionFiletest(file:FormData){
@@ -61,6 +71,6 @@ export class SealService {
     return this.http.post<{}>(this.Url+'tests',{})
   }
 
-  
+
 
 }

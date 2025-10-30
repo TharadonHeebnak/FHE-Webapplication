@@ -15,7 +15,7 @@ import { log } from 'console';
   styleUrl: './decrypt.component.scss'
 })
 export class DecryptComponent {
-  @ViewChild('fileInput') fileInputRef!: ElementRef; 
+  @ViewChild('fileInput') fileInputRef!: ElementRef;
   constructor(
     private sealService: SealService,
     private service: NotificationsService,
@@ -40,8 +40,8 @@ export class DecryptComponent {
   fileDecrypted: File | null = null;
   fileDecrypteds?: string;
   isLoading = false
-  
-  
+
+
     ngOnInit(): void {
     }
 
@@ -51,28 +51,38 @@ export class DecryptComponent {
       this.secretkeyFileReaded = reader.result as string;
       // ทำสิ่งที่คุณต้องการกับข้อมูลที่ได้จากไฟล์ที่อัปโหลดที่นี่
     };
-  
+
     reader.readAsText(file);
   }
-  
+
   Decryptionfile(){
-    if(this.fileToDecrypt){
-      if(this.secretkey !== '' && this.secretkey !== undefined){
+        if (!this.fileToDecrypt) {
+      this.service.warn("Please select a file first");
+      return;
+    }else if (!this.secretkey) {
+      this.service.warn("Please select secret key file first");
+      return;
+    }
       this.isLoading = true
       this.sealService.getDecryptionFile(this.fileToDecrypt,this.secretkey).subscribe(response =>{
         this.fileDecrypteds = response.decryptedFile;
         this.fileName = response.fileDecryptedName;
         this.service.success('File are Decrypted',this.fileName);
         this.isLoading = false
-      })
-      }else{
-        this.service.info('Please Upload Secret Key');
-      }
-    }else{
-      this.service.info('Please Upload file To Decrypt')
-    }
-  
+      }, error => {
+      this.service.error('Decryption failed', 'Invalid or corrupted secret key. Please check your secret key file and try again.');
+      this.isLoading = false;
+      this.fileToDecrypt = null;
+      this.secretkey = null;
+
+      // ถ้ามี element input ใน template ใช้ ViewChild หรือ querySelector เพื่อรีเซ็ต
+      const fileInputDecrypt = document.getElementById('fileDecryptInput') as HTMLInputElement;
+      const keyInput = document.getElementById('secretKeyInput') as HTMLInputElement;
+      if (fileInputDecrypt) fileInputDecrypt.value = '';
+      if (keyInput) keyInput.value = '';
+    });
   }
+
   downloadBase64(base64Data: string, filename: string) {
     const binaryString = atob(base64Data);
     const length = binaryString.length;
@@ -103,7 +113,7 @@ export class DecryptComponent {
       // เรียกใช้ฟังก์ชั่นหรือทำสิ่งที่คุณต้องการกับไฟล์ที่อัปโหลดที่นี่
     }
   }
-  
+
   onFileChangeinputfile(event: any) {
     const fileList: FileList = event.target.files;
     if (fileList.length > 0) {
@@ -112,7 +122,7 @@ export class DecryptComponent {
       this.fileToDecrypt = file;
     }
   }
-  
+
   readPublicKeyFileContent(file: File) {
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -136,5 +146,5 @@ export class DecryptComponent {
         return 'application/octet-stream'; // ถ้าไม่รู้จักชนิดของไฟล์ให้ใช้ชนิด default
     }
   }
-  
+
 }

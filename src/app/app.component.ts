@@ -3,12 +3,7 @@ import { ServerStatusService } from './server-status.service';
 
 @Component({
   selector: 'app-root',
-   template: `
-    <div *ngIf="serverStatus === 'offline'" class="alert alert-danger">
-      ⚠️ Sever is offline!
-    </div>
-    <router-outlet></router-outlet>
-  `,
+  templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
@@ -21,6 +16,9 @@ export class AppComponent {
     this.serverStatusService.checkServer().subscribe(status => {
       this.serverStatus = status;
       console.log('Server is', status);
+      if (status !== 'online') {
+        alert('Warning: The server is currently offline or unreachable.');
+      }
     });
   }
 }
