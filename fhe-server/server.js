@@ -17,6 +17,10 @@ app.use(express.json());
 app.use(cors());  // Enable CORS for all routes
 app.use(bodyParser.json());
 
+app.get('/ping', (req, res) => {
+  res.send('ok'); // check server status
+});
+
 
 app.post('/seal-operation', async (req, res) => {
   const seal = await SEAL();
